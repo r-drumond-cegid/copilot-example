@@ -6,7 +6,7 @@ from typing import Optional
 from ..models.account import BalanceSummary
 from ..models.transaction import EnrichedTransaction, TransactionCategory
 from ..routes.accounts import get_account_balances
-from ..routes.transactions import get_bank_transactions
+from ..routes.transactions import get_transactions
 from ..services.analytics import (
     calculate_balance_summary,
     detect_low_balance_alerts,
@@ -36,7 +36,7 @@ async def get_balance_summary(
     """
     try:
         # Reuse existing account endpoint to get balances
-        accounts = await get_bank_account_balances(date, start_date, end_date)
+        accounts = await get_account_balances(date, start_date, end_date)
         
         # Calculate summary
         summary = calculate_balance_summary(accounts, date or start_date)
@@ -61,7 +61,7 @@ async def get_alerts(
     """
     try:
         # Get current account balances
-        accounts = await get_bank_account_balances(date=None)
+        accounts = await get_account_balances(date=None)
         
         # Detect alerts
         alerts = detect_low_balance_alerts(accounts, threshold)
@@ -96,7 +96,7 @@ async def get_enriched_transactions(
     """
     try:
         # Get base transactions
-        base_transactions = await get_bank_transactions(from_date, to_date)
+        base_transactions = await get_transactions(from_date, to_date)
         
         # Enrich each transaction
         enriched = [enrich_transaction(t) for t in base_transactions]
