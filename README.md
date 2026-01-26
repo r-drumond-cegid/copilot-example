@@ -106,14 +106,18 @@ Le frontend sera accessible sur `http://localhost:3000`
 - `DELETE /api/v1/chat/{session_id}` - Supprimer une session
 - `GET /api/v1/chat/sessions` - Lister les sessions actives
 
+### Analytics
+- `GET /api/v1/analytics/summary` - Résumé analytique
+- `GET /api/v1/analytics/trends` - Tendances financières
+
 ## 🎨 Technologies Utilisées
 
 ### Backend
 - **FastAPI** - Framework API moderne
 - **Pydantic** - Validation de données
 - **Pandas** - Analyse de données
-- **OpenAI** (à configurer) - Intelligence artificielle
-- **LangChain** (à configurer) - Orchestration IA
+- **Azure OpenAI** - Intelligence artificielle (configurée)
+- **LangChain** - Orchestration IA
 - **pytest** - Tests
 
 ### Frontend
@@ -128,14 +132,29 @@ Le frontend sera accessible sur `http://localhost:3000`
 
 ### Variables d'Environnement Backend
 
-Créez un fichier `.env` dans `backend/`:
+Créez un fichier `.env` dans `backend/` (voir `.env.example` pour un modèle):
 
 ```env
-# OpenAI API (à configurer pour activer l'IA)
-OPENAI_API_KEY=your_api_key_here
+# Azure OpenAI Configuration
+MODEL_NAME=gpt41
+MODEL_URL=https://pulse-os-local-resource.cognitiveservices.azure.com/
+MODEL_API_KEY=your-actual-api-key-here
+MODEL_API_VERSION=2024-12-01-preview
+MODEL_API_TYPE=azure
+MODEL_TEMPERATURE=0.1
 
-# Database (optionnel - actuellement en mémoire)
-DATABASE_URL=postgresql://user:password@localhost/financedb
+# FastAPI Configuration
+BACKEND_PORT=8000
+DEBUG=True
+```
+
+**📖 Configuration détaillée**: Consultez [backend/CHATBOT_CONFIG.md](backend/CHATBOT_CONFIG.md) pour le guide complet de configuration du chatbot.
+
+### Tester la Configuration
+
+```powershell
+cd backend
+python test_chatbot_config.py
 ```
 
 ### Variables d'Environnement Frontend
@@ -187,13 +206,27 @@ pytest
 
 # Lancer avec couverture
 pytest --cov=app --cov-report=html
+utilise **Azure OpenAI** (GPT-4) pour fournir une assistance financière intelligente.
 
-# Lancer un fichier spécifique
-pytest tests/test_accounts.py -v
-```
+### Fonctionnalités
 
-## 📱 Design Responsive
+- ✅ **Analyse contextuelle** des comptes et transactions
+- ✅ **Réponses personnalisées** basées sur votre situation financière
+- ✅ **Historique de conversation** pour un contexte continu
+- ✅ **Suggestions intelligentes** de questions
+- ✅ **Mode fallback** avec réponses prédéfinies si Azure OpenAI non configuré
 
+### Exemples de questions
+
+- "Quel est mon solde total ?"
+- "Quelles sont mes dépenses ce mois ?"
+- "Y a-t-il des alertes sur mes comptes ?"
+- "Génère un rapport mensuel"
+- "Analyse mes habitudes de dépense"
+
+### Configuration
+
+Voir [backend/CHATBOT_CONFIG.md](backend/CHATBOT_CONFIG.md) pour le guide complet de configuration Azure OpenAI
 L'interface s'adapte automatiquement aux différentes tailles d'écran:
 
 - **Desktop** (≥1024px): Layout complet avec sidebar
@@ -221,7 +254,7 @@ Le chatbot comprend:
 
 ### Backend
 ```powershell
-# Build Docker (à créer)
+# Bx] Intégration Azure créer)
 docker build -t finance-dashboard-backend .
 docker run -p 8000:8000 finance-dashboard-backend
 ```

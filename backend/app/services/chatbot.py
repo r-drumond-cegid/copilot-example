@@ -1,11 +1,38 @@
-"""Chatbot service using OpenAI for financial assistance."""
+"""Chatbot service using Azure OpenAI for financial assistance."""
 
 import os
 import uuid
 from datetime import datetime
 from typing import Optional
+from openai import AzureOpenAI
+from dotenv import load_dotenv
 
 from ..models.chat import ChatMessage, ChatSession, ChatRequest, ChatResponse
+
+# Load environment variables
+load_dotenv()
+
+# Initialize Azure OpenAI client
+_azure_client = None
+
+def _get_azure_client() -> AzureOpenAI:
+    """Get or create Azure OpenAI client."""
+    global _azure_client
+    if _azure_client is None:
+        api_key = os.getenv("MODEL_API_KEY")
+        api_version = os.getenv("MODEL_API_VERSION", "2024-12-01-preview")
+        azure_endpoint = os.getenv("MODEL_URL")
+        
+        if not api_key or api_key == "later":
+            # Return None if API key not configured yet
+            return None
+        
+        _azure_client = AzureOpenAI(
+            api_key=api_key,
+            api_version=api_version,
+            azure_endpoint=azure_endpoint,
+        )
+    return _azure_client
 
 
 # In-memory session storage (will be replaced with database later)
@@ -61,7 +88,7 @@ def generate_ai_response(
     context_data: Optional[dict] = None
 ) -> str:
     """
-    Generate AI response using OpenAI (placeholder for now).
+    Generate AI response using Azure OpenAI.
     
     Args:
         user_message: User's message
@@ -71,14 +98,91 @@ def generate_ai_response(
     Returns:
         AI-generated response text
     """
-    # TODO: Integrate with OpenAI API once dependency is installed
-    # For now, return a template response
-    
     session = get_session(session_id)
     if not session:
         return "Erreur: Session invalide."
     
-    # Simple rule-based responses for testing
+    # Get Azure OpenAI client
+    client = _get_azure_client()
+    
+    # If client not configured, use fallback rule-based responses
+    if client is None:
+        return _generate_fallback_response(user_message, context_data)
+    
+    try:
+        # Build system prompt with financial context
+        system_prompt = _build_system_prompt(context_data)
+        
+        # Build conversation history
+        messages = [{"role": "system", "content": system_prompt}]
+        
+        # Add recent conversation history (last 10 messages)
+        for msg in session.messages[-10:]:
+            messages.append({
+                "role": msg.role,
+                "content": msg.content
+            })
+        
+        # Add current user message
+        messages.append({
+            "role": "user",
+            "content": user_message
+        })
+        
+        # Call Azure OpenAI
+        model_name = os.getenv("MODEL_NAME", "gpt41")
+        temperature = float(os.getenv("MODEL_TEMPERATURE", "0.1"))
+        
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=messages,
+            temperature=temperature,
+            max_tokens=1000,
+        )
+        
+        return response.choices[0].message.content
+        
+    except Exception as e:
+        print(f"Error calling Azure OpenAI: {e}")
+        return _generate_fallback_response(user_message, context_data)
+
+
+def _build_system_prompt(context_data: Optional[dict] = None) -> str:
+    """Build system prompt with financial context."""
+    base_prompt = """Vous êtes un assistant financier IA expert qui aide les utilisateurs à comprendre et gérer leurs finances personnelles.
+
+Vos responsabilités incluent :
+- Analyser les soldes de comptes et les transactions
+- Fournir des insights sur les habitudes de dépenses
+- Générer des rapports financiers clairs
+- Détecter des tendances et anomalies
+- Donner des conseils financiers personnalisés
+
+Répondez toujours en français de manière claire, professionnelle et empathique."""
+    
+    if context_data:
+        context_prompt = "\n\nContexte financier actuel :"
+        
+        if "total_balance" in context_data:
+            total = context_data["total_balance"]
+            currency = context_data.get("currency", "EUR")
+            context_prompt += f"\n- Solde total : {total:,.2f} {currency}"
+        
+        if "recent_transactions" in context_data:
+            count = len(context_data["recent_transactions"])
+            context_prompt += f"\n- Nombre de transactions récentes : {count}"
+        
+        if "accounts" in context_data:
+            count = len(context_data["accounts"])
+            context_prompt += f"\n- Nombre de comptes : {count}"
+        
+        return base_prompt + context_prompt
+    
+    return base_prompt
+
+
+def _generate_fallback_response(user_message: str, context_data: Optional[dict] = None) -> str:
+    """Generate fallback rule-based response when Azure OpenAI is unavailable."""
     message_lower = user_message.lower()
     
     if "solde" in message_lower or "balance" in message_lower:

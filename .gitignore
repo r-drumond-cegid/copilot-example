@@ -10,6 +10,11 @@ venv/
 ENV/
 .venv
 
+# Environment variables
+.env
+.env.local
+*.env
+
 # Python distributions
 *.egg
 *.egg-info/
