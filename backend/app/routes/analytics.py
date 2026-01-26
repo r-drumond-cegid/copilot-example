@@ -49,19 +49,23 @@ async def get_balance_summary(
 @router.get("/alerts")
 async def get_alerts(
     threshold: float = Query(0.1, description="Alert threshold percentage (0.0-1.0)"),
+    date: Optional[str] = Query(None, description="Date for alerts (YYYY-MM-DD)"),
 ):
     """
     Get low balance alerts for accounts.
     
     Args:
         threshold: Alert threshold as percentage of overdraft (default 0.1 = 10%)
+        date: Date for alerts (defaults to today if not provided)
         
     Returns:
         List of alert objects
     """
     try:
         # Get current account balances
-        accounts = await get_account_balances(date=None)
+        from datetime import datetime
+        alert_date = date or datetime.now().strftime("%Y-%m-%d")
+        accounts = await get_account_balances(date=alert_date)
         
         # Detect alerts
         alerts = detect_low_balance_alerts(accounts, threshold)
