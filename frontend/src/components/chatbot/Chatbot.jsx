@@ -1,6 +1,23 @@
 import { useState, useRef, useEffect } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  IconButton,
+  Fab,
+  Chip,
+  CircularProgress,
+  Avatar,
+} from '@mui/material';
+import {
+  Send as SendIcon,
+  Close as CloseIcon,
+  Chat as ChatIcon,
+  SmartToy as BotIcon,
+  Person as PersonIcon,
+} from '@mui/icons-material';
 import { sendChatMessage } from '../../api/chat';
-import './Chatbot.css';
 
 const Chatbot = ({ isOpen, onToggle }) => {
   const [messages, setMessages] = useState([]);
@@ -89,76 +106,224 @@ const Chatbot = ({ isOpen, onToggle }) => {
 
   return (
     <>
-      <button className="chatbot-toggle" onClick={onToggle}>
-        {isOpen ? '✕' : '💬'}
-      </button>
+      {/* Toggle Button */}
+      <Fab
+        color="primary"
+        onClick={onToggle}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 1000,
+        }}
+      >
+        {isOpen ? <CloseIcon /> : <ChatIcon />}
+      </Fab>
 
+      {/* Chatbot Container */}
       {isOpen && (
-        <div className="chatbot-container">
-          <div className="chatbot-header">
-            <h3>💬 Assistant IA</h3>
-            <button className="close-button" onClick={onToggle}>✕</button>
-          </div>
+        <Paper
+          elevation={8}
+          sx={{
+            position: 'fixed',
+            bottom: 96,
+            right: 24,
+            width: { xs: 'calc(100vw - 48px)', sm: 400 },
+            height: 600,
+            maxHeight: 'calc(100vh - 120px)',
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: 3,
+            overflow: 'hidden',
+            zIndex: 999,
+          }}
+        >
+          {/* Header */}
+          <Box
+            sx={{
+              p: 2,
+              backgroundColor: 'primary.main',
+              color: 'primary.contrastText',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <BotIcon />
+              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                Assistant IA
+              </Typography>
+            </Box>
+            <IconButton
+              size="small"
+              onClick={onToggle}
+              sx={{ color: 'primary.contrastText' }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
 
-          <div className="chatbot-messages">
+          {/* Messages Area */}
+          <Box
+            sx={{
+              flex: 1,
+              overflowY: 'auto',
+              p: 2,
+              backgroundColor: 'background.default',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+            }}
+          >
             {messages.map((message) => (
-              <div key={message.id} className={`message message-${message.role}`}>
-                <div className="message-content">
-                  {message.content}
-                </div>
-                <div className="message-time">
-                  {new Date(message.timestamp).toLocaleTimeString('fr-FR', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </div>
-              </div>
+              <Box
+                key={message.id}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: 1,
+                  flexDirection: message.role === 'user' ? 'row-reverse' : 'row',
+                }}
+              >
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    bgcolor: message.role === 'user' ? 'primary.main' : 'secondary.main',
+                  }}
+                >
+                  {message.role === 'user' ? <PersonIcon fontSize="small" /> : <BotIcon fontSize="small" />}
+                </Avatar>
+                <Box
+                  sx={{
+                    maxWidth: '70%',
+                  }}
+                >
+                  <Paper
+                    elevation={1}
+                    sx={{
+                      p: 1.5,
+                      backgroundColor: message.role === 'user' ? 'primary.light' : 'background.paper',
+                      color: message.role === 'user' ? 'primary.contrastText' : 'text.primary',
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                      {message.content}
+                    </Typography>
+                  </Paper>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ ml: 1, mt: 0.5, display: 'block' }}
+                  >
+                    {new Date(message.timestamp).toLocaleTimeString('fr-FR', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </Typography>
+                </Box>
+              </Box>
             ))}
+            
             {loading && (
-              <div className="message message-assistant">
-                <div className="message-content typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    bgcolor: 'secondary.main',
+                  }}
+                >
+                  <BotIcon fontSize="small" />
+                </Avatar>
+                <Paper elevation={1} sx={{ p: 1.5, borderRadius: 2 }}>
+                  <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center' }}>
+                    <CircularProgress size={16} />
+                    <Typography variant="body2" color="text.secondary">
+                      En cours de réflexion...
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Box>
             )}
             <div ref={messagesEndRef} />
-          </div>
+          </Box>
 
+          {/* Suggestions */}
           {suggestions.length > 0 && (
-            <div className="chatbot-suggestions">
+            <Box
+              sx={{
+                p: 1.5,
+                display: 'flex',
+                gap: 1,
+                flexWrap: 'wrap',
+                borderTop: 1,
+                borderColor: 'divider',
+                backgroundColor: 'background.paper',
+              }}
+            >
               {suggestions.map((suggestion, index) => (
-                <button
+                <Chip
                   key={index}
-                  className="suggestion-chip"
+                  label={suggestion}
                   onClick={() => handleSuggestionClick(suggestion)}
                   disabled={loading}
-                >
-                  {suggestion}
-                </button>
+                  size="small"
+                  sx={{ cursor: 'pointer' }}
+                />
               ))}
-            </div>
+            </Box>
           )}
 
-          <div className="chatbot-input">
-            <textarea
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Posez votre question..."
-              rows="2"
-              disabled={loading}
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={!inputMessage.trim() || loading}
-              className="send-button"
-            >
-              ➤
-            </button>
-          </div>
-        </div>
+          {/* Input Area */}
+          <Box
+            sx={{
+              p: 2,
+              borderTop: 1,
+              borderColor: 'divider',
+              backgroundColor: 'background.paper',
+            }}
+          >
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}>
+              <TextField
+                fullWidth
+                multiline
+                maxRows={3}
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Posez votre question..."
+                disabled={loading}
+                variant="outlined"
+                size="small"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                  },
+                }}
+              />
+              <IconButton
+                color="primary"
+                onClick={handleSendMessage}
+                disabled={!inputMessage.trim() || loading}
+                sx={{
+                  backgroundColor: 'primary.main',
+                  color: 'primary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'primary.dark',
+                  },
+                  '&.Mui-disabled': {
+                    backgroundColor: 'action.disabledBackground',
+                  },
+                }}
+              >
+                <SendIcon />
+              </IconButton>
+            </Box>
+          </Box>
+        </Paper>
       )}
     </>
   );

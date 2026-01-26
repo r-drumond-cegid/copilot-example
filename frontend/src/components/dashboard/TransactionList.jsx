@@ -1,5 +1,26 @@
 import { useState } from 'react';
-import './TransactionList.css';
+import {
+  Box,
+  Paper,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Chip,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Stack,
+} from '@mui/material';
+import {
+  TrendingUp as IncomeIcon,
+  TrendingDown as ExpenseIcon,
+  Store as StoreIcon,
+} from '@mui/icons-material';
 
 const TransactionList = ({ transactions }) => {
   const [filter, setFilter] = useState('all');
@@ -22,63 +43,157 @@ const TransactionList = ({ transactions }) => {
   });
 
   return (
-    <div className="transaction-list">
-      <div className="list-header">
-        <h3>Transactions ({transactions.length})</h3>
-        <div className="list-controls">
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="all">Toutes</option>
-            <option value="income">Revenus</option>
-            <option value="expense">Dépenses</option>
-          </select>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="date">Par Date</option>
-            <option value="amount">Par Montant</option>
-          </select>
-        </div>
-      </div>
+    <Paper sx={{ p: 3, borderRadius: 3 }}>
+      {/* Header */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
+        <Typography variant="h5" component="h3" sx={{ fontWeight: 600 }}>
+          Transactions ({transactions.length})
+        </Typography>
+        
+        {/* Controls */}
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          <FormControl size="small" sx={{ minWidth: 140 }}>
+            <InputLabel>Filtre</InputLabel>
+            <Select
+              value={filter}
+              label="Filtre"
+              onChange={(e) => setFilter(e.target.value)}
+            >
+              <MenuItem value="all">Toutes</MenuItem>
+              <MenuItem value="income">Revenus</MenuItem>
+              <MenuItem value="expense">Dépenses</MenuItem>
+            </Select>
+          </FormControl>
+          
+          <FormControl size="small" sx={{ minWidth: 140 }}>
+            <InputLabel>Trier par</InputLabel>
+            <Select
+              value={sortBy}
+              label="Trier par"
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <MenuItem value="date">Par Date</MenuItem>
+              <MenuItem value="amount">Par Montant</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
 
-      <div className="transactions-container">
-        {sortedTransactions.length === 0 ? (
-          <p className="no-transactions">Aucune transaction trouvée</p>
-        ) : (
-          <div className="transactions-table">
-            {sortedTransactions.map((transaction, index) => (
-              <div key={index} className="transaction-row">
-                <div className="transaction-main">
-                  <div className="transaction-info">
-                    {transaction.category && (
-                      <span 
-                        className="category-badge" 
-                        style={{ backgroundColor: transaction.category.color }}
+      {/* Transactions Table */}
+      {sortedTransactions.length === 0 ? (
+        <Box sx={{ textAlign: 'center', py: 8 }}>
+          <Typography variant="body1" color="text.secondary">
+            Aucune transaction trouvée
+          </Typography>
+        </Box>
+      ) : (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>Catégorie</TableCell>
+                <TableCell>Compte</TableCell>
+                <TableCell>Marchand</TableCell>
+                <TableCell>Tags</TableCell>
+                <TableCell align="right">Montant</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sortedTransactions.map((transaction, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'action.hover',
+                    },
+                  }}
+                >
+                  <TableCell>
+                    <Typography variant="body2">
+                      {new Date(transaction.operation_date).toLocaleDateString('fr-FR')}
+                    </Typography>
+                  </TableCell>
+                  
+                  <TableCell>
+                    {transaction.category ? (
+                      <Chip
+                        label={transaction.category.name}
+                        size="small"
+                        sx={{
+                          backgroundColor: transaction.category.color || 'primary.light',
+                          color: 'white',
+                          fontWeight: 500,
+                        }}
+                      />
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">-</Typography>
+                    )}
+                  </TableCell>
+                  
+                  <TableCell>
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      {transaction.account}
+                    </Typography>
+                  </TableCell>
+                  
+                  <TableCell>
+                    {transaction.merchant ? (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <StoreIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+                        <Typography variant="body2">
+                          {transaction.merchant}
+                        </Typography>
+                      </Box>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">-</Typography>
+                    )}
+                  </TableCell>
+                  
+                  <TableCell>
+                    {transaction.tags && transaction.tags.length > 0 ? (
+                      <Stack direction="row" spacing={0.5} flexWrap="wrap">
+                        {transaction.tags.map((tag, i) => (
+                          <Chip
+                            key={i}
+                            label={tag}
+                            size="small"
+                            variant="outlined"
+                            sx={{ fontSize: '0.75rem' }}
+                          />
+                        ))}
+                      </Stack>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">-</Typography>
+                    )}
+                  </TableCell>
+                  
+                  <TableCell align="right">
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 0.5 }}>
+                      {transaction.is_debit ? (
+                        <ExpenseIcon fontSize="small" sx={{ color: 'error.main' }} />
+                      ) : (
+                        <IncomeIcon fontSize="small" sx={{ color: 'success.main' }} />
+                      )}
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontWeight: 600,
+                          color: transaction.is_debit ? 'error.main' : 'success.main',
+                        }}
                       >
-                        {transaction.category.name}
-                      </span>
-                    )}
-                    <span className="transaction-account">{transaction.account}</span>
-                    {transaction.merchant && (
-                      <span className="transaction-merchant">• {transaction.merchant}</span>
-                    )}
-                  </div>
-                  <div className="transaction-tags">
-                    {transaction.tags && transaction.tags.map((tag, i) => (
-                      <span key={i} className="tag">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="transaction-details">
-                  <span className="transaction-date">{transaction.operation_date}</span>
-                  <span className={`transaction-amount ${transaction.is_debit ? 'expense' : 'income'}`}>
-                    {transaction.is_debit ? '-' : '+'}
-                    {Math.abs(transaction.amount).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} {transaction.currency}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+                        {transaction.is_debit ? '-' : '+'}
+                        {Math.abs(transaction.amount).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} {transaction.currency}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Paper>
   );
 };
 

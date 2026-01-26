@@ -1,5 +1,18 @@
 import { useState, useEffect } from 'react';
 import { format, subDays } from 'date-fns';
+import {
+  Container,
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
+  Button,
+  Grid,
+  Paper,
+  Card,
+  CardContent,
+} from '@mui/material';
+import { Refresh as RefreshIcon, Warning as WarningIcon } from '@mui/icons-material';
 import BalanceSummaryCard from '../components/dashboard/BalanceSummaryCard';
 import TransactionList from '../components/dashboard/TransactionList';
 import DateRangePicker from '../components/dashboard/DateRangePicker';
@@ -8,7 +21,6 @@ import CategoryChart from '../components/charts/CategoryChart';
 import Chatbot from '../components/chatbot/Chatbot';
 import { getBalanceSummary, getAlerts } from '../api/accounts';
 import { getEnrichedTransactions, getTransactionTrends } from '../api/transactions';
-import './Dashboard.css';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -60,91 +72,167 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-header">
-        <h1>Dashboard Financier</h1>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      {/* Header */}
+      <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+        <Typography variant="h1" component="h1" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
+          Dashboard Financier
+        </Typography>
         <DateRangePicker
           fromDate={dateRange.from}
           toDate={dateRange.to}
           onChange={handleDateRangeChange}
         />
-      </div>
+      </Box>
 
+      {/* Loading State */}
       {loading && (
-        <div className="loading-container">
-          <p>Chargement des données...</p>
-        </div>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
+          <Box sx={{ textAlign: 'center' }}>
+            <CircularProgress size={60} />
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              Chargement des données...
+            </Typography>
+          </Box>
+        </Box>
       )}
 
+      {/* Error State */}
       {error && (
-        <div className="error-container">
-          <p>Erreur: {error}</p>
-          <button onClick={loadDashboardData}>Réessayer</button>
-        </div>
+        <Alert 
+          severity="error" 
+          sx={{ mb: 3 }}
+          action={
+            <Button 
+              color="inherit" 
+              size="small" 
+              startIcon={<RefreshIcon />}
+              onClick={loadDashboardData}
+            >
+              Réessayer
+            </Button>
+          }
+        >
+          Erreur: {error}
+        </Alert>
       )}
 
+      {/* Main Content */}
       {!loading && !error && (
         <>
           {/* Alerts Section */}
           {alerts.length > 0 && (
-            <div className="alerts-section">
-              <h3>⚠️ Alertes</h3>
-              <div className="alerts-list">
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <WarningIcon sx={{ mr: 1, color: 'warning.main' }} />
+                <Typography variant="h5" component="h3">
+                  Alertes
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {alerts.map((alert, index) => (
-                  <div key={index} className={`alert alert-${alert.severity}`}>
+                  <Alert 
+                    key={index} 
+                    severity={alert.severity || 'warning'}
+                    sx={{ borderRadius: 2 }}
+                  >
                     {alert.message}
-                  </div>
+                  </Alert>
                 ))}
-              </div>
-            </div>
+              </Box>
+            </Box>
           )}
 
           {/* Balance Summary */}
           {balanceSummary && (
-            <BalanceSummaryCard summary={balanceSummary} />
+            <Box sx={{ mb: 3 }}>
+              <BalanceSummaryCard summary={balanceSummary} />
+            </Box>
           )}
 
           {/* Charts Section */}
-          <div className="charts-grid">
-            <div className="chart-container">
-              <h3>Évolution du Solde</h3>
-              <BalanceChart dateRange={dateRange} />
-            </div>
-            <div className="chart-container">
-              <h3>Dépenses par Catégorie</h3>
-              <CategoryChart transactions={transactions} />
-            </div>
-          </div>
+          <Grid container spacing={3} sx={{ mb: 3 }}>
+            <Grid item xs={12} lg={6}>
+              <Paper sx={{ p: 3, height: '100%' }}>
+                <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+                  Évolution du Solde
+                </Typography>
+                <BalanceChart dateRange={dateRange} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <Paper sx={{ p: 3, height: '100%' }}>
+                <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+                  Dépenses par Catégorie
+                </Typography>
+                <CategoryChart transactions={transactions} />
+              </Paper>
+            </Grid>
+          </Grid>
 
           {/* Trends Summary */}
           {trends && (
-            <div className="trends-section">
-              <h3>Résumé des Transactions</h3>
-              <div className="trends-grid">
-                <div className="trend-card">
-                  <span className="trend-label">Revenus Totaux</span>
-                  <span className="trend-value income">
-                    {trends.total_income.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
-                  </span>
-                </div>
-                <div className="trend-card">
-                  <span className="trend-label">Dépenses Totales</span>
-                  <span className="trend-value expense">
-                    {trends.total_expenses.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
-                  </span>
-                </div>
-                <div className="trend-card">
-                  <span className="trend-label">Flux Net</span>
-                  <span className={`trend-value ${trends.net_flow >= 0 ? 'income' : 'expense'}`}>
-                    {trends.net_flow.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
-                  </span>
-                </div>
-                <div className="trend-card">
-                  <span className="trend-label">Nombre de Transactions</span>
-                  <span className="trend-value">{trends.transaction_count}</span>
-                </div>
-              </div>
-            </div>
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+                Résumé des Transactions
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Revenus Totaux
+                      </Typography>
+                      <Typography variant="h5" sx={{ color: 'success.main', fontWeight: 600 }}>
+                        {trends.total_income.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Dépenses Totales
+                      </Typography>
+                      <Typography variant="h5" sx={{ color: 'error.main', fontWeight: 600 }}>
+                        {trends.total_expenses.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Flux Net
+                      </Typography>
+                      <Typography 
+                        variant="h5" 
+                        sx={{ 
+                          color: trends.net_flow >= 0 ? 'success.main' : 'error.main',
+                          fontWeight: 600 
+                        }}
+                      >
+                        {trends.net_flow.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Nombre de Transactions
+                      </Typography>
+                      <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                        {trends.transaction_count}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Box>
           )}
 
           {/* Transaction List */}
@@ -154,7 +242,7 @@ const Dashboard = () => {
 
       {/* Chatbot */}
       <Chatbot isOpen={chatbotOpen} onToggle={() => setChatbotOpen(!chatbotOpen)} />
-    </div>
+    </Container>
   );
 };
 

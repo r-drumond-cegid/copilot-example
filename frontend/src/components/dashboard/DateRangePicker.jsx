@@ -1,4 +1,5 @@
-import './DateRangePicker.css';
+import { Box, TextField } from '@mui/material';
+import { DateRange as DateRangeIcon } from '@mui/icons-material';
 
 const DateRangePicker = ({ fromDate, toDate, onChange }) => {
   const handleFromChange = (e) => {
@@ -10,26 +11,29 @@ const DateRangePicker = ({ fromDate, toDate, onChange }) => {
   };
 
   return (
-    <div className="date-range-picker">
-      <div className="date-input-group">
-        <label>Du</label>
-        <input 
-          type="date" 
-          value={fromDate} 
-          onChange={handleFromChange}
-          max={toDate}
-        />
-      </div>
-      <div className="date-input-group">
-        <label>Au</label>
-        <input 
-          type="date" 
-          value={toDate} 
-          onChange={handleToChange}
-          min={fromDate}
-        />
-      </div>
-    </div>
+    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+      <DateRangeIcon sx={{ color: 'text.secondary', display: { xs: 'none', sm: 'block' } }} />
+      <TextField
+        label="Du"
+        type="date"
+        value={fromDate}
+        onChange={handleFromChange}
+        inputProps={{ max: toDate }}
+        size="small"
+        sx={{ minWidth: 150 }}
+        InputLabelProps={{ shrink: true }}
+      />
+      <TextField
+        label="Au"
+        type="date"
+        value={toDate}
+        onChange={handleToChange}
+        inputProps={{ min: fromDate }}
+        size="small"
+        sx={{ minWidth: 150 }}
+        InputLabelProps={{ shrink: true }}
+      />
+    </Box>
   );
 };
 
