@@ -3,11 +3,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import accounts, transactions
+from app.routes import accounts, transactions, chat, analytics
 
 app = FastAPI(
     title="Finance Dashboard API",
-    description="API for managing bank accounts and transactions",
+    description="API for managing bank accounts and transactions with AI chatbot",
     version="1.0.0",
 )
 
@@ -23,6 +23,8 @@ app.add_middleware(
 # Include routers
 app.include_router(accounts.router, prefix="/api/v1", tags=["accounts"])
 app.include_router(transactions.router, prefix="/api/v1", tags=["transactions"])
+app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
+app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
 
 
 @app.get("/")

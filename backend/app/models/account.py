@@ -49,3 +49,32 @@ class AccountQueryParams(BaseModel):
     date: Optional[str] = Field(None, description="Single date query (YYYY-MM-DD)")
     start_date: Optional[str] = Field(None, description="Start date for range query (YYYY-MM-DD)")
     end_date: Optional[str] = Field(None, description="End date for range query (YYYY-MM-DD)")
+
+
+class BalanceSummary(BaseModel):
+    """Aggregated balance summary for analytics and reporting."""
+
+    total_balance: float = Field(..., description="Sum of all account balances")
+    currency: str = Field(..., description="Primary currency code")
+    account_count: int = Field(..., description="Number of accounts")
+    highest_balance: float = Field(..., description="Highest account balance")
+    lowest_balance: float = Field(..., description="Lowest account balance")
+    average_balance: float = Field(..., description="Average balance across accounts")
+    total_overdraft_allowed: float = Field(default=0.0, description="Total allowed overdraft")
+    date: str = Field(..., description="Date of the summary (YYYY-MM-DD)")
+    accounts: list[AccountResponse] = Field(default_factory=list, description="List of account details")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "total_balance": 850000.50,
+                "currency": "EUR",
+                "account_count": 5,
+                "highest_balance": 350000.00,
+                "lowest_balance": 50000.00,
+                "average_balance": 170000.10,
+                "total_overdraft_allowed": 50000.0,
+                "date": "2026-01-15",
+                "accounts": [],
+            }
+        }
