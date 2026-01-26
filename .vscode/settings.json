@@ -1,0 +1,8 @@
+{
+  "github.copilot.chat.mcp.servers": {
+    "cds-mcp": {
+      "type": "http",
+      "url": "https://cds-mcp-cyezdhfpg0cchqe2.francecentral-01.azurewebsites.net/mcp"
+    }
+  }
+}
