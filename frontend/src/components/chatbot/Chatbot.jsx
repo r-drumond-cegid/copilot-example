@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Box,
   Paper,
@@ -9,6 +9,12 @@ import {
   Chip,
   CircularProgress,
   Avatar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Slide,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import {
   Send as SendIcon,
@@ -19,7 +25,14 @@ import {
 } from '@mui/icons-material';
 import { sendChatMessage } from '../../api/chat';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Chatbot = ({ isOpen, onToggle }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [sessionId, setSessionId] = useState(null);
@@ -120,33 +133,33 @@ const Chatbot = ({ isOpen, onToggle }) => {
         {isOpen ? <CloseIcon /> : <ChatIcon />}
       </Fab>
 
-      {/* Chatbot Container */}
-      {isOpen && (
-        <Paper
-          elevation={8}
-          sx={{
-            position: 'fixed',
-            bottom: 96,
-            right: 24,
-            width: { xs: 'calc(100vw - 48px)', sm: 400 },
-            height: 600,
-            maxHeight: 'calc(100vh - 120px)',
+      {/* Chatbot Modal Dialog */}
+      <Dialog
+        open={isOpen}
+        onClose={onToggle}
+        maxWidth="sm"
+        fullWidth
+        fullScreen={isMobile}
+        TransitionComponent={Transition}
+        PaperProps={{
+          sx: {
+            height: isMobile ? '100vh' : isTablet ? '85vh' : '700px',
+            maxHeight: isMobile ? '100vh' : '90vh',
+            borderRadius: isMobile ? 0 : 3,
             display: 'flex',
             flexDirection: 'column',
-            borderRadius: 3,
-            overflow: 'hidden',
-            zIndex: 999,
-          }}
-        >
+          },
+        }}
+      >
           {/* Header */}
-          <Box
+          <DialogTitle
             sx={{
-              p: 2,
               backgroundColor: 'primary.main',
               color: 'primary.contrastText',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
+              p: 2,
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -159,16 +172,17 @@ const Chatbot = ({ isOpen, onToggle }) => {
               size="small"
               onClick={onToggle}
               sx={{ color: 'primary.contrastText' }}
+              aria-label="Fermer"
             >
               <CloseIcon />
             </IconButton>
-          </Box>
+          </DialogTitle>
 
           {/* Messages Area */}
-          <Box
+          <DialogContent
+            dividers
             sx={{
               flex: 1,
-              overflowY: 'auto',
               p: 2,
               backgroundColor: 'background.default',
               display: 'flex',
@@ -249,7 +263,7 @@ const Chatbot = ({ isOpen, onToggle }) => {
               </Box>
             )}
             <div ref={messagesEndRef} />
-          </Box>
+          </DialogContent>
 
           {/* Suggestions */}
           {suggestions.length > 0 && (
@@ -323,8 +337,7 @@ const Chatbot = ({ isOpen, onToggle }) => {
               </IconButton>
             </Box>
           </Box>
-        </Paper>
-      )}
+        </Dialog>
     </>
   );
 };

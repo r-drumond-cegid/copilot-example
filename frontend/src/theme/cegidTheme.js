@@ -195,6 +195,20 @@ export const cegidTheme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 12,
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          padding: '16px',
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         root: {
