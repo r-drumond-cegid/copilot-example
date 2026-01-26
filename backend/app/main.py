@@ -27,6 +27,29 @@ app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
 app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
 
 
+@app.on_event("startup")
+async def startup_event():
+    """Load enriched mock data on application startup."""
+    try:
+        from tests.fixtures import (
+            MOCK_ACCOUNTS_TIMELINE_30_DAYS,
+            MOCK_TRANSACTIONS_ENRICHED,
+        )
+        
+        # Load enriched transaction data with categories, merchants, and tags
+        transactions.set_mock_transactions(MOCK_TRANSACTIONS_ENRICHED)
+        
+        # Load 30-day timeline data for balance charts
+        accounts.set_mock_accounts(MOCK_ACCOUNTS_TIMELINE_30_DAYS)
+        
+        print("✓ Loaded enriched mock data:")
+        print(f"  - {len(MOCK_TRANSACTIONS_ENRICHED)} enriched transactions")
+        print(f"  - {len(MOCK_ACCOUNTS_TIMELINE_30_DAYS)} account balance records (30-day timeline)")
+    except Exception as e:
+        print(f"⚠ Warning: Could not load enriched mock data: {e}")
+        print("  Using empty data - API will work but return no results.")
+
+
 @app.get("/")
 async def root():
     """Root endpoint."""

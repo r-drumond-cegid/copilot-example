@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - Finance Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .endpoint h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        .url {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 5px 0 0;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .response {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+        .response.show {
+            display: block;
+        }
+        .response pre {
+            margin: 0;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #4CAF50;
+            color: white;
+        }
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+        .status.pending {
+            background: #ff9800;
+            color: white;
+        }
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Finance Dashboard - API Test Interface</h1>
+    <p>Test the enriched mock data endpoints. Backend must be running on <strong>http://127.0.0.1:8000</strong></p>
+
+    <div class="endpoint">
+        <h3>1. Enriched Transactions <span class="highlight">NEW!</span></h3>
+        <p>Get transactions with categories, merchants, and tags</p>
+        <div class="url">GET /api/v1/transactions/enriched?from_date=2026-01-01&to_date=2026-01-31</div>
+        <button onclick="testEndpoint('enriched-transactions', '/api/v1/transactions/enriched?from_date=2026-01-01&to_date=2026-01-31')">Test Endpoint</button>
+        <button onclick="openInNewTab('/api/v1/transactions/enriched?from_date=2026-01-01&to_date=2026-01-31')">Open in Browser</button>
+        <div id="enriched-transactions-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>2. Account Balances (Timeline) <span class="highlight">NEW!</span></h3>
+        <p>Get 30-day timeline of balances for BalanceChart</p>
+        <div class="url">GET /api/v1/bank-account-balances?start_date=2026-01-01&end_date=2026-01-31</div>
+        <button onclick="testEndpoint('accounts-timeline', '/api/v1/bank-account-balances?start_date=2026-01-01&end_date=2026-01-31')">Test Endpoint</button>
+        <button onclick="openInNewTab('/api/v1/bank-account-balances?start_date=2026-01-01&end_date=2026-01-31')">Open in Browser</button>
+        <div id="accounts-timeline-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>3. Balance Summary</h3>
+        <p>Get aggregated balance statistics</p>
+        <div class="url">GET /api/v1/balance-summary?date=2026-01-26</div>
+        <button onclick="testEndpoint('balance-summary', '/api/v1/balance-summary?date=2026-01-26')">Test Endpoint</button>
+        <button onclick="openInNewTab('/api/v1/balance-summary?date=2026-01-26')">Open in Browser</button>
+        <div id="balance-summary-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>4. Alerts</h3>
+        <p>Get low balance alerts</p>
+        <div class="url">GET /api/v1/alerts?date=2026-01-26</div>
+        <button onclick="testEndpoint('alerts', '/api/v1/alerts?date=2026-01-26')">Test Endpoint</button>
+        <button onclick="openInNewTab('/api/v1/alerts?date=2026-01-26')">Open in Browser</button>
+        <div id="alerts-response" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>5. Transaction Trends</h3>
+        <p>Get income/expense trends and analytics</p>
+        <div class="url">GET /api/v1/transaction-trends?from_date=2026-01-01&to_date=2026-01-31</div>
+        <button onclick="testEndpoint('trends', '/api/v1/transaction-trends?from_date=2026-01-01&to_date=2026-01-31')">Test Endpoint</button>
+        <button onclick="openInNewTab('/api/v1/transaction-trends?from_date=2026-01-01&to_date=2026-01-31')">Open in Browser</button>
+        <div id="trends-response" class="response"></div>
+    </div>
+
+    <div class="endpoint" style="background: #e3f2fd;">
+        <h3>📚 API Documentation</h3>
+        <p>Interactive Swagger UI with all endpoints</p>
+        <div class="url">GET /docs</div>
+        <button onclick="window.open('http://127.0.0.1:8000/docs', '_blank')">Open API Docs</button>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://127.0.0.1:8000';
+
+        async function testEndpoint(id, path) {
+            const responseDiv = document.getElementById(id + '-response');
+            responseDiv.className = 'response show';
+            responseDiv.innerHTML = '<span class="status pending">Loading...</span>';
+
+            try {
+                const response = await fetch(BASE_URL + path);
+                const data = await response.json();
+                
+                const status = response.ok ? 
+                    '<span class="status success">✓ Success</span>' : 
+                    '<span class="status error">✗ Error</span>';
+                
+                let summary = '';
+                if (Array.isArray(data)) {
+                    summary = `<p><strong>Count:</strong> ${data.length} items</p>`;
+                    if (data.length > 0) {
+                        summary += `<p><strong>First item preview:</strong></p>`;
+                    }
+                } else if (data.total_balance !== undefined) {
+                    summary = `<p><strong>Total Balance:</strong> ${data.total_balance.toFixed(2)} ${data.accounts[0]?.currency || 'EUR'}</p>`;
+                    summary += `<p><strong>Accounts:</strong> ${data.account_count}</p>`;
+                } else if (data.alerts !== undefined) {
+                    summary += `<p><strong>Alerts:</strong> ${data.count}</p>`;
+                }
+                
+                responseDiv.innerHTML = status + summary + 
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                responseDiv.innerHTML = 
+                    '<span class="status error">✗ Error</span>' +
+                    '<p style="color: red;">Cannot connect to backend. Make sure the server is running on http://127.0.0.1:8000</p>' +
+                    '<pre>' + error.message + '</pre>';
+            }
+        }
+
+        function openInNewTab(path) {
+            window.open(BASE_URL + path, '_blank');
+        }
+
+        // Test connection on load
+        window.addEventListener('load', () => {
+            fetch(BASE_URL + '/health')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('✓ Backend is running', data);
+                })
+                .catch(error => {
+                    alert('⚠ Backend server is not running!\n\nPlease start the backend first:\ncd backend\npython -m uvicorn app.main:app --reload');
+                });
+        });
+    </script>
+</body>
+</html>
