@@ -574,6 +574,579 @@ MOCK_TRANSACTIONS_ENRICHED = [
         "merchant": "NYC Office Rent",
         "tags": ["expense", "large", "recurring"]
     },
+    # Investment Portfolio Account transactions (throughout 2026)
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-01-13",
+        "value_date": "2026-01-15",
+        "amount": 1940.88,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "rent",
+            "name": "Loyer",
+            "icon": "building",
+            "color": "#17a2b8",
+            "description": "Loyers et charges"
+        },
+        "merchant": "Office Landlord",
+        "tags": ["expense", "large", "recurring"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-02-22",
+        "value_date": "2026-02-22",
+        "amount": 4104.32,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "equipment",
+            "name": "Équipement",
+            "icon": "tools",
+            "color": "#6610f2",
+            "description": "Matériel et équipement"
+        },
+        "merchant": "Office Equipment Co",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-02-27",
+        "value_date": "2026-02-28",
+        "amount": 6490.70,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "salary",
+            "name": "Salaire",
+            "icon": "money-bill-wave",
+            "color": "#28a745",
+            "description": "Revenus salariaux"
+        },
+        "merchant": "Payroll Department",
+        "tags": ["income", "large", "recurring"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-03-13",
+        "value_date": "2026-03-14",
+        "amount": 208.84,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "travel",
+            "name": "Déplacements",
+            "icon": "plane",
+            "color": "#fd7e14",
+            "description": "Frais de déplacement"
+        },
+        "merchant": "Hotels International",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-04-25",
+        "value_date": "2026-04-25",
+        "amount": 1834.71,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "other_income",
+            "name": "Autres revenus",
+            "icon": "hand-holding-usd",
+            "color": "#20c997",
+            "description": "Autres sources de revenus"
+        },
+        "merchant": "Client Payment",
+        "tags": ["income", "large", "business"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-05-06",
+        "value_date": "2026-05-08",
+        "amount": 431.37,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "other_expense",
+            "name": "Autres dépenses",
+            "icon": "receipt",
+            "color": "#e83e8c",
+            "description": "Autres dépenses"
+        },
+        "merchant": "Miscellaneous",
+        "tags": ["expense"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-05-21",
+        "value_date": "2026-05-23",
+        "amount": 864.99,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "insurance",
+            "name": "Assurance",
+            "icon": "shield-alt",
+            "color": "#007bff",
+            "description": "Assurances professionnelles"
+        },
+        "merchant": "Insurance Provider",
+        "tags": ["expense", "recurring"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-10-07",
+        "value_date": "2026-10-08",
+        "amount": 873.91,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "supplies",
+            "name": "Fournitures",
+            "icon": "box",
+            "color": "#6c757d",
+            "description": "Achats et fournitures"
+        },
+        "merchant": "Staples Business",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-11-24",
+        "value_date": "2026-11-26",
+        "amount": 3208.16,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "tax",
+            "name": "Taxes",
+            "icon": "file-invoice-dollar",
+            "color": "#dc3545",
+            "description": "Impôts et taxes"
+        },
+        "merchant": "Tax Authority",
+        "tags": ["expense", "large"]
+    },
+    {
+        "account_description": "Investment Portfolio Account",
+        "iban": "FR7655555555555555555555555",
+        "holder_company_name": "ACME Investments",
+        "operation_date": "2026-12-13",
+        "value_date": "2026-12-15",
+        "amount": 136.60,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "utilities",
+            "name": "Services publics",
+            "icon": "lightbulb",
+            "color": "#ffc107",
+            "description": "Électricité, eau, gaz"
+        },
+        "merchant": "Water Services",
+        "tags": ["expense", "recurring"]
+    },
+    # UK Operations Account transactions (throughout 2026)
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-01-24",
+        "value_date": "2026-01-25",
+        "amount": 412.42,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "travel",
+            "name": "Déplacements",
+            "icon": "plane",
+            "color": "#fd7e14",
+            "description": "Frais de déplacement"
+        },
+        "merchant": "Airlines",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-02-05",
+        "value_date": "2026-02-07",
+        "amount": 4958.09,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "tax",
+            "name": "Taxes",
+            "icon": "file-invoice-dollar",
+            "color": "#dc3545",
+            "description": "Impôts et taxes"
+        },
+        "merchant": "Tax Authority",
+        "tags": ["expense", "large"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-02-10",
+        "value_date": "2026-02-10",
+        "amount": 1432.31,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "supplies",
+            "name": "Fournitures",
+            "icon": "box",
+            "color": "#6c757d",
+            "description": "Achats et fournitures"
+        },
+        "merchant": "Office Depot",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-02-21",
+        "value_date": "2026-02-22",
+        "amount": 85.74,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "other_expense",
+            "name": "Autres dépenses",
+            "icon": "receipt",
+            "color": "#e83e8c",
+            "description": "Autres dépenses"
+        },
+        "merchant": "Bank Fees",
+        "tags": ["expense", "recurring"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-04-27",
+        "value_date": "2026-04-27",
+        "amount": 1558.38,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "equipment",
+            "name": "Équipement",
+            "icon": "tools",
+            "color": "#6610f2",
+            "description": "Matériel et équipement"
+        },
+        "merchant": "Office Equipment Co",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-04-30",
+        "value_date": "2026-05-01",
+        "amount": 1925.25,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "rent",
+            "name": "Loyer",
+            "icon": "building",
+            "color": "#17a2b8",
+            "description": "Loyers et charges"
+        },
+        "merchant": "Office Landlord",
+        "tags": ["expense", "large", "recurring"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-05-23",
+        "value_date": "2026-05-25",
+        "amount": 2711.71,
+        "currency": "GBP",
+        "is_debit": False,
+        "category": {
+            "id": "other_income",
+            "name": "Autres revenus",
+            "icon": "hand-holding-usd",
+            "color": "#20c997",
+            "description": "Autres sources de revenus"
+        },
+        "merchant": "Investment Return",
+        "tags": ["income", "business"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-05-29",
+        "value_date": "2026-05-29",
+        "amount": 71.43,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "utilities",
+            "name": "Services publics",
+            "icon": "lightbulb",
+            "color": "#ffc107",
+            "description": "Électricité, eau, gaz"
+        },
+        "merchant": "Water Services",
+        "tags": ["expense", "recurring"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-07-14",
+        "value_date": "2026-07-16",
+        "amount": 6724.94,
+        "currency": "GBP",
+        "is_debit": False,
+        "category": {
+            "id": "salary",
+            "name": "Salaire",
+            "icon": "money-bill-wave",
+            "color": "#28a745",
+            "description": "Revenus salariaux"
+        },
+        "merchant": "Payroll Department",
+        "tags": ["income", "large", "recurring"]
+    },
+    {
+        "account_description": "UK Operations Account",
+        "iban": "GB1234567890123456789012",
+        "holder_company_name": "ACME UK Ltd",
+        "operation_date": "2026-12-05",
+        "value_date": "2026-12-06",
+        "amount": 822.91,
+        "currency": "GBP",
+        "is_debit": True,
+        "category": {
+            "id": "insurance",
+            "name": "Assurance",
+            "icon": "shield-alt",
+            "color": "#007bff",
+            "description": "Assurances professionnelles"
+        },
+        "merchant": "Insurance Provider",
+        "tags": ["expense", "recurring"]
+    },
+    # Swiss Operations Account transactions (throughout 2026)
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-01-25",
+        "value_date": "2026-01-25",
+        "amount": 1424.51,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "supplies",
+            "name": "Fournitures",
+            "icon": "box",
+            "color": "#6c757d",
+            "description": "Achats et fournitures"
+        },
+        "merchant": "Office Depot",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-02-16",
+        "value_date": "2026-02-17",
+        "amount": 395.87,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "other_expense",
+            "name": "Autres dépenses",
+            "icon": "receipt",
+            "color": "#e83e8c",
+            "description": "Autres dépenses"
+        },
+        "merchant": "Miscellaneous",
+        "tags": ["expense"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-02-26",
+        "value_date": "2026-02-26",
+        "amount": 2701.25,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "equipment",
+            "name": "Équipement",
+            "icon": "tools",
+            "color": "#6610f2",
+            "description": "Matériel et équipement"
+        },
+        "merchant": "Tech Supplier",
+        "tags": ["expense", "large", "business"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-03-12",
+        "value_date": "2026-03-14",
+        "amount": 302.27,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "insurance",
+            "name": "Assurance",
+            "icon": "shield-alt",
+            "color": "#007bff",
+            "description": "Assurances professionnelles"
+        },
+        "merchant": "Insurance Provider",
+        "tags": ["expense", "recurring"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-04-23",
+        "value_date": "2026-04-23",
+        "amount": 7859.44,
+        "currency": "CHF",
+        "is_debit": False,
+        "category": {
+            "id": "salary",
+            "name": "Salaire",
+            "icon": "money-bill-wave",
+            "color": "#28a745",
+            "description": "Revenus salariaux"
+        },
+        "merchant": "Payroll Department",
+        "tags": ["income", "large", "recurring"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-07-05",
+        "value_date": "2026-07-06",
+        "amount": 448.21,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "utilities",
+            "name": "Services publics",
+            "icon": "lightbulb",
+            "color": "#ffc107",
+            "description": "Électricité, eau, gaz"
+        },
+        "merchant": "Electric Company",
+        "tags": ["expense", "recurring"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-07-24",
+        "value_date": "2026-07-24",
+        "amount": 398.69,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "travel",
+            "name": "Déplacements",
+            "icon": "plane",
+            "color": "#fd7e14",
+            "description": "Frais de déplacement"
+        },
+        "merchant": "Airlines",
+        "tags": ["expense", "business"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-09-10",
+        "value_date": "2026-09-11",
+        "amount": 6390.50,
+        "currency": "CHF",
+        "is_debit": False,
+        "category": {
+            "id": "other_income",
+            "name": "Autres revenus",
+            "icon": "hand-holding-usd",
+            "color": "#20c997",
+            "description": "Autres sources de revenus"
+        },
+        "merchant": "Client Payment",
+        "tags": ["income", "large", "business"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-09-18",
+        "value_date": "2026-09-19",
+        "amount": 1723.74,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "rent",
+            "name": "Loyer",
+            "icon": "building",
+            "color": "#17a2b8",
+            "description": "Loyers et charges"
+        },
+        "merchant": "Office Landlord",
+        "tags": ["expense", "large", "recurring"]
+    },
+    {
+        "account_description": "Swiss Operations Account",
+        "iban": "CH1234567890123456789",
+        "holder_company_name": "ACME Switzerland SA",
+        "operation_date": "2026-10-26",
+        "value_date": "2026-10-26",
+        "amount": 1957.81,
+        "currency": "CHF",
+        "is_debit": True,
+        "category": {
+            "id": "tax",
+            "name": "Taxes",
+            "icon": "file-invoice-dollar",
+            "color": "#dc3545",
+            "description": "Impôts et taxes"
+        },
+        "merchant": "Tax Authority",
+        "tags": ["expense", "large"]
+    },
 ]
 
 # Additional edge cases for comprehensive testing
