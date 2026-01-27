@@ -59,9 +59,22 @@ const Dashboard = () => {
       setTransactions(transactionsData);
       setTrends(trendsData);
       setAlerts(alertsData.alerts || []);
+      
+      // Log data for debugging
+      console.log('✓ Dashboard data loaded:', {
+        transactions: transactionsData.length,
+        trends: trendsData,
+        balanceSummary: summaryData,
+        alerts: alertsData.alerts?.length || 0,
+      });
     } catch (err) {
-      setError(err.message);
-      console.error('Error loading dashboard:', err);
+      const errorMessage = err.message || 'Erreur de chargement des données';
+      setError(errorMessage);
+      console.error('❌ Error loading dashboard:', {
+        error: err,
+        message: errorMessage,
+        stack: err.stack,
+      });
     } finally {
       setLoading(false);
     }
@@ -113,7 +126,15 @@ const Dashboard = () => {
             </Button>
           }
         >
-          Erreur: {error}
+          <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
+            Erreur de chargement des données
+          </Typography>
+          <Typography variant="body2">
+            {error}
+          </Typography>
+          <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>
+            Vérifiez que le serveur backend est démarré et accessible. Consultez la console pour plus de détails.
+          </Typography>
         </Alert>
       )}
 

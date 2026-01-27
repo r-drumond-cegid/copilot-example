@@ -1,7 +1,8 @@
 """Analytics and enrichment endpoints."""
 
 from fastapi import APIRouter, HTTPException, Query
-from typing import Optional
+from typing import Optional, List
+from datetime import datetime
 
 from ..models.account import BalanceSummary
 from ..models.transaction import EnrichedTransaction, TransactionCategory
@@ -15,6 +16,32 @@ from ..services.analytics import (
 from ..services.enrichment import enrich_transaction, filter_transactions, CATEGORIES
 
 router = APIRouter()
+
+# In-memory storage for enriched mock data
+_mock_enriched_transactions: List[EnrichedTransaction] = []
+
+
+def set_mock_enriched_transactions(transactions: List[dict]):
+    """Set mock enriched transaction data for testing."""
+    global _mock_enriched_transactions
+    print(f"  [analytics] Transforming {len(transactions)} transactions...")
+    # Transform field names from mock data format to EnrichedTransaction model
+    transformed = []
+    for i, trans in enumerate(transactions):
+        try:
+            trans_copy = trans.copy()
+            # Rename fields if they exist in old format
+            if 'account_description' in trans_copy:
+                trans_copy['account'] = trans_copy.pop('account_description')
+            if 'holder_company_name' in trans_copy:
+                trans_copy['company'] = trans_copy.pop('holder_company_name')
+            transformed.append(EnrichedTransaction(**trans_copy))
+        except Exception as e:
+            print(f"    [analytics] Error transforming transaction {i}: {e}")
+            print(f"    [analytics] Transaction keys: {list(trans.keys())}")
+            raise
+    _mock_enriched_transactions = transformed
+    print(f"  [analytics] Successfully stored {len(_mock_enriched_transactions)} enriched transactions")
 
 
 @router.get("/balance-summary", response_model=BalanceSummary)
@@ -99,11 +126,15 @@ async def get_enriched_transactions(
         List of enriched transactions
     """
     try:
-        # Get base transactions
-        base_transactions = await get_transactions(from_date, to_date)
+        # Parse dates for filtering
+        start = datetime.strptime(from_date, "%Y-%m-%d")
+        end = datetime.strptime(to_date, "%Y-%m-%d")
         
-        # Enrich each transaction
-        enriched = [enrich_transaction(t) for t in base_transactions]
+        # Use pre-enriched transactions from mock data (preserves categories)
+        enriched = [
+            t for t in _mock_enriched_transactions
+            if start <= datetime.strptime(t.operation_date, "%Y-%m-%d") <= end
+        ]
         
         # Apply filters
         if category or min_amount is not None or max_amount is not None or is_debit is not None:

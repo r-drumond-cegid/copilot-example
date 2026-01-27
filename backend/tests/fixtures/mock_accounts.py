@@ -132,11 +132,44 @@ MOCK_ACCOUNTS_EDGE_CASES = [
     },
 ]
 
-# Historical balance timeline: realistic 30-day progression for frontend BalanceChart
-# Shows daily balance evolution with transaction impacts
+# Historical balance timeline: realistic 60-day progression for frontend BalanceChart
+# Shows daily balance evolution with transaction impacts (Dec 2025 - Jan 2026)
 MOCK_ACCOUNTS_TIMELINE_30_DAYS = [
-    # Main Business Account - 30 days progression
-    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-01", "value_balance": 150000.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    # Main Business Account - 60 days progression (Dec 2025 - Jan 2026)
+    # December 2025 - Starting month
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-01", "value_balance": 145000.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-02", "value_balance": 151500.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # +6500 salary
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-03", "value_balance": 151500.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-04", "value_balance": 151500.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-05", "value_balance": 149000.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -2500 rent
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-06", "value_balance": 148550.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -450 insurance
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-07", "value_balance": 146100.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -2450 supplies
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-08", "value_balance": 153600.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # +7500 customer payment
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-09", "value_balance": 153600.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-10", "value_balance": 153320.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -280 electricity
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-11", "value_balance": 153200.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -120 water
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-12", "value_balance": 151400.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -1800 supplies
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-13", "value_balance": 151400.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-14", "value_balance": 156400.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # +5000 customer payment
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-15", "value_balance": 162900.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # +6500 salary
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-16", "value_balance": 151900.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -11000 equipment
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-17", "value_balance": 151900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-18", "value_balance": 151900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-19", "value_balance": 151900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-20", "value_balance": 149000.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -2900 tax
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-21", "value_balance": 149000.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-22", "value_balance": 148200.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -800 travel
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-23", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -300 hotel
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-24", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-25", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-26", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-27", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-28", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-29", "value_balance": 147900.00, "currency": "EUR", "allowed_overdraft": 10000.0},
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-30", "value_balance": 152900.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # +5000 year-end payment
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2025-12-31", "value_balance": 152865.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -35 bank fees
+    # January 2026
+    {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-01", "value_balance": 150000.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # -2865 year-start adjustment
     {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-02", "value_balance": 156500.00, "currency": "EUR", "allowed_overdraft": 10000.0},  # +6500 salary
     {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-03", "value_balance": 156500.00, "currency": "EUR", "allowed_overdraft": 10000.0},
     {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-04", "value_balance": 156500.00, "currency": "EUR", "allowed_overdraft": 10000.0},
@@ -168,8 +201,41 @@ MOCK_ACCOUNTS_TIMELINE_30_DAYS = [
     {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-30", "value_balance": 151452.60, "currency": "EUR", "allowed_overdraft": 10000.0},
     {"account_description": "Main Business Account", "iban": "FR7612345678901234567890123", "holder_company_name": "ACME Corporation", "date": "2026-01-31", "value_balance": 151417.60, "currency": "EUR", "allowed_overdraft": 10000.0},  # -35 bank fees
     
-    # Savings Account - 30 days progression (mostly stable with occasional growth)
-    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2026-01-01", "value_balance": 500000.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    # Savings Account - 60 days progression (mostly stable with occasional growth)
+    # December 2025
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-01", "value_balance": 498000.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-02", "value_balance": 498000.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-03", "value_balance": 498000.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-04", "value_balance": 498000.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-05", "value_balance": 498080.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +80 interest
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-06", "value_balance": 498080.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-07", "value_balance": 498080.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-08", "value_balance": 498080.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-09", "value_balance": 498080.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-10", "value_balance": 498160.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +80 interest
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-11", "value_balance": 498160.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-12", "value_balance": 498160.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-13", "value_balance": 498160.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-14", "value_balance": 498160.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-15", "value_balance": 498240.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +80 interest
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-16", "value_balance": 498240.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-17", "value_balance": 498240.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-18", "value_balance": 498240.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-19", "value_balance": 498240.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-20", "value_balance": 498320.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +80 interest
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-21", "value_balance": 498320.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-22", "value_balance": 498320.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-23", "value_balance": 498320.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-24", "value_balance": 498320.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-25", "value_balance": 499820.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +1500 year-end bonus
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-26", "value_balance": 499820.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-27", "value_balance": 499820.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-28", "value_balance": 499820.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-29", "value_balance": 499820.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-30", "value_balance": 499900.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +80 interest
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2025-12-31", "value_balance": 499900.00, "currency": "EUR", "allowed_overdraft": 0.0},
+    # January 2026
+    {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2026-01-01", "value_balance": 500000.00, "currency": "EUR", "allowed_overdraft": 0.0},  # +100 new year adjustment
     {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2026-01-02", "value_balance": 500000.00, "currency": "EUR", "allowed_overdraft": 0.0},
     {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2026-01-03", "value_balance": 500000.00, "currency": "EUR", "allowed_overdraft": 0.0},
     {"account_description": "Savings Account", "iban": "FR7698765432109876543210987", "holder_company_name": "ACME Corporation", "date": "2026-01-04", "value_balance": 500000.00, "currency": "EUR", "allowed_overdraft": 0.0},

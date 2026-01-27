@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { getAccountBalances } from '../../api/accounts';
-import { subDays, format, eachDayOfInterval } from 'date-fns';
 
 const BalanceChart = ({ dateRange }) => {
   const [chartData, setChartData] = useState([]);
@@ -15,20 +14,25 @@ const BalanceChart = ({ dateRange }) => {
     setLoading(true);
     
     try {
-      // Generate dates for the range
-      const dates = eachDayOfInterval({
-        start: new Date(dateRange.from),
-        end: new Date(dateRange.to),
+      // Query account balances for the entire date range
+      const balances = await getAccountBalances({ 
+        start_date: dateRange.from, 
+        end_date: dateRange.to 
       });
 
-      // For simplicity, get balance at end date (in production, would query each date)
-      const balances = await getAccountBalances({ date: dateRange.to });
-      
-      // Simulate timeline data (in production, would fetch historical data)
-      const timelineData = dates.map((date) => ({
-        date: format(date, 'yyyy-MM-dd'),
-        balance: balances.reduce((sum, acc) => sum + acc.balance, 0),
-      }));
+      // Group balances by date and calculate total for each day
+      const balancesByDate = {};
+      balances.forEach(acc => {
+        if (!balancesByDate[acc.date]) {
+          balancesByDate[acc.date] = 0;
+        }
+        balancesByDate[acc.date] += acc.balance;
+      });
+
+      // Convert to array and sort by date
+      const timelineData = Object.entries(balancesByDate)
+        .map(([date, balance]) => ({ date, balance }))
+        .sort((a, b) => a.date.localeCompare(b.date));
 
       setChartData(timelineData);
     } catch (error) {

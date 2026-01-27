@@ -200,8 +200,333 @@ MOCK_TRANSACTIONS_EDGE_CASES = [
 
 # Enriched transactions with full category, merchant, and tags data
 # Supports frontend components: CategoryChart, TransactionList
+# Extended to 60 days (Dec 2025 - Jan 2026)
 MOCK_TRANSACTIONS_ENRICHED = [
-    # Salary/Income transactions
+    # December 2025 - Salary/Income transactions
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-02",
+        "value_date": "2025-12-02",
+        "amount": 6500.00,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "salary",
+            "name": "Salaire",
+            "icon": "money-bill-wave",
+            "color": "#28a745",
+            "description": "Revenus salariaux"
+        },
+        "merchant": "Payroll Department",
+        "tags": ["income", "large", "recurring"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-05",
+        "value_date": "2025-12-05",
+        "amount": 2500.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "rent",
+            "name": "Loyer",
+            "icon": "home",
+            "color": "#dc3545",
+            "description": "Paiement du loyer"
+        },
+        "merchant": "Property Management Inc",
+        "tags": ["expense", "large", "recurring", "fixed"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-06",
+        "value_date": "2025-12-06",
+        "amount": 450.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "insurance",
+            "name": "Assurance",
+            "icon": "shield-alt",
+            "color": "#6610f2",
+            "description": "Assurance professionnelle"
+        },
+        "merchant": "Insurance Company Ltd",
+        "tags": ["expense", "insurance", "recurring"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-07",
+        "value_date": "2025-12-07",
+        "amount": 2450.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "supplies",
+            "name": "Fournitures",
+            "icon": "box",
+            "color": "#fd7e14",
+            "description": "Fournitures de bureau"
+        },
+        "merchant": "Office Supplies Co",
+        "tags": ["expense", "supplies", "business"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-08",
+        "value_date": "2025-12-08",
+        "amount": 7500.00,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "customer_payment",
+            "name": "Paiement Client",
+            "icon": "hand-holding-usd",
+            "color": "#28a745",
+            "description": "Paiement de client"
+        },
+        "merchant": "Client ABC Corp",
+        "tags": ["income", "large", "business"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-10",
+        "value_date": "2025-12-10",
+        "amount": 280.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "utilities",
+            "name": "Électricité",
+            "icon": "bolt",
+            "color": "#ffc107",
+            "description": "Facture d'électricité"
+        },
+        "merchant": "Power Company",
+        "tags": ["expense", "utilities", "recurring"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-11",
+        "value_date": "2025-12-11",
+        "amount": 120.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "utilities",
+            "name": "Eau",
+            "icon": "tint",
+            "color": "#17a2b8",
+            "description": "Facture d'eau"
+        },
+        "merchant": "Water Services",
+        "tags": ["expense", "utilities", "recurring"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-12",
+        "value_date": "2025-12-12",
+        "amount": 1800.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "supplies",
+            "name": "Fournitures",
+            "icon": "box",
+            "color": "#fd7e14",
+            "description": "Fournitures de bureau"
+        },
+        "merchant": "Tech Supplies Inc",
+        "tags": ["expense", "supplies", "business"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-14",
+        "value_date": "2025-12-14",
+        "amount": 5000.00,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "customer_payment",
+            "name": "Paiement Client",
+            "icon": "hand-holding-usd",
+            "color": "#28a745",
+            "description": "Paiement de client"
+        },
+        "merchant": "Client XYZ Ltd",
+        "tags": ["income", "large", "business"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-15",
+        "value_date": "2025-12-15",
+        "amount": 6500.00,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "salary",
+            "name": "Salaire",
+            "icon": "money-bill-wave",
+            "color": "#28a745",
+            "description": "Revenus salariaux"
+        },
+        "merchant": "Payroll Department",
+        "tags": ["income", "large", "recurring"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-16",
+        "value_date": "2025-12-16",
+        "amount": 11000.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "equipment",
+            "name": "Équipement",
+            "icon": "laptop",
+            "color": "#6c757d",
+            "description": "Achat d'équipement"
+        },
+        "merchant": "Tech Equipment Store",
+        "tags": ["expense", "large", "equipment", "investment"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-20",
+        "value_date": "2025-12-20",
+        "amount": 2900.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "tax",
+            "name": "Impôts",
+            "icon": "file-invoice-dollar",
+            "color": "#dc3545",
+            "description": "Paiement d'impôts"
+        },
+        "merchant": "Tax Office",
+        "tags": ["expense", "large", "tax", "government"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-22",
+        "value_date": "2025-12-22",
+        "amount": 800.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "travel",
+            "name": "Déplacements",
+            "icon": "plane",
+            "color": "#007bff",
+            "description": "Frais de déplacement"
+        },
+        "merchant": "Travel Agency",
+        "tags": ["expense", "travel", "business"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-23",
+        "value_date": "2025-12-23",
+        "amount": 300.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "accommodation",
+            "name": "Hébergement",
+            "icon": "hotel",
+            "color": "#17a2b8",
+            "description": "Frais d'hébergement"
+        },
+        "merchant": "Business Hotel",
+        "tags": ["expense", "accommodation", "business", "travel"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-30",
+        "value_date": "2025-12-30",
+        "amount": 5000.00,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "customer_payment",
+            "name": "Paiement Client",
+            "icon": "hand-holding-usd",
+            "color": "#28a745",
+            "description": "Paiement de client"
+        },
+        "merchant": "Year-End Client Payment",
+        "tags": ["income", "large", "business", "year-end"]
+    },
+    {
+        "account_description": "Main Business Account",
+        "iban": "FR7612345678901234567890123",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-31",
+        "value_date": "2025-12-31",
+        "amount": 35.00,
+        "currency": "EUR",
+        "is_debit": True,
+        "category": {
+            "id": "bank_fees",
+            "name": "Frais bancaires",
+            "icon": "university",
+            "color": "#6c757d",
+            "description": "Frais de gestion"
+        },
+        "merchant": "Bank",
+        "tags": ["expense", "fees", "bank", "recurring"]
+    },
+    {
+        "account_description": "Savings Account",
+        "iban": "FR7698765432109876543210987",
+        "holder_company_name": "ACME Corporation",
+        "operation_date": "2025-12-25",
+        "value_date": "2025-12-25",
+        "amount": 1500.00,
+        "currency": "EUR",
+        "is_debit": False,
+        "category": {
+            "id": "investment_return",
+            "name": "Retour sur investissement",
+            "icon": "chart-line",
+            "color": "#28a745",
+            "description": "Gains d'investissement"
+        },
+        "merchant": "Investment Fund",
+        "tags": ["income", "investment", "savings"]
+    },
+    # January 2026 - Salary/Income transactions
     {
         "account_description": "Main Business Account",
         "iban": "FR7612345678901234567890123",

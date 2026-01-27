@@ -37,17 +37,32 @@ async def startup_event():
         )
         
         # Load enriched transaction data with categories, merchants, and tags
+        # Store in both routes for compatibility
         transactions.set_mock_transactions(MOCK_TRANSACTIONS_ENRICHED)
+        analytics.set_mock_enriched_transactions(MOCK_TRANSACTIONS_ENRICHED)
         
-        # Load 30-day timeline data for balance charts
+        # Load 60-day timeline data for balance charts (Dec 2025 - Jan 2026)
         accounts.set_mock_accounts(MOCK_ACCOUNTS_TIMELINE_30_DAYS)
+        
+        # Validate data loaded successfully
+        if not MOCK_TRANSACTIONS_ENRICHED:
+            raise RuntimeError("MOCK_TRANSACTIONS_ENRICHED is empty")
+        if not MOCK_ACCOUNTS_TIMELINE_30_DAYS:
+            raise RuntimeError("MOCK_ACCOUNTS_TIMELINE_30_DAYS is empty")
         
         print("✓ Loaded enriched mock data:")
         print(f"  - {len(MOCK_TRANSACTIONS_ENRICHED)} enriched transactions")
-        print(f"  - {len(MOCK_ACCOUNTS_TIMELINE_30_DAYS)} account balance records (30-day timeline)")
+        print(f"  - {len(MOCK_ACCOUNTS_TIMELINE_30_DAYS)} account balance records (60-day timeline)")
+        
+        # Display date range
+        transaction_dates = [t["operation_date"] for t in MOCK_TRANSACTIONS_ENRICHED]
+        account_dates = [a["date"] for a in MOCK_ACCOUNTS_TIMELINE_30_DAYS]
+        print(f"  - Transactions: {min(transaction_dates)} to {max(transaction_dates)}")
+        print(f"  - Account balances: {min(account_dates)} to {max(account_dates)}")
     except Exception as e:
-        print(f"⚠ Warning: Could not load enriched mock data: {e}")
-        print("  Using empty data - API will work but return no results.")
+        print(f"⚠ ERROR: Could not load enriched mock data: {e}")
+        print("  API will not function correctly without data.")
+        raise  # Fail fast to prevent running with empty data
 
 
 @app.get("/")
