@@ -87,6 +87,51 @@ npm run dev
 
 Le frontend sera accessible sur `http://localhost:3000`
 
+### 🔐 Registry JFrog pour `@cegid`
+
+Pour installer les packages `@cegid`, configurez l'accès au registre JFrog.
+
+1) Générer un token d'accès depuis JFrog:
+- Ouvrir: https://cegid.jfrog.io/ui/user_profile
+- Créer un Access Token (ou utiliser "Set Me Up" sur le repo npm)
+
+2) Authentification via commande (recommandé):
+
+```powershell
+npm login --registry=https://cegid.jfrog.io/artifactory/api/npm/dsy-npm-all/ --scope=@cegid
+```
+
+- Username: votre identifiant JFrog
+- Password: collez le token généré
+- Email: votre email
+
+3) Configuration `.npmrc` (si besoin):
+
+- Projet (déjà présent): voir [frontend/.npmrc](frontend/.npmrc) et [.npmrc](.npmrc)
+- Utilisateur (plus sûr, hors dépôt): `%USERPROFILE%\.npmrc`
+
+Exemple de contenu:
+
+```ini
+@cegid:registry=https://cegid.jfrog.io/artifactory/api/npm/dsy-npm-all/
+//cegid.jfrog.io/:_authToken=<votre-token>
+//cegid.jfrog.io/:email=ronaldo.drumond@cegid.com
+//cegid.jfrog.io/:always-auth=true
+```
+
+4) Vérification:
+
+```powershell
+npm ping --registry=https://cegid.jfrog.io/artifactory/api/npm/dsy-npm-all/
+npm whoami --registry=https://cegid.jfrog.io/artifactory/api/npm/dsy-npm-all/
+npm view @cegid/cds-react version --registry=https://cegid.jfrog.io/artifactory/api/npm/dsy-npm-all/
+```
+
+5) Sécurité:
+- Évitez de committer des tokens dans le repo
+- Préférez `%USERPROFILE%\.npmrc` pour les secrets
+- Si vous utilisez un `.npmrc` de projet, remplacez le placeholder par le token local et ajoutez des règles internes pour la gestion des secrets
+
 ## 📊 Endpoints API Principaux
 
 ### Comptes
@@ -284,6 +329,12 @@ npm run build
 - [ ] Personnalisation des catégories
 - [ ] Budgets et objectifs
 - [ ] Prévisions ML
+
+### TODO: Migration CDS (UI)
+- [ ] Auditer les imports `@mui/material` restants dans le frontend
+- [ ] Remplacer les imports MUI par le shim `@cegid/cds-react` (alias Vite) où nécessaire
+- [ ] Intégrer les packages réels `@cegid/cds-react` et `@cegid/forms` via le registre JFrog (voir la section "🔐 Registry JFrog pour @cegid")
+- [ ] Retirer les alias de shims et basculer les imports vers les packages `@cegid/*` une fois l’accès au registre configuré
 
 ## 📄 Licence
 

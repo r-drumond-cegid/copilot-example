@@ -1,8 +1,13 @@
 import Plot from 'react-plotly.js';
 import { useMemo, useState, useEffect, useLayoutEffect } from 'react';
+import { useTheme } from '@mui/material';
 
+/**
+ * @param {{ transactions: import('../../types').Transaction[] }} props
+ */
 const CategoryChart = ({ transactions }) => {
   const [chartHeight, setChartHeight] = useState(600);
+  const theme = useTheme();
 
   useEffect(() => {
     const updateChartHeight = () => {
@@ -74,8 +79,16 @@ const CategoryChart = ({ transactions }) => {
   }
 
   const colors = [
-    '#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
-    '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16',
+    theme.palette.primary.main,
+    theme.palette.success.main,
+    theme.palette.warning.main,
+    theme.palette.error.main,
+    theme.palette.secondary.main,
+    theme.palette.info.main,
+    theme.palette.success.light,
+    theme.palette.warning.light,
+    theme.palette.info.light,
+    theme.palette.secondary.light,
   ];
 
   const trace = {
@@ -104,11 +117,12 @@ const CategoryChart = ({ transactions }) => {
       l: isMobile ? 10 : 20 
     },
     showlegend: false,
-    paper_bgcolor: '#ffffff',
+    paper_bgcolor: theme.palette.background.paper,
   };
 
   return (
     <Plot
+      aria-label="Graphique des dépenses par catégorie"
       data={[trace]}
       layout={{ ...layout, height: chartHeight }}
       config={{ responsive: true, displayModeBar: false }}

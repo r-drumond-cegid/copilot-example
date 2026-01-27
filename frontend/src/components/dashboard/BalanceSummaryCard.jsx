@@ -6,13 +6,16 @@ import {
   Grid, 
   Chip,
   Divider 
-} from '@mui/material';
+} from '@cegid/cds-react';
 import { 
   AccountBalance as AccountBalanceIcon,
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon 
 } from '@mui/icons-material';
 
+/**
+ * @param {{ summary: import('../../types').BalanceSummary }} props
+ */
 const BalanceSummaryCard = ({ summary }) => {
   if (!summary) return null;
 

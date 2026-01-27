@@ -15,13 +15,16 @@ import {
   FormControl,
   InputLabel,
   Stack,
-} from '@mui/material';
+} from '@cegid/cds-react';
 import {
   TrendingUp as IncomeIcon,
   TrendingDown as ExpenseIcon,
   Store as StoreIcon,
 } from '@mui/icons-material';
 
+/**
+ * @param {{ transactions: import('../../types').Transaction[] }} props
+ */
 const TransactionList = ({ transactions }) => {
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('date');
@@ -43,10 +46,10 @@ const TransactionList = ({ transactions }) => {
   });
 
   return (
-    <Paper sx={{ p: 3, borderRadius: 3 }}>
+    <Paper component="section" aria-labelledby="transactions-title" sx={{ p: 3, borderRadius: 3 }}>
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-        <Typography variant="h5" component="h3" sx={{ fontWeight: 600 }}>
+        <Typography id="transactions-title" variant="h5" component="h2" sx={{ fontWeight: 600 }}>
           Transactions ({transactions.length})
         </Typography>
         
@@ -91,12 +94,12 @@ const TransactionList = ({ transactions }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Catégorie</TableCell>
-                <TableCell>Compte</TableCell>
-                <TableCell>Marchand</TableCell>
-                <TableCell>Tags</TableCell>
-                <TableCell align="right">Montant</TableCell>
+                <TableCell aria-sort={sortBy === 'date' ? 'descending' : 'none'}>Date</TableCell>
+                <TableCell aria-sort="none">Catégorie</TableCell>
+                <TableCell aria-sort="none">Compte</TableCell>
+                <TableCell aria-sort="none">Marchand</TableCell>
+                <TableCell aria-sort="none">Tags</TableCell>
+                <TableCell align="right" aria-sort={sortBy === 'amount' ? 'descending' : 'none'}>Montant</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

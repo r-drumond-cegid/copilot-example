@@ -1,0 +1,32 @@
+declare module '@cegid/cds-react' {
+  export const Button: any;
+  export const Alert: any;
+  export const Box: any;
+  export const Typography: any;
+  export const CircularProgress: any;
+  export const Grid: any;
+  export const Paper: any;
+  export const Card: any;
+  export const CardContent: any;
+  export const Container: any;
+  export const AppBar: any;
+  export const Toolbar: any;
+  export const Dialog: any;
+  export const DialogTitle: any;
+  export const DialogContent: any;
+  export const TextField: any;
+  export const FormControl: any;
+  export const InputLabel: any;
+  export const Select: any;
+  export const MenuItem: any;
+  export const Chip: any;
+  export const Stack: any;
+  export const Table: any;
+  export const TableBody: any;
+  export const TableCell: any;
+  export const TableContainer: any;
+  export const TableHead: any;
+  export const TableRow: any;
+  const _default: any;
+  export default _default;
+}

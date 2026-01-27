@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { format, subDays } from 'date-fns';
+import { Button } from '@cegid/cds-react';
 import {
   Box,
   Typography,
   CircularProgress,
   Alert,
-  Button,
   Grid,
   Paper,
   Card,
   CardContent,
-} from '@mui/material';
+} from '@cegid/cds-react';
 import { Refresh as RefreshIcon, Warning as WarningIcon } from '@mui/icons-material';
 import BalanceSummaryCard from '../components/dashboard/BalanceSummaryCard';
 import TransactionList from '../components/dashboard/TransactionList';
@@ -84,10 +84,10 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', py: 2, px: 0 }}>
+    <Box component="main" aria-labelledby="page-title" sx={{ width: '100%', py: 2, px: 0 }}>
       {/* Header */}
       <Box sx={{ mb: 2, px: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
-        <Typography variant="h1" component="h1" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
+        <Typography id="page-title" variant="h1" component="h1" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
           Dashboard Financier
         </Typography>
         <DateRangePicker
@@ -142,10 +142,10 @@ const Dashboard = () => {
         <>
           {/* Alerts Section */}
           {alerts.length > 0 && (
-            <Box sx={{ mb: 2, px: 2 }}>
+            <Box component="section" aria-labelledby="alerts-title" sx={{ mb: 2, px: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <WarningIcon sx={{ mr: 1, color: 'warning.main' }} />
-                <Typography variant="h5" component="h3">
+                <Typography id="alerts-title" variant="h5" component="h2">
                   Alertes
                 </Typography>
               </Box>
@@ -165,22 +165,22 @@ const Dashboard = () => {
 
           {/* Balance Summary */}
           {balanceSummary && (
-            <Box sx={{ mb: 2, px: 2 }}>
+            <Box component="section" aria-label="Résumé des soldes" sx={{ mb: 2, px: 2 }}>
               <BalanceSummaryCard summary={balanceSummary} />
             </Box>
           )}
 
           {/* Charts Section */}
           <Box sx={{ width: '100%', mb: 2, px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Paper sx={{ p: 2, width: '100%' }}>
-              <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+            <Paper component="section" aria-labelledby="balance-chart-title" sx={{ p: 2, width: '100%' }}>
+              <Typography id="balance-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
                 Évolution du Solde
               </Typography>
               <BalanceChart dateRange={dateRange} />
             </Paper>
             
-            <Paper sx={{ p: 2, width: '100%' }}>
-              <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+            <Paper component="section" aria-labelledby="category-chart-title" sx={{ p: 2, width: '100%' }}>
+              <Typography id="category-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
                 Dépenses par Catégorie
               </Typography>
               <CategoryChart transactions={transactions} />
@@ -189,8 +189,8 @@ const Dashboard = () => {
 
           {/* Trends Summary */}
           {trends && (
-            <Box sx={{ mb: 3 }}>
-              <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+            <Box component="section" aria-labelledby="trends-title" sx={{ mb: 3, px: 2 }}>
+              <Typography id="trends-title" variant="h5" component="h2" sx={{ mb: 2 }}>
                 Résumé des Transactions
               </Typography>
               <Grid container spacing={2}>
@@ -253,7 +253,9 @@ const Dashboard = () => {
           )}
 
           {/* Transaction List */}
-          <TransactionList transactions={transactions} />
+          <Box component="section" aria-label="Liste des transactions" sx={{ px: 2 }}>
+            <TransactionList transactions={transactions} />
+          </Box>
         </>
       )}
 

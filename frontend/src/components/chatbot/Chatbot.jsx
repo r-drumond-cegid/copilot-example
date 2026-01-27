@@ -9,13 +9,11 @@ import {
   Chip,
   CircularProgress,
   Avatar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   Slide,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
+} from '@cegid/cds-react';
+import { Dialog, DialogTitle, DialogContent } from '@cegid/cds-react';
 import {
   Send as SendIcon,
   Close as CloseIcon,
@@ -133,7 +131,7 @@ const Chatbot = ({ isOpen, onToggle }) => {
         {isOpen ? <CloseIcon /> : <ChatIcon />}
       </Fab>
 
-      {/* Chatbot Modal Dialog */}
+      {/* Chatbot Modal Dialog (CDS Dialog) */}
       <Dialog
         open={isOpen}
         onClose={onToggle}
@@ -190,6 +188,8 @@ const Chatbot = ({ isOpen, onToggle }) => {
               gap: 2,
             }}
           >
+            {/* A11y: announce incoming assistant messages */}
+            <Box component="div" sx={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }} aria-live="polite" role="status" />
             {messages.map((message) => (
               <Box
                 key={message.id}

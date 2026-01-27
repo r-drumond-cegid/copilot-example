@@ -1,11 +1,16 @@
 import { useState, useEffect, useLayoutEffect } from 'react';
+import { useTheme } from '@mui/material';
 import Plot from 'react-plotly.js';
 import { getAccountBalances } from '../../api/accounts';
 
+/**
+ * @param {{ dateRange: { from: string, to: string } }} props
+ */
 const BalanceChart = ({ dateRange }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [chartHeight, setChartHeight] = useState(500);
+  const theme = useTheme();
 
   useEffect(() => {
     loadBalanceData();
@@ -76,11 +81,11 @@ const BalanceChart = ({ dateRange }) => {
     mode: 'lines+markers',
     name: 'Solde Total',
     line: {
-      color: '#2563eb',
+      color: theme.palette.primary.main,
       width: 3,
     },
     marker: {
-      color: '#2563eb',
+      color: theme.palette.primary.main,
       size: 6,
     },
   };
@@ -100,21 +105,22 @@ const BalanceChart = ({ dateRange }) => {
     xaxis: {
       title: 'Date',
       showgrid: true,
-      gridcolor: '#e2e8f0',
+      gridcolor: theme.palette.divider,
     },
     yaxis: {
       title: 'Solde (€)',
       showgrid: true,
-      gridcolor: '#e2e8f0',
+      gridcolor: theme.palette.divider,
       tickformat: ',.0f',
     },
-    plot_bgcolor: '#ffffff',
-    paper_bgcolor: '#ffffff',
+    plot_bgcolor: theme.palette.background.paper,
+    paper_bgcolor: theme.palette.background.paper,
     hovermode: 'x unified',
   };
 
   return (
     <Plot
+      aria-label="Graphique de l'évolution du solde"
       data={[trace]}
       layout={{ ...layout, height: chartHeight }}
       config={{ responsive: true, displayModeBar: false }}

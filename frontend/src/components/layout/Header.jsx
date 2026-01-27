@@ -1,9 +1,9 @@
-import { AppBar, Toolbar, Typography, Box, Container } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box, Container } from '@cegid/cds-react';
 import { AccountBalance as AccountBalanceIcon } from '@mui/icons-material';
 
 const Header = () => {
   return (
-    <AppBar position="static" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <AppBar component="header" position="static" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <Container maxWidth={false} sx={{ px: { xs: 1, sm: 2, md: 2, lg: 2 } }}>
         <Toolbar disableGutters sx={{ py: 1 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexGrow: 1 }}>
