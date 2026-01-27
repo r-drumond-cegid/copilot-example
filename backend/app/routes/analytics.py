@@ -35,6 +35,11 @@ def set_mock_enriched_transactions(transactions: List[dict]):
                 trans_copy['account'] = trans_copy.pop('account_description')
             if 'holder_company_name' in trans_copy:
                 trans_copy['company'] = trans_copy.pop('holder_company_name')
+            
+            # Convert nested category dict to TransactionCategory object
+            if 'category' in trans_copy and isinstance(trans_copy['category'], dict):
+                trans_copy['category'] = TransactionCategory(**trans_copy['category'])
+            
             transformed.append(EnrichedTransaction(**trans_copy))
         except Exception as e:
             print(f"    [analytics] Error transforming transaction {i}: {e}")
@@ -168,8 +173,15 @@ async def get_transaction_trends(
         Dictionary with trend statistics
     """
     try:
-        # Get enriched transactions
-        enriched = await get_enriched_transactions(from_date, to_date)
+        # Parse dates for filtering
+        start = datetime.strptime(from_date, "%Y-%m-%d")
+        end = datetime.strptime(to_date, "%Y-%m-%d")
+        
+        # Filter transactions by date range
+        enriched = [
+            t for t in _mock_enriched_transactions
+            if start <= datetime.strptime(t.operation_date, "%Y-%m-%d") <= end
+        ]
         
         # Calculate trends
         trends = calculate_transaction_trends(enriched)

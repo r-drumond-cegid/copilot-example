@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { format, subDays } from 'date-fns';
 import {
-  Container,
   Box,
   Typography,
   CircularProgress,
@@ -26,7 +25,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dateRange, setDateRange] = useState({
-    from: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
+    from: '2025-12-01',  // Date fixe pour capturer toutes les données mock (Dec 2025 - Jan 2026)
     to: format(new Date(), 'yyyy-MM-dd'),
   });
   
@@ -85,9 +84,9 @@ const Dashboard = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Box sx={{ width: '100%', py: 2, px: 0 }}>
       {/* Header */}
-      <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+      <Box sx={{ mb: 2, px: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h1" component="h1" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
           Dashboard Financier
         </Typography>
@@ -143,8 +142,8 @@ const Dashboard = () => {
         <>
           {/* Alerts Section */}
           {alerts.length > 0 && (
-            <Box sx={{ mb: 3 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <Box sx={{ mb: 2, px: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <WarningIcon sx={{ mr: 1, color: 'warning.main' }} />
                 <Typography variant="h5" component="h3">
                   Alertes
@@ -166,30 +165,27 @@ const Dashboard = () => {
 
           {/* Balance Summary */}
           {balanceSummary && (
-            <Box sx={{ mb: 3 }}>
+            <Box sx={{ mb: 2, px: 2 }}>
               <BalanceSummaryCard summary={balanceSummary} />
             </Box>
           )}
 
           {/* Charts Section */}
-          <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid item xs={12} lg={6}>
-              <Paper sx={{ p: 3, height: '100%' }}>
-                <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
-                  Évolution du Solde
-                </Typography>
-                <BalanceChart dateRange={dateRange} />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Paper sx={{ p: 3, height: '100%' }}>
-                <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
-                  Dépenses par Catégorie
-                </Typography>
-                <CategoryChart transactions={transactions} />
-              </Paper>
-            </Grid>
-          </Grid>
+          <Box sx={{ width: '100%', mb: 2, px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Paper sx={{ p: 2, width: '100%' }}>
+              <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+                Évolution du Solde
+              </Typography>
+              <BalanceChart dateRange={dateRange} />
+            </Paper>
+            
+            <Paper sx={{ p: 2, width: '100%' }}>
+              <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+                Dépenses par Catégorie
+              </Typography>
+              <CategoryChart transactions={transactions} />
+            </Paper>
+          </Box>
 
           {/* Trends Summary */}
           {trends && (
@@ -198,7 +194,7 @@ const Dashboard = () => {
                 Résumé des Transactions
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={3} xl={3}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -210,7 +206,7 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={3} xl={3}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -222,7 +218,7 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={3} xl={3}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -240,7 +236,7 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={3} xl={3}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -263,7 +259,7 @@ const Dashboard = () => {
 
       {/* Chatbot */}
       <Chatbot isOpen={chatbotOpen} onToggle={() => setChatbotOpen(!chatbotOpen)} />
-    </Container>
+    </Box>
   );
 };
 

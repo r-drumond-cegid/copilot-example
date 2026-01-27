@@ -1,19 +1,53 @@
 import Plot from 'react-plotly.js';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect, useLayoutEffect } from 'react';
 
 const CategoryChart = ({ transactions }) => {
+  const [chartHeight, setChartHeight] = useState(600);
+
+  useEffect(() => {
+    const updateChartHeight = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setChartHeight(400);
+      } else if (width < 1024) {
+        setChartHeight(500);
+      } else {
+        setChartHeight(600);
+      }
+    };
+
+    updateChartHeight();
+    window.addEventListener('resize', updateChartHeight);
+    return () => window.removeEventListener('resize', updateChartHeight);
+  }, []);
+
   const categoryData = useMemo(() => {
+    // Validate transactions array
+    if (!transactions || !Array.isArray(transactions)) {
+      console.warn('CategoryChart: Invalid transactions data');
+      return { labels: [], values: [] };
+    }
+    
     // Filter only expenses (debits)
-    const expenses = transactions.filter(t => t.is_debit);
+    const expenses = transactions.filter(t => t && t.is_debit);
     
     // Group by category
     const categoryTotals = {};
     expenses.forEach(t => {
-      if (t.category) {
+      // Validate category structure
+      if (t.category && t.category.name && typeof t.category.name === 'string') {
         const catName = t.category.name;
         categoryTotals[catName] = (categoryTotals[catName] || 0) + Math.abs(t.amount);
       }
     });
+
+    // Check if we have any data
+    if (Object.keys(categoryTotals).length === 0) {
+      console.warn('CategoryChart: No category data found in expenses', {
+        totalTransactions: transactions.length,
+        expenseCount: expenses.length,
+      });
+    }
 
     // Sort by amount
     const sorted = Object.entries(categoryTotals)
@@ -25,6 +59,11 @@ const CategoryChart = ({ transactions }) => {
       values: sorted.map(([, value]) => value),
     };
   }, [transactions]);
+
+  // Force Plotly to recalculate after DOM is fully painted
+  useLayoutEffect(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, [categoryData]);
 
   if (categoryData.labels.length === 0) {
     return (
@@ -52,9 +91,18 @@ const CategoryChart = ({ transactions }) => {
     hovertemplate: '<b>%{label}</b><br>%{value:,.2f} €<br>%{percent}<extra></extra>',
   };
 
+  const isMobile = window.innerWidth < 768;
+  
   const layout = {
     autosize: true,
-    margin: { t: 20, r: 20, b: 20, l: 20 },
+    width: undefined,
+    height: undefined,
+    margin: { 
+      t: isMobile ? 10 : 20, 
+      r: isMobile ? 10 : 20, 
+      b: isMobile ? 10 : 20, 
+      l: isMobile ? 10 : 20 
+    },
     showlegend: false,
     paper_bgcolor: '#ffffff',
   };
@@ -62,9 +110,10 @@ const CategoryChart = ({ transactions }) => {
   return (
     <Plot
       data={[trace]}
-      layout={layout}
+      layout={{ ...layout, height: chartHeight }}
       config={{ responsive: true, displayModeBar: false }}
-      style={{ width: '100%', height: '400px' }}
+      useResizeHandler={true}
+      style={{ width: '100%', height: '100%' }}
     />
   );
 };

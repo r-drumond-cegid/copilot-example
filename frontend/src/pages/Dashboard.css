@@ -66,13 +66,6 @@
   background-color: #fffbeb;
 }
 
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
 .chart-container {
   background-color: var(--bg-primary);
   padding: 1.5rem;

@@ -12,7 +12,7 @@ function App() {
       <Router>
         <div className="app">
           <Header />
-          <main className="main-content">
+          <main className="main-content" style={{ padding: 0, margin: 0 }}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
             </Routes>

@@ -1,14 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { getAccountBalances } from '../../api/accounts';
 
 const BalanceChart = ({ dateRange }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [chartHeight, setChartHeight] = useState(500);
 
   useEffect(() => {
     loadBalanceData();
   }, [dateRange]);
+
+  useEffect(() => {
+    const updateChartHeight = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setChartHeight(300);
+      } else if (width < 1024) {
+        setChartHeight(400);
+      } else {
+        setChartHeight(500);
+      }
+    };
+
+    updateChartHeight();
+    window.addEventListener('resize', updateChartHeight);
+    return () => window.removeEventListener('resize', updateChartHeight);
+  }, []);
+
+  // Force Plotly to recalculate after DOM is fully painted
+  useLayoutEffect(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, [chartData]);
 
   const loadBalanceData = async () => {
     setLoading(true);
@@ -62,9 +85,18 @@ const BalanceChart = ({ dateRange }) => {
     },
   };
 
+  const isMobile = window.innerWidth < 768;
+  
   const layout = {
     autosize: true,
-    margin: { t: 20, r: 20, b: 40, l: 60 },
+    width: undefined,
+    height: undefined,
+    margin: { 
+      t: 20, 
+      r: isMobile ? 10 : 20, 
+      b: isMobile ? 30 : 40, 
+      l: isMobile ? 50 : 60 
+    },
     xaxis: {
       title: 'Date',
       showgrid: true,
@@ -84,9 +116,10 @@ const BalanceChart = ({ dateRange }) => {
   return (
     <Plot
       data={[trace]}
-      layout={layout}
+      layout={{ ...layout, height: chartHeight }}
       config={{ responsive: true, displayModeBar: false }}
-      style={{ width: '100%', height: '400px' }}
+      useResizeHandler={true}
+      style={{ width: '100%', height: '100%' }}
     />
   );
 };
