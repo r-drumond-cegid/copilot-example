@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter, HTTPException
 from typing import Optional
+from datetime import datetime, timedelta
 
 from ..models.chat import ChatRequest, ChatResponse, ChatSession
 from ..services.chatbot import (
@@ -10,6 +11,9 @@ from ..services.chatbot import (
     clear_session,
     list_active_sessions,
 )
+from ..routes.accounts import get_account_balances
+from ..routes.transactions import get_transactions
+from ..services.analytics import calculate_balance_summary
 
 router = APIRouter()
 
@@ -26,8 +30,32 @@ async def send_chat_message(request: ChatRequest):
         ChatResponse with AI assistant message and suggestions
     """
     try:
-        # TODO: Add financial context data from database
-        context_data = {}
+        # Fetch financial data for chatbot context
+        current_date = datetime.now()
+        current_date_str = current_date.strftime("%Y-%m-%d")
+        
+        # Get account balances for current date
+        accounts = await get_account_balances(date=current_date_str)
+        
+        # Calculate balance summary from accounts
+        balance_summary = calculate_balance_summary(accounts, current_date_str)
+        
+        # Get recent transactions (last 30 days)
+        from_date = (current_date - timedelta(days=30)).strftime("%Y-%m-%d")
+        to_date = current_date.strftime("%Y-%m-%d")
+        all_transactions = await get_transactions(
+            from_date=from_date,
+            to_date=to_date
+        )
+        
+        # Build context data for chatbot
+        context_data = {
+            "total_balance": balance_summary.total_balance,
+            "currency": balance_summary.currency,
+            "account_count": balance_summary.account_count,
+            "accounts": [acc.dict() for acc in accounts],
+            "recent_transactions": [trans.dict() for trans in all_transactions[-10:]],
+        }
         
         response = await process_chat_message(request, context_data)
         return response
