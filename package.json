@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Dashboard Finance avec SDD + Copilot Agents - Présentation",
   "scripts": {
-    "slides": "marp slides/slides.md -o slides/index.html",
-    "slides:pdf": "marp slides/slides.md -o slides/slides.pdf",
-    "slides:watch": "marp -w slides/slides.md",
-    "slides:serve": "marp -s slides/",
+    "slides": "marp --theme uncover slides/slides.md -o slides/index.html",
+    "slides:pdf": "marp --theme uncover slides/slides.md -o slides/slides.pdf",
+    "slides:watch": "marp --theme uncover -w slides/slides.md",
+    "slides:serve": "marp --theme uncover -s slides/",
     "slides:all": "npm run slides && npm run slides:pdf"
   },
   "keywords": [

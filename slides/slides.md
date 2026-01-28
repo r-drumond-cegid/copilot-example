@@ -1,8 +1,27 @@
 ---
 marp: true
-theme: default
+theme: uncover
 paginate: true
 backgroundColor: #fff
+style: |
+	section {
+		/* Cegid accent colors for Uncover theme */
+		--color-highlight: #0066CC;
+		--color-highlight-heading: #0066CC;
+	}
+	/* Thin brand bar at top of each slide */
+	section::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 6px;
+		background-color: #0066CC;
+	}
+	/* Link color alignment */
+	section a { color: #0066CC; }
+	section a:hover { color: #004A99; }
 ---
 
 # SDD + Copilot Agents
@@ -180,7 +199,7 @@ Fichier: `.github/copilot-instructions.md` (section TASKS)
 
 - **VSCode Copilot Customization**: https://code.visualstudio.com/docs/copilot/customization/overview
 - **Custom Instructions**: https://code.visualstudio.com/docs/copilot/customization/custom-instructions
-- **awesome-copilot**: github.com/github/awesome-copilot
+- **awesome-copilot**: [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main)
 - **Agent Skills**: Extensible capabilities
 
 ---
@@ -225,14 +244,12 @@ git checkout -b feature/copilot-sdd
 - **Frontend**: [Framework + version]
 - **Backend**: [Framework + version]
 - **Database**: [Type + version]
-
 ## 5. Architecture
 src/
 ├── components/
 ├── pages/
 ├── services/
 └── utils/
-
 ## 6. Contraintes
 - Performance: [X ms]
 - Bundle size: [X kb]
@@ -264,5 +281,5 @@ src/
 
 **Merci !** 🙏
 
-📊 **Slides**: [Lien GitHub Pages]  
-💻 **Repo**: [Lien GitHub]
+📊 **Slides**: [\[Lien GitHub Pages\]  ](https://r-drumond-cegid.github.io/copilot-example/)
+💻 **Repo**: [\[Lien GitHub\]](https://github.com/r-drumond-cegid/copilot-example)
