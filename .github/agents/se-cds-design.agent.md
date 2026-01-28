@@ -53,6 +53,12 @@ Help teams apply the correct Cegid Design System (CDS) patterns: discover and se
    - `mcp_cds-mcp_search-components` with `{ query: 'Button' }`
    - Pick one returned component and call `mcp_cds-mcp_get-component-details`.
 
+### Instructions Retrieval & Preparation
+- If `.github/instructions/copilot-instructions.instructions.md` is missing or incomplete:
+  - Retrieve Cegid design rules via CDS MCP documentation and component guidelines (catalog + details).
+  - Materialize or update `.github/instructions/copilot-instructions.instructions.md` with project coding directives (HTML5 semantics, React hooks, naming, Plotly usage, security, responsiveness).
+  - Record the retrieval outcome in `docs/cds/session-log.md`.
+
 ## Core Flows
 
 ### 1) Component Discovery
@@ -60,13 +66,24 @@ Help teams apply the correct Cegid Design System (CDS) patterns: discover and se
 - Capture findings: component names, variants, accessibility notes, usage constraints.
 
 ### 2) Design Conformity Checks
-- Evaluate current UI (frontend) against Cegid rules in `.github/instructions/copilot-instructions.instructions.md`:
+- Evaluate current UI (frontend) against Cegid rules retrieved/applied in `.github/instructions/copilot-instructions.instructions.md`:
   - HTML5 semantic elements (header, main, section, article)
   - React functional components + hooks (`useState`, `useEffect`, `useMemo`)
   - Naming: PascalCase (components, types), camelCase (functions, variables), ALL_CAPS (constants)
   - Plotly.js usage for charts: modular and reactive
   - Error handling and input validation; no API keys exposed in frontend; responsiveness
 - For relevant CDS components, retrieve details and note alignment gaps.
+
+### 2.1) Execution Plan & Implementation
+- Plan:
+  - Identify non-conformities per rule group (semantics, React patterns, naming, charts, security, responsiveness).
+  - Map gaps to CDS components/props/variants with accessibility expectations.
+  - Define minimal, targeted code changes per file to enforce rules.
+- Implement:
+  - Apply focused patches to frontend components to meet CDS rules (semantic tags, functional components + hooks, naming consistency, Plotly modularization).
+  - Add error handling and input validation where missing; verify no API keys on frontend.
+  - Ensure responsive layouts across dashboard pages and shared layout components.
+  - Document changes in `docs/cds/conformity-report.md` and `docs/cds/changelog.md`.
 
 ### 3) Component Recommendations
 - Provide mapping: UI requirement → CDS component(s) with variant/state guidance.
@@ -84,6 +101,7 @@ Help teams apply the correct Cegid Design System (CDS) patterns: discover and se
   - Catalog snapshot, taxonomy, notable components/variants.
 - docs/cds/conformity-report.md
   - Checks vs project rules; findings, gaps, and prioritized fixes.
+  - Include execution plan and implementation notes per rule group.
 - docs/cds/recommendations.md
   - UI requirement → CDS mapping, rationale, props/variants, examples.
 - docs/cds/figma-handoff.md
@@ -103,9 +121,15 @@ Help teams apply the correct Cegid Design System (CDS) patterns: discover and se
 - Catalog query `{ limit: 3 }` returns items; `search-components` returns matches (e.g., Button).
 - At least one component details call succeeds.
 - Docs created under `docs/cds/` with the sections above.
+- Instructions present: `.github/instructions/copilot-instructions.instructions.md` exists and reflects CDS MCP guidance.
+- Enforcement applied: targeted code changes implemented, documented, and verified by smoke checks.
 
 ## Environment & Fallbacks
 
 - Prerequisites: MCP-enabled runner, outbound HTTPS to Azure Websites, access to Figma (if generating), and write permissions to `docs/`.
 - If MCP unavailable: record failure in session log and proceed using `web/fetch` + local heuristics; mark MCP-dependent tasks as blocked.
 - If Figma generation blocked: provide manual handoff template with required variants/props and acceptance criteria.
+
+## Notes (French Summary)
+
+- Si les instructions Cegid ne sont pas encore ajoutées dans `.github/instructions/copilot-instructions.instructions.md`, l’agent les récupère via CDS MCP (catalogue + détails des composants), met à jour le fichier d’instructions, puis établit un plan d’exécution et implémente les règles de design dans le code (sémantique HTML5, composants fonctionnels React + hooks, conventions de nommage, Plotly modulaire et réactif, sécurité, responsivité). Les résultats sont consignés dans `docs/cds/session-log.md` et `docs/cds/conformity-report.md`.
