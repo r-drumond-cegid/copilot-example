@@ -2,6 +2,31 @@
 
 Dashboard financier moderne intégrant un chatbot IA pour la gestion et l'analyse de comptes bancaires et transactions.
 
+## 📊 Présentation
+
+- **Slides en ligne** : [slides/index.html](slides/index.html)
+- **PDF** : [slides/slides.pdf](slides/slides.pdf)
+- **Source Markdown** : [slides/slides.md](slides/slides.md)
+
+### Commandes Slides
+
+```bash
+# Générer HTML
+npm run slides
+
+# Générer PDF
+npm run slides:pdf
+
+# Générer les deux
+npm run slides:all
+
+# Mode watch (auto-refresh)
+npm run slides:watch
+
+# Serveur local
+npm run slides:serve
+```
+
 ## 🎯 Fonctionnalités
 
 ### Backend (FastAPI)

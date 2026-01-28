@@ -1,0 +1,21 @@
+{
+  "name": "copilot-example",
+  "version": "1.0.0",
+  "description": "Dashboard Finance avec SDD + Copilot Agents - Présentation",
+  "scripts": {
+    "slides": "marp slides/slides.md -o slides/index.html",
+    "slides:pdf": "marp slides/slides.md -o slides/slides.pdf",
+    "slides:watch": "marp -w slides/slides.md",
+    "slides:serve": "marp -s slides/",
+    "slides:all": "npm run slides && npm run slides:pdf"
+  },
+  "keywords": [
+    "sdd",
+    "copilot",
+    "agents",
+    "marp",
+    "presentation"
+  ],
+  "author": "",
+  "license": "MIT"
+}
