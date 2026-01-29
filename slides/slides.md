@@ -24,69 +24,67 @@ style: |
 	section a:hover { color: #004A99; }
 ---
 
-# SDD + Copilot Agents
-**Spec → Plan → Code (Autonome)**
+# SDD + Agents Copilot
+**Spécification → Plan → Code (autonome)**
 
-Mode Plan pour Hackathons
+Mode Plan pour les hackathons
 
 **Pragmatique • Autonome • Rapide**
 
 ---
 
-## Copilot Agents vs Chat classique
-**Copilot Agents: La Révolution**
+## Agents Copilot vs chat classique
+**Agents Copilot : la révolution**
 
-- Les agents = autonomie + planification
-- Mode Plan = décomposition automatique
-- Exécution multi-étapes sans intervention
-- Meilleur que "prompt aléatoire"
-
----
-
-## SDD + Copilot Agents
-**Spec définit → Agent exécute**
-
-- Spécifications structurées = brief pour l'agent
-- Agent lit + comprend + planifie
-- Mode Plan = stratégie avant code
+- Les agents = autonomie + planification.
+- Mode Plan = décomposition automatique des tâches.
+- Exécution multi-étapes sans intervention humaine.
+- Mieux que le « prompt » au hasard.
 
 ---
 
-## Workflow Agents: 3 Étapes
+## SDD + Agents Copilot
+**La spec définit → l’agent exécute**
 
-**1. Spec** - Écrivez le brief  
-**2. Mode Plan** - Agent décompose  
-**3. Execute** - Agent code
-
----
-
-## Étape 1: Spécification
-
-Fichier: `.github/copilot-instructions.md`
-
-- **Idée**: En 2-3 phrases
-- **Motivations**: Pourquoi c'est important
-- **Comportements clés**: 3-5 cas d'usage
+- Spécifications structurées = un brief pour l’agent.
+- L’agent lit, comprend et planifie.
+- Mode Plan = stratégie avant le code.
 
 ---
 
-## Exemple Instructions
+## Workflow des agents : 3 étapes
+
+**1. Spécification** — Rédiger le brief  
+**2. Mode Plan** — L’agent décompose  
+**3. Exécution** — L’agent code
+
+---
+
+## Étape 1 : Spécification
+
+Fichier : `.github/copilot-instructions.md`
+
+- Idée : en 2–3 phrases
+- Motivations : pourquoi c’est important
+- Comportements clés : 3–5 cas d’usage
+
+---
+
+## Exemple d’instructions
 
 **`.github/copilot-instructions.md`**
 
 ```markdown
-# Todo App Spec
+# Spécification de l’application Todo
 
 ## Objectif
 Une app simple pour gérer des tâches.
 Ajouter, cocher, supprimer des items.
-
 ## Comportements clés
-- L'utilisateur crée une tâche
+- L’utilisateur crée une tâche
 - Marque comme complétée
-- Supprime les tâches
-- Persiste en localStorage
-
+- Supprime des tâches
+- Persistance via localStorage
 ## Stack requis
 - React + TypeScript
 - Tailwind CSS
@@ -95,118 +93,118 @@ Ajouter, cocher, supprimer des items.
 
 ---
 
-## Étape 2: Plan Technique
+## Étape 2 : Plan technique
 
-Fichier: `.github/copilot-instructions.md` (section PLAN)
+Fichier : `.github/copilot-instructions.md` (section PLAN)
 
-- **Tech Stack**: Framework, DB, etc
-- **Architecture**: Structure fichiers
-- **Contraintes**: Performance, sécurité
-
----
-
-## Étape 3: Tâches
-
-Fichier: `.github/copilot-instructions.md` (section TASKS)
-
-- Divisez le projet en 3-8 tâches
-- Chaque tâche: 30-60 min
-- Ordre logique de dépendances
+- Stack technique : framework, base de données, etc.
+- Architecture : structure des fichiers
+- Contraintes : performance, sécurité
 
 ---
 
-## Utiliser Copilot Agents
+## Étape 3 : Tâches
 
-- Ouvrez VSCode + Copilot Chat
-- Sélectionnez **Mode Plan** (astérisque *)
-- L'agent lit `.github/copilot-instructions.md` automatiquement
-- L'agent génère plan → code autonome
+Fichier : `.github/copilot-instructions.md` (section TASKS)
+
+- Diviser le projet en 3 à 8 tâches
+- Chaque tâche : 30 à 60 min
+- Ordre logique selon les dépendances
 
 ---
 
-## Prompts Clés
+## Utiliser les agents Copilot
+
+- Ouvrir VS Code + Copilot Chat
+- Sélectionner Mode Plan
+- L’agent lit automatiquement `.github/copilot-instructions.md`
+- L’agent génère un plan puis code de manière autonome
+
+---
+
+## Prompts clés
 
 ```text
 # Pour valider la spec
-"Valide cette spec pour clarté et complétude"
+« Valide cette spec pour clarté et complétude »
 
 # Pour générer le plan
-"En Mode Plan, génère un plan technique détaillé"
+« En Mode Plan, génère un plan technique détaillé »
 
 # Pour découper en tâches
-"Découpe le projet en tâches ordonnées"
+« Découpe le projet en tâches ordonnées »
 
 # Pour implémenter
-"Implémente la tâche 1 selon le plan"
+« Implémente la tâche 1 selon le plan »
 ```
 
 ---
 
-## Custom Instructions Avancées
+## Instructions personnalisées avancées
 
 ```markdown
-## Coding Standards
+## Normes de codage
 
 - ESLint + Prettier obligatoires
 - Tests unitaires pour chaque fonction
 - TypeScript strict: true
 
-## Code Review Checklist
+## Checklist de revue de code
 
-- Performance: pas de re-renders inutiles
-- Sécurité: validation des inputs
-- Accessibilité: WCAG 2.1 Level AA
+- Performance : pas de re-render inutiles
+- Sécurité : validation des inputs
+- Accessibilité : WCAG 2.1 niveau AA
 ```
 
 ---
 
-## SDD + Agents = Cheat Code
+## SDD + Agents = Avantage décisif
 
-- +50% vitesse (agent autonome)
-- Zéro "vibe coding"
-- Pivot rapide: modifiez `.github/copilot-instructions.md`
-- Jury voit une archi cohérente
-
----
-
-## Pièges à Éviter
-
-- Ne pas trop détailler les instructions (verbeux = lent)
-- Oublier de valider le plan avant code
-- Changer spec sans maj des tâches
-- Négliger les custom instructions
+- Jusqu’à +50 % de vitesse (agent autonome)
+- Zéro code « au feeling »
+- Pivot rapide : modifiez `.github/copilot-instructions.md`
+- Le jury voit une architecture cohérente
 
 ---
 
-## Timing pour Hackathon 48h
+## Pièges à éviter
 
-**Heure 0-2**: Instructions + Plan  
-**Heure 2-20**: Copilot Agent code  
-**Heure 20-48**: Tests + Polish
-
----
-
-## Stack + Customization
-
-- **Copilot Agents**: Mode Plan (*)
-- **VSCode**: IDE principal avec customizations
-- **Git**: `.github/copilot-instructions.md` en repo
-- **awesome-copilot**: Templates agents
+- Ne pas trop détailler les instructions (trop verbeux = lent)
+- Oublier de valider le plan avant le code
+- Changer la spec sans mettre à jour les tâches
+- Négliger les instructions personnalisées
 
 ---
 
-## Ressources + Exemples
+## Timing pour un hackathon de 48 h
 
-- **VSCode Copilot Customization**: https://code.visualstudio.com/docs/copilot/customization/overview
-- **Custom Instructions**: https://code.visualstudio.com/docs/copilot/customization/custom-instructions
-- **awesome-copilot**: [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main)
-- **Agent Skills**: Extensible capabilities
+**Heures 0–2** : instructions + plan  
+**Heures 2–20** : code avec l’agent Copilot  
+**Heures 20–48** : tests + finition
 
 ---
 
-## Let's Build! 🚀
+## Stack et personnalisation
 
-**SDD + Copilot Agents = Produit fini en temps record**
+- Agents Copilot : Mode Plan (*)
+- VS Code : IDE principal avec personnalisations
+- Git : `.github/copilot-instructions.md` dans le repo
+- awesome-copilot : templates d’agents
+
+---
+
+## Ressources et exemples
+
+- Personnalisation de Copilot dans VS Code : https://code.visualstudio.com/docs/copilot/customization/overview
+- Instructions personnalisées : https://code.visualstudio.com/docs/copilot/customization/custom-instructions
+- awesome-copilot : [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main)
+- Compétences des agents : capacités extensibles
+
+---
+
+## Construisons ! 🚀
+
+**SDD + Agents Copilot = produit fini en temps record**
 
 ```bash
 git commit .github/copilot-instructions.md
@@ -215,21 +213,21 @@ git checkout -b feature/copilot-sdd
 
 ---
 
-## Bonus: Structure Recommandée
+## Bonus : structure recommandée
 
 **`.github/copilot-instructions.md`**
 
 ```markdown
-# [Nom du Projet] - Spec & Instructions
+# [Nom du projet] - Spec & Instructions
 
 ## 1. Objectif
-[Description courte: 2-3 phrases]
+[Description courte : 2–3 phrases]
 
 ## 2. Motivations
 - [Pourquoi ce projet]
-- [Cas d'usage principal]
+- [Cas d’usage principal]
 
-## 3. Comportements Clés
+## 3. Comportements clés
 - [Comportement 1]
 - [Comportement 2]
 - [Comportement 3]
@@ -237,13 +235,13 @@ git checkout -b feature/copilot-sdd
 
 ---
 
-## Bonus: Structure Recommandée (suite)
+## Bonus : structure recommandée (suite)
 
 ```markdown
 ## 4. Tech Stack
-- **Frontend**: [Framework + version]
-- **Backend**: [Framework + version]
-- **Database**: [Type + version]
+- **Frontend** : [Framework + version]
+- **Backend** : [Framework + version]
+- **Database** : [Type + version]
 ## 5. Architecture
 src/
 ├── components/
@@ -251,28 +249,28 @@ src/
 ├── services/
 └── utils/
 ## 6. Contraintes
-- Performance: [X ms]
-- Bundle size: [X kb]
+- Performance : [X ms]
+- Taille du bundle : [X kb]
 ```
 
 ---
 
-## Bonus: Tasks & Standards
+## Bonus : tâches et normes
 
 ```markdown
-## 7. Tasks (Ordre logique)
+## 7. Tâches (ordre logique)
 1. Setup & structure
 2. Core models
 3. API/backend
 4. UI components
 5. Integration
 6. Tests
-7. Polish & optimizations
+7. Polish & optimisations
 
-## 8. Coding Standards
+## 8. Normes de codage
 - [Linter + config]
-- [Type checking: TypeScript strict]
-- [Testing: Unit + E2E]
+- [Type checking : TypeScript strict]
+- [Testing : Unit + E2E]
 ```
 
 ---
@@ -281,5 +279,12 @@ src/
 
 **Merci !** 🙏
 
-📊 **Slides**: [\[Lien GitHub Pages\]  ](https://r-drumond-cegid.github.io/copilot-example/)
-💻 **Repo**: [\[Lien GitHub\]](https://github.com/r-drumond-cegid/copilot-example)
+📊 **Slides** : [Lien GitHub Pages](https://r-drumond-cegid.github.io/copilot-example/)
+💻 **Repo** : [Lien GitHub](https://github.com/r-drumond-cegid/copilot-example)
+
+---
+
+## Liens utiles
+
+- Demande d’accès à GitHub Copilot chez Cegid : https://devsecopscegid.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1%2Fgroup%2F4%2Fcreate%2F43
+- Cegid Design System : https://cds-website.azurewebsites.net/guidelines/installation
