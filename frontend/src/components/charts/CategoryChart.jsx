@@ -1,30 +1,22 @@
 import Plot from 'react-plotly.js';
-import { useMemo, useState, useEffect, useLayoutEffect } from 'react';
+import { useMemo, useState, useRef, useCallback } from 'react';
 import { useTheme } from '@mui/material';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 
 /**
  * @param {{ transactions: import('../../types').Transaction[] }} props
  */
 const CategoryChart = ({ transactions }) => {
+  const containerRef = useRef(null);
   const [chartHeight, setChartHeight] = useState(600);
   const theme = useTheme();
-
-  useEffect(() => {
-    const updateChartHeight = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setChartHeight(400);
-      } else if (width < 1024) {
-        setChartHeight(500);
-      } else {
-        setChartHeight(600);
-      }
-    };
-
-    updateChartHeight();
-    window.addEventListener('resize', updateChartHeight);
-    return () => window.removeEventListener('resize', updateChartHeight);
+  const handleResize = useCallback((rect) => {
+    const width = rect?.width ?? 1200;
+    if (width < 600) setChartHeight(380);
+    else if (width < 960) setChartHeight(500);
+    else setChartHeight(600);
   }, []);
+  useResizeObserver(containerRef, handleResize);
 
   const categoryData = useMemo(() => {
     // Validate transactions array
@@ -65,9 +57,13 @@ const CategoryChart = ({ transactions }) => {
     };
   }, [transactions]);
 
-  // Force Plotly to recalculate after DOM is fully painted
-  useLayoutEffect(() => {
-    window.dispatchEvent(new Event('resize'));
+  const descId = 'category-chart-desc';
+  const desc = useMemo(() => {
+    const total = categoryData.values.reduce((a, b) => a + b, 0);
+    const top = categoryData.labels.slice(0, 3)
+      .map((l, i) => `${l} (${categoryData.values[i]?.toLocaleString('fr-FR')} €)`) 
+      .join(', ');
+    return { total, top };
   }, [categoryData]);
 
   if (categoryData.labels.length === 0) {
@@ -104,7 +100,7 @@ const CategoryChart = ({ transactions }) => {
     hovertemplate: '<b>%{label}</b><br>%{value:,.2f} €<br>%{percent}<extra></extra>',
   };
 
-  const isMobile = window.innerWidth < 768;
+  const isMobile = false;
   
   const layout = {
     autosize: true,
@@ -121,14 +117,19 @@ const CategoryChart = ({ transactions }) => {
   };
 
   return (
-    <Plot
-      aria-label="Graphique des dépenses par catégorie"
-      data={[trace]}
-      layout={{ ...layout, height: chartHeight }}
-      config={{ responsive: true, displayModeBar: false }}
-      useResizeHandler={true}
-      style={{ width: '100%', height: '100%' }}
-    />
+    <div ref={containerRef} style={{ width: '100%' }}>
+      <p id={descId} className="sr-only">
+        Répartition des dépenses par catégorie. Total {desc.total.toLocaleString('fr-FR')} €. Principales catégories: {desc.top || 'N/A'}.
+      </p>
+      <Plot
+        aria-label="Graphique des dépenses par catégorie"
+        aria-describedby={descId}
+        data={[trace]}
+        layout={{ ...layout, height: chartHeight }}
+        config={{ responsive: true, displayModeBar: false }}
+        style={{ width: '100%', height: chartHeight }}
+      />
+    </div>
   );
 };
 

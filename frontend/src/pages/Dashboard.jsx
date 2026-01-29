@@ -194,7 +194,7 @@ const Dashboard = () => {
                 Résumé des Transactions
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={3} xl={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3, xl: 3 }}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -206,7 +206,7 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3} xl={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3, xl: 3 }}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -218,7 +218,7 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3} xl={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3, xl: 3 }}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -236,7 +236,7 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3} xl={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3, xl: 3 }}>
                   <Card>
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" gutterBottom>

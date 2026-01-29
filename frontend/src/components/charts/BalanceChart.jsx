@@ -1,7 +1,8 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useTheme } from '@mui/material';
 import Plot from 'react-plotly.js';
 import { getAccountBalances } from '../../api/accounts';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 
 /**
  * @param {{ dateRange: { from: string, to: string } }} props
@@ -9,6 +10,7 @@ import { getAccountBalances } from '../../api/accounts';
 const BalanceChart = ({ dateRange }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const containerRef = useRef(null);
   const [chartHeight, setChartHeight] = useState(500);
   const theme = useTheme();
 
@@ -16,27 +18,13 @@ const BalanceChart = ({ dateRange }) => {
     loadBalanceData();
   }, [dateRange]);
 
-  useEffect(() => {
-    const updateChartHeight = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setChartHeight(300);
-      } else if (width < 1024) {
-        setChartHeight(400);
-      } else {
-        setChartHeight(500);
-      }
-    };
-
-    updateChartHeight();
-    window.addEventListener('resize', updateChartHeight);
-    return () => window.removeEventListener('resize', updateChartHeight);
+  const handleResize = useCallback((rect) => {
+    const width = rect?.width ?? 1200;
+    if (width < 600) setChartHeight(280);
+    else if (width < 960) setChartHeight(380);
+    else setChartHeight(500);
   }, []);
-
-  // Force Plotly to recalculate after DOM is fully painted
-  useLayoutEffect(() => {
-    window.dispatchEvent(new Event('resize'));
-  }, [chartData]);
+  useResizeObserver(containerRef, handleResize);
 
   const loadBalanceData = async () => {
     setLoading(true);
@@ -70,8 +58,26 @@ const BalanceChart = ({ dateRange }) => {
     }
   };
 
+  const descId = 'balance-chart-desc';
+  const summary = useMemo(() => {
+    if (!chartData || chartData.length === 0) {
+      return { from: null, to: null, min: 0, max: 0, end: 0 };
+    }
+    const first = chartData[0];
+    const last = chartData[chartData.length - 1];
+    const min = Math.min(...chartData.map(d => d.balance));
+    const max = Math.max(...chartData.map(d => d.balance));
+    return {
+      from: first?.date, to: last?.date, min, max, end: last?.balance,
+    };
+  }, [chartData]);
+
   if (loading) {
     return <div style={{ textAlign: 'center', padding: '2rem' }}>Chargement...</div>;
+  }
+
+  if (!chartData || chartData.length === 0) {
+    return <div style={{ textAlign: 'center', padding: '2rem' }}>Aucune donnée disponible</div>;
   }
 
   const trace = {
@@ -90,7 +96,7 @@ const BalanceChart = ({ dateRange }) => {
     },
   };
 
-  const isMobile = window.innerWidth < 768;
+  const isMobile = false;
   
   const layout = {
     autosize: true,
@@ -119,14 +125,19 @@ const BalanceChart = ({ dateRange }) => {
   };
 
   return (
-    <Plot
-      aria-label="Graphique de l'évolution du solde"
-      data={[trace]}
-      layout={{ ...layout, height: chartHeight }}
-      config={{ responsive: true, displayModeBar: false }}
-      useResizeHandler={true}
-      style={{ width: '100%', height: '100%' }}
-    />
+    <div ref={containerRef} style={{ width: '100%' }}>
+      <p id={descId} className="sr-only">
+        Évolution du solde du {summary.from} au {summary.to}. Minimum {summary.min.toLocaleString('fr-FR')} €, maximum {summary.max.toLocaleString('fr-FR')} €, solde final {summary.end.toLocaleString('fr-FR')} €.
+      </p>
+      <Plot
+        aria-label="Graphique de l'évolution du solde"
+        aria-describedby={descId}
+        data={[trace]}
+        layout={{ ...layout, height: chartHeight }}
+        config={{ responsive: true, displayModeBar: false }}
+        style={{ width: '100%', height: chartHeight }}
+      />
+    </div>
   );
 };
 

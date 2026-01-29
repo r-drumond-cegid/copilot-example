@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Paper,
@@ -15,7 +15,10 @@ import {
   FormControl,
   InputLabel,
   Stack,
+  Button,
+  Pagination,
 } from '@cegid/cds-react';
+import { getCategories } from '../../api/transactions';
 import {
   TrendingUp as IncomeIcon,
   TrendingDown as ExpenseIcon,
@@ -28,22 +31,67 @@ import {
 const TransactionList = ({ transactions }) => {
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('date');
+  const [sortOrder, setSortOrder] = useState('desc');
+  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [minAmount, setMinAmount] = useState('');
+  const [maxAmount, setMaxAmount] = useState('');
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-  const filteredTransactions = transactions.filter(t => {
-    if (filter === 'income') return !t.is_debit;
-    if (filter === 'expense') return t.is_debit;
-    return true;
-  });
+  useEffect(() => {
+    (async () => {
+      try {
+        const cats = await getCategories();
+        setCategories(cats || []);
+      } catch (e) {
+        console.warn('Unable to load categories:', e.message);
+      }
+    })();
+  }, []);
 
-  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
-    if (sortBy === 'date') {
-      return new Date(b.operation_date) - new Date(a.operation_date);
+  const filteredTransactions = useMemo(() => {
+    return transactions.filter(t => {
+      if (filter === 'income' && t.is_debit) return false;
+      if (filter === 'expense' && !t.is_debit) return false;
+      if (category && (!t.category || t.category.id !== category)) return false;
+      const amt = Math.abs(t.amount);
+      if (minAmount && amt < Number(minAmount)) return false;
+      if (maxAmount && amt > Number(maxAmount)) return false;
+      return true;
+    });
+  }, [transactions, filter, category, minAmount, maxAmount]);
+
+  const sortedTransactions = useMemo(() => {
+    const arr = [...filteredTransactions];
+    arr.sort((a, b) => {
+      if (sortBy === 'date') {
+        const res = new Date(a.operation_date) - new Date(b.operation_date);
+        return sortOrder === 'asc' ? res : -res;
+      }
+      if (sortBy === 'amount') {
+        const res = Math.abs(a.amount) - Math.abs(b.amount);
+        return sortOrder === 'asc' ? res : -res;
+      }
+      return 0;
+    });
+    return arr;
+  }, [filteredTransactions, sortBy, sortOrder]);
+
+  const totalPages = Math.max(1, Math.ceil(sortedTransactions.length / pageSize));
+  const pagedTransactions = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return sortedTransactions.slice(start, start + pageSize);
+  }, [sortedTransactions, page, pageSize]);
+
+  const toggleSort = (key) => {
+    if (sortBy === key) {
+      setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(key);
+      setSortOrder('desc');
     }
-    if (sortBy === 'amount') {
-      return Math.abs(b.amount) - Math.abs(a.amount);
-    }
-    return 0;
-  });
+  };
 
   return (
     <Paper component="section" aria-labelledby="transactions-title" sx={{ p: 3, borderRadius: 3 }}>
@@ -79,31 +127,61 @@ const TransactionList = ({ transactions }) => {
               <MenuItem value="amount">Par Montant</MenuItem>
             </Select>
           </FormControl>
-        </Box>
-      </Box>
 
-      {/* Transactions Table */}
-      {sortedTransactions.length === 0 ? (
-        <Box sx={{ textAlign: 'center', py: 8 }}>
-          <Typography variant="body1" color="text.secondary">
-            Aucune transaction trouvée
-          </Typography>
+          <FormControl size="small" sx={{ minWidth: 180 }}>
+            <InputLabel>Catégorie</InputLabel>
+            <Select
+              value={category}
+              label="Catégorie"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <MenuItem value="">Toutes</MenuItem>
+              {categories.map(cat => (
+                <MenuItem key={cat.id} value={cat.id}>{cat.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextFieldSmall label="Montant min" value={minAmount} onChange={setMinAmount} />
+          <TextFieldSmall label="Montant max" value={maxAmount} onChange={setMaxAmount} />
+
+          <FormControl size="small" sx={{ minWidth: 140 }}>
+            <InputLabel>Par page</InputLabel>
+            <Select
+              value={pageSize}
+              label="Par page"
+              onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={25}>25</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
-      ) : (
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell aria-sort={sortBy === 'date' ? 'descending' : 'none'}>Date</TableCell>
-                <TableCell aria-sort="none">Catégorie</TableCell>
-                <TableCell aria-sort="none">Compte</TableCell>
-                <TableCell aria-sort="none">Marchand</TableCell>
-                <TableCell aria-sort="none">Tags</TableCell>
-                <TableCell align="right" aria-sort={sortBy === 'amount' ? 'descending' : 'none'}>Montant</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedTransactions.map((transaction, index) => (
+        </Box>
+        {/* Transactions Table */}
+        {sortedTransactions.length === 0 ? (
+          <Box sx={{ textAlign: 'center', py: 8 }}>
+            <Typography variant="body1" color="text.secondary">
+              Aucune transaction trouvée
+            </Typography>
+          </Box>
+        ) : (
+          <TableContainer>
+            <Table aria-labelledby="transactions-title">
+              <caption className="sr-only">Liste des transactions avec date, catégorie, compte, marchand, tags et montant</caption>
+              <TableHead>
+                <TableRow>
+                  <TableCell scope="col" aria-sort={sortBy === 'date' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'} onClick={() => toggleSort('date')} sx={{ cursor: 'pointer' }}>Date</TableCell>
+                  <TableCell scope="col" aria-sort="none">Catégorie</TableCell>
+                  <TableCell scope="col" aria-sort="none">Compte</TableCell>
+                  <TableCell scope="col" aria-sort="none">Marchand</TableCell>
+                  <TableCell scope="col" aria-sort="none">Tags</TableCell>
+                  <TableCell scope="col" align="right" aria-sort={sortBy === 'amount' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'} onClick={() => toggleSort('amount')} sx={{ cursor: 'pointer' }}>Montant</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {pagedTransactions.map((transaction, index) => (
                 <TableRow
                   key={index}
                   sx={{
@@ -196,8 +274,34 @@ const TransactionList = ({ transactions }) => {
           </Table>
         </TableContainer>
       )}
+      {/* Pagination */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
+        <Typography variant="caption" color="text.secondary">Page {page} sur {totalPages} ({sortedTransactions.length} transactions filtrées)</Typography>
+        <Pagination count={totalPages} page={page} onChange={(_, value) => setPage(value)} size="small" />
+      </Box>
     </Paper>
   );
 };
 
 export default TransactionList;
+
+// Small numeric text field component for amounts
+const TextFieldSmall = ({ label, value, onChange }) => (
+  <FormControl size="small" sx={{ minWidth: 120 }}>
+    <InputLabel shrink>{label}</InputLabel>
+    <Select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      displayEmpty
+      renderValue={(selected) => selected || ''}
+      inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+    >
+      <MenuItem value="">—</MenuItem>
+      <MenuItem value="50">50</MenuItem>
+      <MenuItem value="100">100</MenuItem>
+      <MenuItem value="250">250</MenuItem>
+      <MenuItem value="500">500</MenuItem>
+      <MenuItem value="1000">1000</MenuItem>
+    </Select>
+  </FormControl>
+);

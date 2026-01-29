@@ -10,6 +10,7 @@ import {
   CircularProgress,
   Avatar,
   Slide,
+  Button,
   useMediaQuery,
   useTheme,
 } from '@cegid/cds-react';
@@ -107,6 +108,15 @@ const Chatbot = ({ isOpen, onToggle }) => {
   const handleSuggestionClick = (suggestion) => {
     setInputMessage(suggestion);
   };
+  const handleNewChat = () => {
+    setMessages([]);
+    setSessionId(null);
+    setSuggestions([
+      'Quel est mon solde total ?',
+      'Montre-moi mes dernières transactions',
+      'Génère un rapport mensuel',
+    ]);
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -166,14 +176,19 @@ const Chatbot = ({ isOpen, onToggle }) => {
                 Assistant IA
               </Typography>
             </Box>
-            <IconButton
-              size="small"
-              onClick={onToggle}
-              sx={{ color: 'primary.contrastText' }}
-              aria-label="Fermer"
-            >
-              <CloseIcon />
-            </IconButton>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+              <Button onClick={handleNewChat} size="small" variant="outlined" disabled={loading} aria-label="Nouveau chat">
+                Nouveau chat
+              </Button>
+              <IconButton
+                size="small"
+                onClick={onToggle}
+                sx={{ color: 'primary.contrastText' }}
+                aria-label="Fermer"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
           </DialogTitle>
 
           {/* Messages Area */}
@@ -312,6 +327,7 @@ const Chatbot = ({ isOpen, onToggle }) => {
                 disabled={loading}
                 variant="outlined"
                 size="small"
+                inputProps={{ 'aria-describedby': 'chat-input-help' }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     borderRadius: 2,
@@ -336,6 +352,9 @@ const Chatbot = ({ isOpen, onToggle }) => {
                 <SendIcon />
               </IconButton>
             </Box>
+            <Typography id="chat-input-help" variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+              Entrée: envoyer. Maj+Entrée: retour à la ligne.
+            </Typography>
           </Box>
         </Dialog>
     </>

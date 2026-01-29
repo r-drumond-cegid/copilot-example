@@ -38,6 +38,7 @@ export { default as Divider } from '@mui/material/Divider';
 export { default as Slide } from '@mui/material/Slide';
 export { useTheme } from '@mui/material';
 export { default as useMediaQuery } from '@mui/material/useMediaQuery';
+export { default as Pagination } from '@mui/material/Pagination';
 
 // Tables
 export { default as Table } from '@mui/material/Table';

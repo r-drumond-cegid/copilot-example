@@ -68,7 +68,7 @@ const BalanceSummaryCard = ({ summary }) => {
 
         {/* Details Grid */}
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Box sx={{ p: 2, backgroundColor: 'background.default', borderRadius: 2 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Nombre de Comptes
@@ -79,7 +79,7 @@ const BalanceSummaryCard = ({ summary }) => {
             </Box>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Box sx={{ p: 2, backgroundColor: 'background.default', borderRadius: 2 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Solde Moyen
@@ -90,7 +90,7 @@ const BalanceSummaryCard = ({ summary }) => {
             </Box>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Box sx={{ p: 2, backgroundColor: 'success.light', borderRadius: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <TrendingUpIcon sx={{ color: 'success.dark' }} />
               <Box>
@@ -104,7 +104,7 @@ const BalanceSummaryCard = ({ summary }) => {
             </Box>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Box sx={{ p: 2, backgroundColor: 'error.light', borderRadius: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <TrendingDownIcon sx={{ color: 'error.dark' }} />
               <Box>
@@ -118,7 +118,7 @@ const BalanceSummaryCard = ({ summary }) => {
             </Box>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Box sx={{ p: 2, backgroundColor: 'background.default', borderRadius: 2 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Découvert Autorisé Total
