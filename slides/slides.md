@@ -27,10 +27,6 @@ style: |
 # Développer avec GitHub Copilot (Mode Agent)
 **Tu expliques → Copilot planifie → Copilot code**
 
-Guide débutant • clair • rassurant
-
-**Pragmatique • Autonome • Rapide**
-
 ---
 
 ## Agents Copilot vs chat classique
@@ -58,7 +54,7 @@ Guide débutant • clair • rassurant
 
 ## Pourquoi utiliser Copilot comme un agent ?
 
-- Éviter de coder “à l’aveugle”
+- Ne pas coder sans vision ni plan
 - Garder une vision claire du besoin
 - Accélérer le développement sans perdre le contrôle
 
@@ -99,19 +95,16 @@ Dans `.github/copilot-instructions.md` :
 
 ## Objectif
 Créer une application web simple pour gérer des tâches.
-
 ## Comportements clés
 - Ajouter une tâche
 - Marquer une tâche comme complétée
 - Supprimer une tâche
 - Sauvegarde locale des données
-
 ## Contraintes
 - React + TypeScript
 - Tailwind CSS
 - Pas de dépendances externes
 ```
-
 💡 Pas besoin d’écrire du code, ni un plan technique.
 
 ---
@@ -145,17 +138,6 @@ Ton rôle : valider, ajuster, garder la cohérence.
 
 - Toi : définir le besoin, valider le plan, relire le code
 - Copilot : transformer l’idée en plan, découper le travail, écrire le code
-
----
-
-## Erreurs courantes à éviter
-
-- ❌ Écrire un plan technique à la main
-- ❌ Détailler les tâches dans les instructions
-- ❌ Tout laisser faire sans relire
-- ✅ Décrire clairement le besoin
-- ✅ Laisser Copilot planifier
-- ✅ Garder un œil critique
 
 ---
 
@@ -206,7 +188,7 @@ Ton rôle : valider, ajuster, garder la cohérence.
 - Jusqu’à +50 % de vitesse (agent autonome)
 - Zéro code « au feeling »
 - Pivot rapide : modifiez `.github/copilot-instructions.md`
-- Le jury voit une architecture cohérente
+- Une architecture cohérente à la fin
 
 ---
 
@@ -214,12 +196,11 @@ Ton rôle : valider, ajuster, garder la cohérence.
 
 - Ne pas trop détailler les instructions (trop verbeux = lent)
 - Oublier de valider le plan avant le code
-- Changer la spec sans mettre à jour les tâches
 - Négliger les instructions personnalisées
 
 ---
 
-## Timing pour un hackathon de 48 h
+## Timing pour un hackathon
 
 **Heures 0–2** : instructions + plan  
 **Heures 2–20** : code avec l’agent Copilot  
@@ -229,7 +210,7 @@ Ton rôle : valider, ajuster, garder la cohérence.
 
 ## Stack et personnalisation
 
-- Agents Copilot : Mode Plan (*)
+- Agents Copilot : Mode Plan
 - VS Code : IDE principal avec personnalisations
 - Git : `.github/copilot-instructions.md` dans le repo
 - awesome-copilot : templates d’agents
@@ -239,20 +220,7 @@ Ton rôle : valider, ajuster, garder la cohérence.
 ## Ressources et exemples
 
 - Personnalisation de Copilot dans VS Code : https://code.visualstudio.com/docs/copilot/customization/overview
-- Instructions personnalisées : https://code.visualstudio.com/docs/copilot/customization/custom-instructions
 - awesome-copilot : [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main)
-- Compétences des agents : capacités extensibles
-
----
-
-## Construisons ! 🚀
-
-**SDD + Agents Copilot = produit fini en temps record**
-
-```bash
-git commit .github/copilot-instructions.md
-git checkout -b feature/copilot-sdd
-```
 
 ---
 
@@ -298,34 +266,14 @@ src/
 
 ---
 
-## Bonus : tâches et normes
+## Démo — Introduction 
 
-```markdown
-## 7. Tâches (ordre logique)
-1. Setup & structure
-2. Core models
-3. API/backend
-4. UI components
-5. Integration
-6. Tests
-7. Polish & optimisations
-
-## 8. Normes de codage
-- [Linter + config]
-- [Type checking : TypeScript strict]
-- [Testing : Unit + E2E]
-```
-
----
-
-## Démo — Introduction (Copilot Agents)
-
-**Ce que j’ai fait avec GitHub Copilot**
+**(Copilot Agents)**
 
 - Objectif: transformer une intention claire en application fonctionnelle.
 - Méthode (Mode Agent): Spécification → Plan → Code.
-- Copilot: a structuré le plan, découpé les étapes et assisté les mises à jour (slides et implémentations ciblées).
-- Moi: j’ai défini le besoin, validé le plan, relu et ajusté.
+- Copilot: a structuré le plan, découpé les étapes et assisté les mises à jour (implémentations ciblées).
+- Moi: j’ai défini le besoin, validé le plan, relu, ajusté, testé et signalé les erreurs.
 - Ce que vous verrez: Dashboard (graphiques Plotly), Chatbot UI, API FastAPI avec données mock.
 
 ---

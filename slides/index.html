@@ -23,8 +23,6 @@
 </style></head><body><div class="bespoke-marp-osc"><button data-bespoke-marp-osc="prev" tabindex="-1" title="Previous slide">Previous slide</button><span data-bespoke-marp-osc="page"></span><button data-bespoke-marp-osc="next" tabindex="-1" title="Next slide">Next slide</button><button data-bespoke-marp-osc="fullscreen" tabindex="-1" title="Toggle fullscreen (f)">Toggle fullscreen</button><button data-bespoke-marp-osc="presenter" tabindex="-1" title="Open presenter view (p)">Open presenter view</button></div><div id=":$p"><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="1" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h1 id="d%C3%A9velopper-avec-github-copilot-mode-agent">Développer avec GitHub Copilot (Mode Agent)</h1>
 <p><strong>Tu expliques → Copilot planifie → Copilot code</strong></p>
-<p>Guide débutant • clair • rassurant</p>
-<p><strong>Pragmatique • Autonome • Rapide</strong></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="2" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="agents-copilot-vs-chat-classique">Agents Copilot vs chat classique</h2>
@@ -51,7 +49,7 @@ Copilot écrit le code.</p>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="pourquoi-utiliser-copilot-comme-un-agent">Pourquoi utiliser Copilot comme un agent ?</h2>
 <ul>
-<li>Éviter de coder “à l’aveugle”</li>
+<li>Ne pas coder sans vision ni plan</li>
 <li>Garder une vision claire du besoin</li>
 <li>Accélérer le développement sans perdre le contrôle</li>
 </ul>
@@ -83,13 +81,11 @@ Copilot écrit le code.</p>
 
 <span class="hljs-section">## Objectif</span>
 Créer une application web simple pour gérer des tâches.
-
 <span class="hljs-section">## Comportements clés</span>
 <span class="hljs-bullet">-</span> Ajouter une tâche
 <span class="hljs-bullet">-</span> Marquer une tâche comme complétée
 <span class="hljs-bullet">-</span> Supprimer une tâche
 <span class="hljs-bullet">-</span> Sauvegarde locale des données
-
 <span class="hljs-section">## Contraintes</span>
 <span class="hljs-bullet">-</span> React + TypeScript
 <span class="hljs-bullet">-</span> Tailwind CSS
@@ -125,23 +121,12 @@ Créer une application web simple pour gérer des tâches.
 </ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-theme="uncover" lang="en-US" style="--theme:uncover;">
-<h2 id="erreurs-courantes-%C3%A0-%C3%A9viter">Erreurs courantes à éviter</h2>
-<ul>
-<li><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Écrire un plan technique à la main</li>
-<li><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Détailler les tâches dans les instructions</li>
-<li><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Tout laisser faire sans relire</li>
-<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Décrire clairement le besoin</li>
-<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Laisser Copilot planifier</li>
-<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Garder un œil critique</li>
-</ul>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="r%C3%A8gle-dor">Règle d’or</h2>
 <blockquote>
 <p>Plus l’intention est claire, meilleur sera le code.</p>
 </blockquote>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="prompts-cl%C3%A9s">Prompts clés</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text"># Pour valider la spec
 « Valide cette spec pour clarté et complétude »
@@ -156,7 +141,7 @@ Créer une application web simple pour gérer des tâches.
 « Implémente la tâche 1 selon le plan »
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="instructions-personnalis%C3%A9es-avanc%C3%A9es">Instructions personnalisées avancées</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-markdown"><span class="hljs-section">## Normes de codage</span>
 
@@ -171,56 +156,46 @@ Créer une application web simple pour gérer des tâches.
 <span class="hljs-bullet">-</span> Accessibilité : WCAG 2.1 niveau AA
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="sdd--agents--avantage-d%C3%A9cisif">SDD + Agents = Avantage décisif</h2>
 <ul>
 <li>Jusqu’à +50 % de vitesse (agent autonome)</li>
 <li>Zéro code « au feeling »</li>
 <li>Pivot rapide : modifiez <code>.github/copilot-instructions.md</code></li>
-<li>Le jury voit une architecture cohérente</li>
+<li>Une architecture cohérente à la fin</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="pi%C3%A8ges-%C3%A0-%C3%A9viter">Pièges à éviter</h2>
 <ul>
 <li>Ne pas trop détailler les instructions (trop verbeux = lent)</li>
 <li>Oublier de valider le plan avant le code</li>
-<li>Changer la spec sans mettre à jour les tâches</li>
 <li>Négliger les instructions personnalisées</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-theme="uncover" lang="en-US" style="--theme:uncover;">
-<h2 id="timing-pour-un-hackathon-de-48-h">Timing pour un hackathon de 48 h</h2>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+<h2 id="timing-pour-un-hackathon">Timing pour un hackathon</h2>
 <p><strong>Heures 0–2</strong> : instructions + plan<br />
 <strong>Heures 2–20</strong> : code avec l’agent Copilot<br />
 <strong>Heures 20–48</strong> : tests + finition</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="stack-et-personnalisation">Stack et personnalisation</h2>
 <ul>
-<li>Agents Copilot : Mode Plan (*)</li>
+<li>Agents Copilot : Mode Plan</li>
 <li>VS Code : IDE principal avec personnalisations</li>
 <li>Git : <code>.github/copilot-instructions.md</code> dans le repo</li>
 <li>awesome-copilot : templates d’agents</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="ressources-et-exemples">Ressources et exemples</h2>
 <ul>
 <li>Personnalisation de Copilot dans VS Code : <a href="https://code.visualstudio.com/docs/copilot/customization/overview">https://code.visualstudio.com/docs/copilot/customization/overview</a></li>
-<li>Instructions personnalisées : <a href="https://code.visualstudio.com/docs/copilot/customization/custom-instructions">https://code.visualstudio.com/docs/copilot/customization/custom-instructions</a></li>
 <li>awesome-copilot : <a href="https://github.com/github/awesome-copilot/tree/main">github.com/github/awesome-copilot</a></li>
-<li>Compétences des agents : capacités extensibles</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-theme="uncover" lang="en-US" style="--theme:uncover;">
-<h2 id="construisons--%F0%9F%9A%80">Construisons ! <img class="emoji" draggable="false" alt="🚀" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f680.svg" data-marp-twemoji=""/></h2>
-<p><strong>SDD + Agents Copilot = produit fini en temps record</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">git commit .github/copilot-instructions.md
-git checkout -b feature/copilot-sdd
-</code></pre>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="bonus--structure-recommand%C3%A9e">Bonus : structure recommandée</h2>
 <p><strong><code>.github/copilot-instructions.md</code></strong></p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-markdown"><span class="hljs-section"># [Nom du projet] - Spec &amp; Instructions</span>
@@ -238,7 +213,7 @@ git checkout -b feature/copilot-sdd
 <span class="hljs-bullet">-</span> [Comportement 3]
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="bonus--structure-recommand%C3%A9e-suite">Bonus : structure recommandée (suite)</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-markdown"><span class="hljs-section">## 4. Tech Stack</span>
 <span class="hljs-bullet">-</span> <span class="hljs-strong">**Frontend**</span> : [Framework + version]
@@ -255,41 +230,24 @@ src/
 <span class="hljs-bullet">-</span> Taille du bundle : [X kb]
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-theme="uncover" lang="en-US" style="--theme:uncover;">
-<h2 id="bonus--t%C3%A2ches-et-normes">Bonus : tâches et normes</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-markdown"><span class="hljs-section">## 7. Tâches (ordre logique)</span>
-<span class="hljs-bullet">1.</span> Setup &amp; structure
-<span class="hljs-bullet">2.</span> Core models
-<span class="hljs-bullet">3.</span> API/backend
-<span class="hljs-bullet">4.</span> UI components
-<span class="hljs-bullet">5.</span> Integration
-<span class="hljs-bullet">6.</span> Tests
-<span class="hljs-bullet">7.</span> Polish &amp; optimisations
-
-<span class="hljs-section">## 8. Normes de codage</span>
-<span class="hljs-bullet">-</span> [Linter + config]
-<span class="hljs-bullet">-</span> [Type checking : TypeScript strict]
-<span class="hljs-bullet">-</span> [Testing : Unit + E2E]
-</code></pre>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-theme="uncover" lang="en-US" style="--theme:uncover;">
-<h2 id="d%C3%A9mo--introduction-copilot-agents">Démo — Introduction (Copilot Agents)</h2>
-<p><strong>Ce que j’ai fait avec GitHub Copilot</strong></p>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+<h2 id="d%C3%A9mo--introduction">Démo — Introduction</h2>
+<p><strong>(Copilot Agents)</strong></p>
 <ul>
 <li>Objectif: transformer une intention claire en application fonctionnelle.</li>
 <li>Méthode (Mode Agent): Spécification → Plan → Code.</li>
-<li>Copilot: a structuré le plan, découpé les étapes et assisté les mises à jour (slides et implémentations ciblées).</li>
-<li>Moi: j’ai défini le besoin, validé le plan, relu et ajusté.</li>
+<li>Copilot: a structuré le plan, découpé les étapes et assisté les mises à jour (implémentations ciblées).</li>
+<li>Moi: j’ai défini le besoin, validé le plan, relu, ajusté, testé et signalé les erreurs.</li>
 <li>Ce que vous verrez: Dashboard (graphiques Plotly), Chatbot UI, API FastAPI avec données mock.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="questions">Questions ?</h2>
 <p><strong>Merci !</strong> <img class="emoji" draggable="false" alt="🙏" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f64f.svg" data-marp-twemoji=""/></p>
 <p><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> <strong>Slides</strong> : <a href="https://r-drumond-cegid.github.io/copilot-example/">Lien GitHub Pages</a><br />
 <img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> <strong>Repo</strong> : <a href="https://github.com/r-drumond-cegid/copilot-example">Lien GitHub</a></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-theme="uncover" lang="en-US" style="--theme:uncover;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-theme="uncover" lang="en-US" style="--theme:uncover;">
 <h2 id="liens-utiles">Liens utiles</h2>
 <ul>
 <li>Demande d’accès à GitHub Copilot chez Cegid : <a href="https://devsecopscegid.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1%2Fgroup%2F4%2Fcreate%2F43">https://devsecopscegid.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1%2Fgroup%2F4%2Fcreate%2F43</a></li>
