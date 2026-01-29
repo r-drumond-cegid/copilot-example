@@ -268,13 +268,11 @@ src/
 
 ## Démo — Introduction 
 
-**(Copilot Agents)**
-
-- Objectif: transformer une intention claire en application fonctionnelle.
-- Méthode (Mode Agent): Spécification → Plan → Code.
-- Copilot: a structuré le plan, découpé les étapes et assisté les mises à jour (implémentations ciblées).
-- Moi: j’ai défini le besoin, validé le plan, relu, ajusté, testé et signalé les erreurs.
-- Ce que vous verrez: Dashboard (graphiques Plotly), Chatbot UI, API FastAPI avec données mock.
+- Objectif : dashboard pour application financière avec chatbot en pop-up.
+- Méthode : Spécification → Plan → Code (mode Agent).
+- Copilot : structuration du plan et assistance au développement.
+- Moi : définition du besoin, validation, tests et corrections.
+- Démo : dashboard Plotly, UI chatbot, API FastAPI avec données mock.
 
 ---
 
