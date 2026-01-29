@@ -24,10 +24,10 @@ style: |
 	section a:hover { color: #004A99; }
 ---
 
-# SDD + Agents Copilot
-**Spécification → Plan → Code (autonome)**
+# Développer avec GitHub Copilot (Mode Agent)
+**Tu expliques → Copilot planifie → Copilot code**
 
-Mode Plan pour les hackathons
+Guide débutant • clair • rassurant
 
 **Pragmatique • Autonome • Rapide**
 
@@ -43,82 +43,125 @@ Mode Plan pour les hackathons
 
 ---
 
-## SDD + Agents Copilot
-**La spec définit → l’agent exécute**
-
-- Spécifications structurées = un brief pour l’agent.
-- L’agent lit, comprend et planifie.
-- Mode Plan = stratégie avant le code.
+## Développer avec GitHub Copilot (Mode Agent)
+**Copilot ne code pas “au hasard” — il suit des instructions.**
 
 ---
 
-## Workflow des agents : 3 étapes
+## Idée clé à retenir
 
-**1. Spécification** — Rédiger le brief  
-**2. Mode Plan** — L’agent décompose  
-**3. Exécution** — L’agent code
+> Tu expliques ce que tu veux.  
+> Copilot réfléchit à comment le faire.  
+> Copilot écrit le code.
 
 ---
 
-## Étape 1 : Spécification
+## Pourquoi utiliser Copilot comme un agent ?
+
+- Éviter de coder “à l’aveugle”
+- Garder une vision claire du besoin
+- Accélérer le développement sans perdre le contrôle
+
+Copilot devient un assistant de développement, pas juste un auto-compléteur.
+
+---
+
+## Workflow en 3 étapes
+
+**1️⃣ Décrire le besoin (toi)** — une spécification simple, en langage humain  
+**2️⃣ Laisser Copilot réfléchir (Mode Plan)** — plan technique + découpage  
+**3️⃣ Laisser Copilot coder (Agent)** — implémentation selon le plan
+
+---
+
+## Étape 1 — Écrire de bonnes instructions
 
 Fichier : `.github/copilot-instructions.md`
 
-- Idée : en 2–3 phrases
-- Motivations : pourquoi c’est important
-- Comportements clés : 3–5 cas d’usage
+**Question centrale :** Qu’est-ce que je veux construire, et pourquoi ?
 
 ---
 
-## Exemple d’instructions
+## Contenu recommandé
 
-**`.github/copilot-instructions.md`**
+Dans `.github/copilot-instructions.md` :
+
+- Objectif : à quoi sert l’application ?
+- Comportements clés : que peut faire l’utilisateur ?
+- Contraintes : règles techniques importantes
+
+---
+
+## Exemple simple
 
 ```markdown
-# Spécification de l’application Todo
+# Application Todo
 
 ## Objectif
-Une app simple pour gérer des tâches.
-Ajouter, cocher, supprimer des items.
+Créer une application web simple pour gérer des tâches.
+
 ## Comportements clés
-- L’utilisateur crée une tâche
-- Marque comme complétée
-- Supprime des tâches
-- Persistance via localStorage
-## Stack requis
+- Ajouter une tâche
+- Marquer une tâche comme complétée
+- Supprimer une tâche
+- Sauvegarde locale des données
+
+## Contraintes
 - React + TypeScript
 - Tailwind CSS
 - Pas de dépendances externes
 ```
 
----
-
-## Étape 2 : Plan technique
-
-Fichier : `.github/copilot-instructions.md` (section PLAN)
-
-- Stack technique : framework, base de données, etc.
-- Architecture : structure des fichiers
-- Contraintes : performance, sécurité
+💡 Pas besoin d’écrire du code, ni un plan technique.
 
 ---
 
-## Étape 3 : Tâches
+## Étape 2 — Mode Plan (Copilot)
 
-Fichier : `.github/copilot-instructions.md` (section TASKS)
+Prompt recommandé : « Analyse ces instructions et propose un plan. »
 
-- Diviser le projet en 3 à 8 tâches
-- Chaque tâche : 30 à 60 min
-- Ordre logique selon les dépendances
+Copilot va :
+
+- choisir une structure de projet
+- définir les composants
+- proposer un ordre logique de travail
+
+👉 Ce plan sert à vérifier que vous êtes alignés.
 
 ---
 
-## Utiliser les agents Copilot
+## Étape 3 — Exécution (Copilot Agent)
 
-- Ouvrir VS Code + Copilot Chat
-- Sélectionner Mode Plan
-- L’agent lit automatiquement `.github/copilot-instructions.md`
-- L’agent génère un plan puis code de manière autonome
+Une fois le plan validé :
+
+- Copilot écrit le code, étape par étape
+- Tu peux interrompre ou corriger à tout moment
+
+Ton rôle : valider, ajuster, garder la cohérence.
+
+---
+
+## Rôles
+
+- Toi : définir le besoin, valider le plan, relire le code
+- Copilot : transformer l’idée en plan, découper le travail, écrire le code
+
+---
+
+## Erreurs courantes à éviter
+
+- ❌ Écrire un plan technique à la main
+- ❌ Détailler les tâches dans les instructions
+- ❌ Tout laisser faire sans relire
+- ✅ Décrire clairement le besoin
+- ✅ Laisser Copilot planifier
+- ✅ Garder un œil critique
+
+---
+
+## Règle d’or
+
+> Plus l’intention est claire, meilleur sera le code.
 
 ---
 
@@ -272,6 +315,18 @@ src/
 - [Type checking : TypeScript strict]
 - [Testing : Unit + E2E]
 ```
+
+---
+
+## Démo — Introduction (Copilot Agents)
+
+**Ce que j’ai fait avec GitHub Copilot**
+
+- Objectif: transformer une intention claire en application fonctionnelle.
+- Méthode (Mode Agent): Spécification → Plan → Code.
+- Copilot: a structuré le plan, découpé les étapes et assisté les mises à jour (slides et implémentations ciblées).
+- Moi: j’ai défini le besoin, validé le plan, relu et ajusté.
+- Ce que vous verrez: Dashboard (graphiques Plotly), Chatbot UI, API FastAPI avec données mock.
 
 ---
 

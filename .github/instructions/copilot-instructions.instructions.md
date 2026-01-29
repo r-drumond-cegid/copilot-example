@@ -4,77 +4,73 @@ applyTo: '**'
 
 # Directives générales de codage – Dashboard Finance
 
-## Style de code
+Objectif: fournir des règles claires, concises et actionnables pour garder le frontend React, le backend FastAPI et l’intégration CDS cohérents, accessibles et sécurisés.
 
-* Utiliser les éléments HTML5 sémantiques (`header`, `main`, `section`, `article`, etc.)
-* Préférer les fonctionnalités modernes de JavaScript (ES6+) : `const`/`let`, fonctions fléchées, template literals
-* Dans React, privilégier les **Functional Components** et les hooks (`useState`, `useEffect`, `useMemo`, etc.)
-* Pour les graphiques, utiliser **Plotly.js** de manière modulable et réactive
+## Quick Links
+- Types & CDS: `frontend/src/types/cds-react.d.ts`
+- Thème CDS: `frontend/src/theme/cegidTheme.js`
+- Frontend config: `frontend/eslint.config.js`, `frontend/vite.config.ts`
+- Backend structure: `backend/app/` (routes, services, modèles)
+- Tests backend: `backend/tests/`
+- Docs CDS: `docs/cds/`
 
----
+## Style de code (Essentiels)
+- HTML5 sémantique: `header`, `main`, `section`, `article`.
+- JavaScript ES6+: `const`/`let`, fonctions fléchées, template literals.
+- React: composants fonctionnels + hooks (`useState`, `useEffect`, `useMemo`).
+- Graphiques: **Plotly.js** modulable et réactif, encapsulé dans des conteneurs UI.
 
 ## Conventions de nommage
+- PascalCase: composants React, interfaces, types.
+- camelCase: variables, fonctions, méthodes.
+- `_privé`: membres privés de classe.
+- ALL_CAPS: constantes.
+- API: noms explicites (`fetchTransactions`, `calculateBalance`).
 
-* **PascalCase** pour les composants React, interfaces et types
-* **camelCase** pour les variables, fonctions et méthodes
-* Préfixer les membres privés d'une classe avec un underscore `_`
-* **ALL_CAPS** pour les constantes
-* Pour les endpoints et fonctions d'API, utiliser des noms explicites (ex : `fetchTransactions`, `calculateBalance`)
+## Qualité & Sécurité
+- Noms clairs; commenter les logiques complexes (filtrage, enrichissement).
+- Gérer erreurs pour entrées utilisateur et appels API.
+- Séparation stricte: Frontend (UI/graphes), Backend (routes/services/modèles), IA (orchestration).
+- Sécurité bancaire: pas de clés en frontend, chiffrer données sensibles, valider/sanitiser toutes les entrées.
 
----
+## Architecture & Spécifiques projet
+- Types données: `Transaction`, `Account`, `BalanceSummary` (structurés et partagés).
+- Enrichissement: fonctions de catégorisation/filtrage dédiées (testables).
+- Reporting: composants Plotly réutilisables (balances, timelines, alertes).
+- Responsiveness: desktop + mobile; layouts fluides.
 
-## Qualité du code
+## Cegid Design System (CDS) — Essentiels
+- Composants standards d’abord: `Button`, `Input`, `Select`, `DataTable`, `DatePicker`, `Modal`, `Tabs`, `Accordion`, `Tooltip`, `Toast`, `Card`.
+- Imports: utiliser `cds-react` (ou `frontend/src/cds-react-shim.js` si nécessaire). Centraliser types dans `frontend/src/types/cds-react.d.ts`.
+- Thèmes: appliquer tokens via `frontend/src/theme/cegidTheme.js`; éviter surcharges non prévues.
+- États/variantes: utiliser props officielles (`size`, `disabled`, `loading`, `error`, `success`).
+- Formulaires: validations normalisées; empêcher doubles soumissions; désactiver actions pendant chargement.
+- Sécurité: pas de secrets côté UI; inputs validés/sanitisés.
 
-* Utiliser des noms de variables et fonctions **clairs et explicites**
-* Ajouter des commentaires pour les logiques complexes (ex : filtrage et enrichissement des transactions)
-* Gérer les erreurs pour toutes les entrées utilisateurs et appels API
-* Modulariser le code pour séparer clairement :
+## Accessibilité — Checklist rapide (WCAG 2.1 AA)
+- Focus visible; navigation clavier complète.
+- Libellés clairs; `aria-*` appropriés; associer `label` aux champs.
+- Tableaux: `th` avec `scope`; annonces `aria-live` si mises à jour asynchrones.
+- Modales: piégeage du focus; fermeture via `Esc`; rôles `dialog`/`alertdialog`.
+- Graphiques: descriptions accessibles; dimensions réactives.
 
-  * Frontend (UI, composants, graphiques)
-  * Backend (FastAPI : routes, services, modèles de données)
-  * Services IA (OpenAI / LangGraph)
-* Respecter les bonnes pratiques de sécurité pour les données bancaires :
+## Transactions, Comptes & Reporting
+- Types partagés et validations strictes.
+- Enrichissement: catégories, filtres, regroupements (documenter et tester).
+- Graphiques Plotly: réutilisables, encapsulés dans `Card`/`Panel`, réactifs.
 
-  * Ne jamais exposer les clés API dans le frontend
-  * Chiffrement des données sensibles
-  * Validation stricte des entrées utilisateurs
+## Chatbot
+- Composant UI dédié; flux FastAPI → IA → réponse.
+- Historiser les conversations côté backend.
 
----
+## Outillage MCP CDS
+- Consulter le catalogue composants; vérifier props/contraintes/accessibilité avant implémentation.
+- Handoff Figma → Code: générer composants; intégrer Storybook/tests.
+- Documenter choix & conformité dans `docs/cds/` (catalogue, rapport, recommandations, changelog).
 
-## Bonnes pratiques spécifiques au projet
+## Tests & Linting (alignement rapide)
+- Frontend: respecter `eslint.config.js`; corriger avant PR.
+- Backend: maintenir et exécuter `backend/tests/`; cibler d’abord les modules modifiés.
+- Accessibilité: vérifier focus, contrastes, labels et annonces.
 
-* **Transactions et comptes** : créer des interfaces/types pour structurer les données (`Transaction`, `Account`, `BalanceSummary`)
-* **Enrichissement des données** : ajouter des fonctions claires pour catégoriser et filtrer les transactions
-* **Reporting** : prévoir des composants réutilisables pour graphiques Plotly (balances, timelines, alertes)
-* **Chatbot** :
-
-  * Créer un composant dédié pour l'interface conversationnelle
-  * Orchestrer les appels FastAPI → IA → réponse utilisateur
-  * Maintenir l'historique des conversations côté backend
-* **Responsiveness** : tous les composants doivent être adaptés aux écrans desktop et mobile
-
----
-
-## Cegid Design System (CDS)
-
-* **Composants CDS** : utiliser les composants standards du DS (`Button`, `Input`, `Select`, `Checkbox`, `Radio`, `Textarea`, `FormField`, `DataTable`, `DatePicker`/`DateRangePicker`, `Modal`, `Tabs`, `Accordion`, `Tooltip`, `Toast`/`Notification`, `Card`). Éviter les composants maison si une alternative CDS existe.
-* **Imports** : privilégier le paquet `cds-react` (ou le shim local `src/cds-react-shim.js` si nécessaire en attendant l'intégration). Les types doivent être centralisés dans `src/types/cds-react.d.ts`.
-* **Thématisation** : appliquer les tokens CDS (couleurs, typographies, espacements) via `src/theme/cegidTheme.js`. Ne pas surcharger les styles au-delà des variables et thèmes prévus.
-* **Accessibilité** : respecter WCAG 2.1 AA. États de focus visibles, navigation clavier complète, libellés clairs et `aria-*` appropriés. Associer `label` aux champs, utiliser des `th` avec `scope` dans les tableaux, et fournir des descriptions pour les graphiques.
-* **États & variantes** : utiliser les variantes et props officielles (ex : `size`, `disabled`, `loading`, `error`, `success`). Éviter les styles ad hoc ou classes non standard.
-* **Formulaires** : utiliser les composants de formulaire CDS, validations synchrones/asynchrones avec messages d’erreur normalisés. Empêcher les doubles soumissions et désactiver les actions pendant le chargement.
-* **Modales/Dialogs** : gérer le piégeage du focus, fermeture via `Esc`, et rôles ARIA (`dialog`, `alertdialog`). Ne pas masquer du contenu sans rôles/accessibilité corrects.
-* **Notifications** : utiliser `Toast`/`Alert` CDS pour les retours utilisateur (succès/erreur/info) avec messages concis et non intrusifs.
-* **Listes & tableaux** : utiliser `DataTable` pour pagination, tri, sélection, et mises à jour asynchrones (prévoir `aria-live` si nécessaire).
-* **Réactivité** : respecter les points de rupture CDS et layouts fluides. Les composants doivent s’adapter automatiquement aux tailles d’écran.
-* **Graphiques** : conserver Plotly, mais encapsuler dans des conteneurs CDS (`Card`/`Panel`) et fournir des descriptions accessibles. Les dimensions doivent être réactives.
-* **Sécurité** : aucune clé/secret en frontend, validation stricte des entrées et sanitisation des contenus.
-
----
-
-## Intégration MCP CDS (outillage)
-
-* **Catalogue & recherche** : consulter le catalogue des composants CDS pour sélectionner les bons composants et variantes.
-* **Détails des composants** : vérifier les props, contraintes et attentes d’accessibilité avant implémentation.
-* **Handoff Figma → Code** : lorsque des maquettes sont disponibles, générer les composants via l’outillage MCP et intégrer les artefacts produits (Storybook/tests) dans le projet.
-* **Documentation** : consigner les choix et conformités dans `docs/cds/` (catalogue, rapport de conformité, recommandations, changelog).
+Notes: cette version est volontairement concise. Utiliser `docs/` et fichiers référencés pour les détails d’implémentation.
