@@ -3,8 +3,12 @@ name: Workflow Lint
 on:
   push:
     branches: ["main"]
+    paths:
+      - ".github/workflows/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - ".github/workflows/**"
 
 permissions:
   contents: read
@@ -25,5 +29,7 @@ jobs:
         run: go install github.com/rhysd/actionlint/cmd/actionlint@v1.6.27
 
       - name: Run actionlint
+        shell: bash
         run: |
-          $(go env GOPATH)/bin/actionlint -color never
+          set -euo pipefail
+          $(go env GOPATH)/bin/actionlint -color=never
