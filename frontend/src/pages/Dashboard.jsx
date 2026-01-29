@@ -246,21 +246,26 @@ const Dashboard = () => {
             </Box>
           )}
 
-          {/* Charts Section */}
-          <Box sx={{ width: '100%', mb: 2, px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Paper component="section" aria-labelledby="balance-chart-title" sx={{ p: 2, width: '100%' }}>
-              <Typography id="balance-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
-                Évolution du Solde
-              </Typography>
-              <BalanceChart dateRange={dateRange} compact={compact} />
-            </Paper>
-            
-            <Paper component="section" aria-labelledby="category-chart-title" sx={{ p: 2, width: '100%' }}>
-              <Typography id="category-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
-                Dépenses par Catégorie
-              </Typography>
-              <CategoryChart transactions={transactions} />
-            </Paper>
+          {/* Charts Section: side by side on md+ screens, stacked on small */}
+          <Box sx={{ width: '100%', mb: 2, px: 2 }}>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <Paper component="section" aria-labelledby="balance-chart-title" sx={{ p: 2, width: '100%', height: '100%' }}>
+                  <Typography id="balance-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
+                    Évolution du Solde
+                  </Typography>
+                  <BalanceChart dateRange={dateRange} compact={compact} />
+                </Paper>
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <Paper component="section" aria-labelledby="category-chart-title" sx={{ p: 2, width: '100%', height: '100%' }}>
+                  <Typography id="category-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
+                    Dépenses par Catégorie
+                  </Typography>
+                  <CategoryChart transactions={transactions} compact={compact} />
+                </Paper>
+              </Grid>
+            </Grid>
           </Box>
 
           {/* Trends Summary */}

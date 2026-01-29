@@ -145,17 +145,31 @@ const Chatbot = ({ isOpen, onToggle }) => {
       <Dialog
         open={isOpen}
         onClose={onToggle}
-        maxWidth="sm"
-        fullWidth
+        maxWidth={false}
+        fullWidth={false}
         fullScreen={isMobile}
         TransitionComponent={Transition}
+        scroll="paper"
+        keepMounted
+        sx={{
+          '& .MuiDialog-container': {
+            alignItems: isMobile ? 'stretch' : 'flex-end',
+            justifyContent: isMobile ? 'center' : 'flex-end',
+            p: isMobile ? 0 : 2,
+          },
+        }}
         PaperProps={{
           sx: {
-            height: isMobile ? '100vh' : isTablet ? '85vh' : '700px',
+            width: isMobile ? '100%' : 460,
+            height: isMobile ? '100vh' : '82vh',
             maxHeight: isMobile ? '100vh' : '90vh',
             borderRadius: isMobile ? 0 : 3,
             display: 'flex',
             flexDirection: 'column',
+            overflow: 'hidden',
+            boxShadow: 6,
+            border: 1,
+            borderColor: 'primary.main',
           },
         }}
       >
@@ -168,6 +182,9 @@ const Chatbot = ({ isOpen, onToggle }) => {
               alignItems: 'center',
               justifyContent: 'space-between',
               p: 2,
+              position: 'sticky',
+              top: 0,
+              zIndex: 2,
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -201,6 +218,7 @@ const Chatbot = ({ isOpen, onToggle }) => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
+              overflowX: 'hidden',
             }}
           >
             {/* A11y: announce incoming assistant messages */}
@@ -313,6 +331,8 @@ const Chatbot = ({ isOpen, onToggle }) => {
               borderTop: 1,
               borderColor: 'divider',
               backgroundColor: 'background.paper',
+              position: 'sticky',
+              bottom: 0,
             }}
           >
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}>

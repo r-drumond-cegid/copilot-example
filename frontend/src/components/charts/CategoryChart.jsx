@@ -4,18 +4,33 @@ import { useTheme } from '@mui/material';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 
 /**
- * @param {{ transactions: import('../../types').Transaction[] }} props
+ * @param {{ transactions: import('../../types').Transaction[], compact?: boolean, height?: number }} props
  */
-const CategoryChart = ({ transactions }) => {
+const CategoryChart = ({ transactions, compact = false, height }) => {
   const containerRef = useRef(null);
   const [chartHeight, setChartHeight] = useState(600);
+  const [containerWidth, setContainerWidth] = useState(1200);
   const theme = useTheme();
   const handleResize = useCallback((rect) => {
+    if (height && typeof height === 'number') {
+      setChartHeight(height);
+      return;
+    }
     const width = rect?.width ?? 1200;
-    if (width < 600) setChartHeight(380);
-    else if (width < 960) setChartHeight(500);
-    else setChartHeight(600);
-  }, []);
+    setContainerWidth(width);
+    let h;
+    if (width < 520) {
+      h = compact ? 260 : 320;
+    } else if (width < 960) {
+      h = Math.round(width * (compact ? 0.55 : 0.65));
+    } else {
+      h = compact ? 440 : 560;
+    }
+    // Clamp between reasonable bounds to avoid oversized donuts
+    const minH = 240;
+    const maxH = compact ? 480 : 600;
+    setChartHeight(Math.max(minH, Math.min(h, maxH)));
+  }, [compact, height]);
   useResizeObserver(containerRef, handleResize);
 
   const categoryData = useMemo(() => {
@@ -87,6 +102,8 @@ const CategoryChart = ({ transactions }) => {
     theme.palette.secondary.light,
   ];
 
+  const labelsInside = compact || containerWidth < 720;
+
   const trace = {
     labels: categoryData.labels,
     values: categoryData.values,
@@ -95,12 +112,14 @@ const CategoryChart = ({ transactions }) => {
     marker: {
       colors: colors,
     },
-    textinfo: 'label+percent',
-    textposition: 'outside',
+    textinfo: labelsInside ? 'percent+label' : 'label+percent',
+    textposition: labelsInside ? 'inside' : 'outside',
+    insidetextorientation: 'radial',
+    textfont: { size: labelsInside ? 11 : 12, color: labelsInside ? theme.palette.getContrastText(theme.palette.primary.main) : undefined },
     hovertemplate: '<b>%{label}</b><br>%{value:,.2f} €<br>%{percent}<extra></extra>',
   };
 
-  const isMobile = false;
+  const isMobile = containerWidth < 600;
   
   const layout = {
     autosize: true,
@@ -108,11 +127,12 @@ const CategoryChart = ({ transactions }) => {
     height: undefined,
     margin: { 
       t: isMobile ? 10 : 20, 
-      r: isMobile ? 10 : 20, 
+      r: labelsInside ? 10 : 40, 
       b: isMobile ? 10 : 20, 
-      l: isMobile ? 10 : 20 
+      l: labelsInside ? 10 : 40 
     },
-    showlegend: false,
+    showlegend: labelsInside,
+    uniformtext: { mode: 'hide', minsize: 10 },
     paper_bgcolor: theme.palette.background.paper,
   };
 
