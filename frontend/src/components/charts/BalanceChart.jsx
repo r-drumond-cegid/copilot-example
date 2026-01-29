@@ -5,9 +5,9 @@ import { getAccountBalances } from '../../api/accounts';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 
 /**
- * @param {{ dateRange: { from: string, to: string } }} props
+ * @param {{ dateRange: { from: string, to: string }, compact?: boolean }} props
  */
-const BalanceChart = ({ dateRange }) => {
+const BalanceChart = ({ dateRange, compact = false }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
@@ -20,10 +20,11 @@ const BalanceChart = ({ dateRange }) => {
 
   const handleResize = useCallback((rect) => {
     const width = rect?.width ?? 1200;
-    if (width < 600) setChartHeight(280);
-    else if (width < 960) setChartHeight(380);
-    else setChartHeight(500);
-  }, []);
+    // Use smaller heights when in compact mode
+    if (width < 600) setChartHeight(compact ? 220 : 280);
+    else if (width < 960) setChartHeight(compact ? 300 : 380);
+    else setChartHeight(compact ? 400 : 500);
+  }, [compact]);
   useResizeObserver(containerRef, handleResize);
 
   const loadBalanceData = async () => {

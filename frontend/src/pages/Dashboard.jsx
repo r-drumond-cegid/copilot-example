@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { format, subDays } from 'date-fns';
 import { Button } from '@cegid/cds-react';
 import {
@@ -10,6 +10,11 @@ import {
   Paper,
   Card,
   CardContent,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Chip,
 } from '@cegid/cds-react';
 import { Refresh as RefreshIcon, Warning as WarningIcon } from '@mui/icons-material';
 import BalanceSummaryCard from '../components/dashboard/BalanceSummaryCard';
@@ -34,10 +39,51 @@ const Dashboard = () => {
   const [trends, setTrends] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [chatbotOpen, setChatbotOpen] = useState(false);
+  const [compact, setCompact] = useState(() => {
+    try {
+      return localStorage.getItem('dashboardCompact') === 'true';
+    } catch { return false; }
+  });
+  const [summaryCollapsed, setSummaryCollapsed] = useState(() => {
+    try {
+      const v = localStorage.getItem('summaryCollapsed');
+      return v ? v === 'true' : false;
+    } catch { return false; }
+  });
+  const [entity, setEntity] = useState('Toutes');
+  const [bankGroup, setBankGroup] = useState('Tous');
+  const [cutoffLabel, setCutoffLabel] = useState('');
 
   useEffect(() => {
     loadDashboardData();
   }, [dateRange]);
+
+  // Persist compact mode
+  useEffect(() => {
+    try { localStorage.setItem('dashboardCompact', compact ? 'true' : 'false'); } catch {}
+  }, [compact]);
+
+  // Persist summary collapsed
+  useEffect(() => {
+    try { localStorage.setItem('summaryCollapsed', summaryCollapsed ? 'true' : 'false'); } catch {}
+  }, [summaryCollapsed]);
+
+  // Update cut-off countdown every minute
+  useEffect(() => {
+    const updateCutoff = () => {
+      const now = new Date();
+      const cutoff = new Date();
+      cutoff.setHours(17, 0, 0, 0); // 17:00 local time
+      const ms = cutoff - now;
+      if (ms <= 0) { setCutoffLabel('Cut-off passé'); return; }
+      const h = Math.floor(ms / 3600000);
+      const m = Math.floor((ms % 3600000) / 60000);
+      setCutoffLabel(`Cut-off dans ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+    };
+    updateCutoff();
+    const id = setInterval(updateCutoff, 60000);
+    return () => clearInterval(id);
+  }, []);
 
   const loadDashboardData = async () => {
     setLoading(true);
@@ -85,16 +131,41 @@ const Dashboard = () => {
 
   return (
     <Box component="main" aria-labelledby="page-title" sx={{ width: '100%', py: 2, px: 0 }}>
-      {/* Header */}
-      <Box sx={{ mb: 2, px: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
-        <Typography id="page-title" variant="h1" component="h1" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
-          Dashboard Financier
-        </Typography>
-        <DateRangePicker
-          fromDate={dateRange.from}
-          toDate={dateRange.to}
-          onChange={handleDateRangeChange}
-        />
+      {/* Sticky Consolidated Header */}
+      <Box sx={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: 'background.paper', borderBottom: 1, borderColor: 'divider', py: compact ? 1 : 1.5, px: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+          <Typography id="page-title" variant="h1" component="h1" sx={{ fontSize: { xs: compact ? '1.6rem' : '2rem', md: compact ? '2rem' : '2.5rem' } }}>
+            Dashboard Financier
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+            {/* Bank/Entity switchers */}
+            <FormControl size="small" sx={{ minWidth: 160 }}>
+              <InputLabel>Entité</InputLabel>
+              <Select value={entity} label="Entité" onChange={(e) => setEntity(e.target.value)}>
+                <MenuItem value="Toutes">Toutes</MenuItem>
+                <MenuItem value="Entité A">Entité A</MenuItem>
+                <MenuItem value="Entité B">Entité B</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 160 }}>
+              <InputLabel>Banques</InputLabel>
+              <Select value={bankGroup} label="Banques" onChange={(e) => setBankGroup(e.target.value)}>
+                <MenuItem value="Tous">Tous</MenuItem>
+                <MenuItem value="Groupe 1">Groupe 1</MenuItem>
+                <MenuItem value="Groupe 2">Groupe 2</MenuItem>
+              </Select>
+            </FormControl>
+            <DateRangePicker
+              fromDate={dateRange.from}
+              toDate={dateRange.to}
+              onChange={handleDateRangeChange}
+            />
+            <Chip label={cutoffLabel} color="warning" variant="outlined" size="small" />
+            <Button size="small" variant="outlined" onClick={() => setCompact(v => !v)}>
+              Mode compact: {compact ? 'ON' : 'OFF'}
+            </Button>
+          </Box>
+        </Box>
       </Box>
 
       {/* Loading State */}
@@ -166,7 +237,12 @@ const Dashboard = () => {
           {/* Balance Summary */}
           {balanceSummary && (
             <Box component="section" aria-label="Résumé des soldes" sx={{ mb: 2, px: 2 }}>
-              <BalanceSummaryCard summary={balanceSummary} />
+              <BalanceSummaryCard 
+                summary={balanceSummary} 
+                compact={compact} 
+                collapsed={summaryCollapsed}
+                onToggleCollapsed={() => setSummaryCollapsed(v => !v)}
+              />
             </Box>
           )}
 
@@ -176,7 +252,7 @@ const Dashboard = () => {
               <Typography id="balance-chart-title" variant="h5" component="h2" sx={{ mb: 2 }}>
                 Évolution du Solde
               </Typography>
-              <BalanceChart dateRange={dateRange} />
+              <BalanceChart dateRange={dateRange} compact={compact} />
             </Paper>
             
             <Paper component="section" aria-labelledby="category-chart-title" sx={{ p: 2, width: '100%' }}>
@@ -254,7 +330,7 @@ const Dashboard = () => {
 
           {/* Transaction List */}
           <Box component="section" aria-label="Liste des transactions" sx={{ px: 2 }}>
-            <TransactionList transactions={transactions} />
+            <TransactionList transactions={transactions} compact={compact} />
           </Box>
         </>
       )}

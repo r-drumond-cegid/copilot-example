@@ -26,9 +26,9 @@ import {
 } from '@mui/icons-material';
 
 /**
- * @param {{ transactions: import('../../types').Transaction[] }} props
+ * @param {{ transactions: import('../../types').Transaction[], compact?: boolean }} props
  */
-const TransactionList = ({ transactions }) => {
+const TransactionList = ({ transactions, compact = false }) => {
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
@@ -37,7 +37,7 @@ const TransactionList = ({ transactions }) => {
   const [minAmount, setMinAmount] = useState('');
   const [maxAmount, setMaxAmount] = useState('');
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(compact ? 25 : 10);
 
   useEffect(() => {
     (async () => {
@@ -94,15 +94,15 @@ const TransactionList = ({ transactions }) => {
   };
 
   return (
-    <Paper component="section" aria-labelledby="transactions-title" sx={{ p: 3, borderRadius: 3 }}>
+    <Paper component="section" aria-labelledby="transactions-title" sx={{ p: compact ? 2 : 3, borderRadius: 3 }}>
       {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-        <Typography id="transactions-title" variant="h5" component="h2" sx={{ fontWeight: 600 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: compact ? 2 : 3, flexWrap: 'wrap', gap: 2 }}>
+        <Typography id="transactions-title" variant={compact ? 'h6' : 'h5'} component="h2" sx={{ fontWeight: 600 }}>
           Transactions ({transactions.length})
         </Typography>
         
         {/* Controls */}
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: compact ? 1.5 : 2, flexWrap: 'wrap' }}>
           <FormControl size="small" sx={{ minWidth: 140 }}>
             <InputLabel>Filtre</InputLabel>
             <Select
@@ -168,16 +168,16 @@ const TransactionList = ({ transactions }) => {
           </Box>
         ) : (
           <TableContainer>
-            <Table aria-labelledby="transactions-title">
+            <Table aria-labelledby="transactions-title" size={compact ? 'small' : 'medium'}>
               <caption className="sr-only">Liste des transactions avec date, catégorie, compte, marchand, tags et montant</caption>
               <TableHead>
                 <TableRow>
-                  <TableCell scope="col" aria-sort={sortBy === 'date' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'} onClick={() => toggleSort('date')} sx={{ cursor: 'pointer' }}>Date</TableCell>
+                  <TableCell scope="col" aria-sort={sortBy === 'date' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'} onClick={() => toggleSort('date')} sx={{ cursor: 'pointer', py: compact ? 0.5 : 1 }}>Date</TableCell>
                   <TableCell scope="col" aria-sort="none">Catégorie</TableCell>
                   <TableCell scope="col" aria-sort="none">Compte</TableCell>
                   <TableCell scope="col" aria-sort="none">Marchand</TableCell>
                   <TableCell scope="col" aria-sort="none">Tags</TableCell>
-                  <TableCell scope="col" align="right" aria-sort={sortBy === 'amount' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'} onClick={() => toggleSort('amount')} sx={{ cursor: 'pointer' }}>Montant</TableCell>
+                  <TableCell scope="col" align="right" aria-sort={sortBy === 'amount' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'} onClick={() => toggleSort('amount')} sx={{ cursor: 'pointer', py: compact ? 0.5 : 1 }}>Montant</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -188,10 +188,11 @@ const TransactionList = ({ transactions }) => {
                     '&:hover': {
                       backgroundColor: 'action.hover',
                     },
+                    '& td': { py: compact ? 0.75 : 1.25 },
                   }}
                 >
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant={compact ? 'caption' : 'body2'}>
                       {new Date(transaction.operation_date).toLocaleDateString('fr-FR')}
                     </Typography>
                   </TableCell>
@@ -200,7 +201,7 @@ const TransactionList = ({ transactions }) => {
                     {transaction.category ? (
                       <Chip
                         label={transaction.category.name}
-                        size="small"
+                        size={compact ? 'small' : 'medium'}
                         sx={{
                           backgroundColor: transaction.category.color || 'primary.light',
                           color: 'white',
@@ -213,7 +214,7 @@ const TransactionList = ({ transactions }) => {
                   </TableCell>
                   
                   <TableCell>
-                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    <Typography variant={compact ? 'caption' : 'body2'} sx={{ fontWeight: 500 }}>
                       {transaction.account}
                     </Typography>
                   </TableCell>
@@ -222,7 +223,7 @@ const TransactionList = ({ transactions }) => {
                     {transaction.merchant ? (
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <StoreIcon fontSize="small" sx={{ color: 'text.secondary' }} />
-                        <Typography variant="body2">
+                        <Typography variant={compact ? 'caption' : 'body2'}>
                           {transaction.merchant}
                         </Typography>
                       </Box>
@@ -238,9 +239,9 @@ const TransactionList = ({ transactions }) => {
                           <Chip
                             key={i}
                             label={tag}
-                            size="small"
+                            size={compact ? 'small' : 'medium'}
                             variant="outlined"
-                            sx={{ fontSize: '0.75rem' }}
+                            sx={{ fontSize: compact ? '0.7rem' : '0.75rem' }}
                           />
                         ))}
                       </Stack>
@@ -257,7 +258,7 @@ const TransactionList = ({ transactions }) => {
                         <IncomeIcon fontSize="small" sx={{ color: 'success.main' }} />
                       )}
                       <Typography
-                        variant="body2"
+                        variant={compact ? 'caption' : 'body2'}
                         sx={{
                           fontWeight: 600,
                           color: transaction.is_debit ? 'error.main' : 'success.main',
