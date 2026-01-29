@@ -379,9 +379,37 @@ Projet d'exemple - Usage éducatif
   - Org repo: use “Restrict who can push” in the branch rule and add your user/team.
 - **Pages approvals (UI)**: Settings → Environments → `github-pages` → Protection rules → Required reviewers: add `@r-drumond-cegid`.
 
+## ⚙️ CI/CD Workflows (Overview)
+
+- Pages (Slides): Deploy site from [\.github/workflows/pages.yml](.github/workflows/pages.yml)
+  - Purpose: Publishes `slides/` to GitHub Pages (root serves `slides/index.html`).
+  - Triggers: push to `main`, manual dispatch.
+  - Flow: checkout → verify `slides/index.html` → upload artifact (`slides/`) → deploy to `github-pages`.
+  - Tip: Manage deploy approvals in Settings → Environments → `github-pages`.
+
+- CI: Build frontend and test backend in [\.github/workflows/ci.yml](.github/workflows/ci.yml)
+  - Frontend: Node 20, cache npm, `npm ci`, ESLint (if config), `npm run build`, uploads `frontend/dist` artifact.
+  - Backend: Python 3.11, cache pip, install `backend/requirements.txt`, runs `pytest`.
+  - Triggers: push/PR to `main` with concurrency to cancel outdated runs.
+
+- Workflow Lint: Validate workflows via actionlint in [\.github/workflows/workflow-lint.yml](.github/workflows/workflow-lint.yml)
+  - Purpose: Catches YAML errors and insecure/mistyped patterns in `.github/workflows/**`.
+  - Triggers: push/PR to `main` (only when workflows change).
+
+- Dependency Review: Block vulnerable dependency changes in [\.github/workflows/dependency-review.yml](.github/workflows/dependency-review.yml)
+  - Purpose: Fails PRs introducing known vulnerabilities at severity `high` or above.
+  - Trigger: PRs targeting `main`.
+
+- CodeQL: Static analysis (SAST) for JS and Python in [\.github/workflows/codeql.yml](.github/workflows/codeql.yml)
+  - Purpose: Detects security issues in source code; uploads SARIF to the Security tab.
+  - Triggers: push/PR to `main`, plus weekly schedule (Mon 03:00 UTC).
+
+Recommended (Branch Protection): Mark these checks as required — “Workflow Lint”, “CI (frontend/backend)”, “Dependency Review”, and “CodeQL”. This ensures PRs cannot merge until all pass and you approve.
+
 ## 👥 Contribution
 
-Suivre les directives dans `.github/instructions/chatbot-finance.instructions.md`
+Voir le guide: [CONTRIBUTING.md](CONTRIBUTING.md)
+Et les directives internes: [.github/instructions/](.github/instructions)
 
 ## 📞 Support
 

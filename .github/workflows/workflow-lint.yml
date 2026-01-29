@@ -32,4 +32,5 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          $(go env GOPATH)/bin/actionlint -no-color
+          GOPATH="$(go env GOPATH)"
+          "$GOPATH"/bin/actionlint -no-color

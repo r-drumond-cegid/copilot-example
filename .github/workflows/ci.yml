@@ -35,7 +35,7 @@ jobs:
       - name: Lint
         working-directory: frontend
         run: |
-          if [ -f eslint.config.js ] || [ -f .eslintrc.* ]; then
+          if [ -f eslint.config.js ] || compgen -G ".eslintrc.*" > /dev/null; then
             npm run lint --if-present
           else
             echo "No ESLint config; skipping lint."
