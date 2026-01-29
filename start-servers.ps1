@@ -24,13 +24,13 @@ Write-Host "Servers are starting..." -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "Backend:  http://127.0.0.1:8000" -ForegroundColor White
-Write-Host "Frontend: http://localhost:5173" -ForegroundColor White
+Write-Host "Frontend: http://localhost:3000" -ForegroundColor White
 Write-Host "API Docs: http://127.0.0.1:8000/docs" -ForegroundColor White
 Write-Host ""
 Write-Host "Opening frontend in browser..." -ForegroundColor Cyan
 
 Start-Sleep -Seconds 5
-Start-Process "http://localhost:5173"
+Start-Process "http://localhost:3000"
 
 Write-Host ""
 Write-Host "Both servers are running in separate windows." -ForegroundColor Green

@@ -31,12 +31,12 @@ npm run dev
 You should see:
 ```
 VITE ready in XXX ms
-➜  Local:   http://localhost:5173/
+➜  Local:   http://localhost:3000/
 ```
 
 ### 3. Open Browser
 
-Navigate to: **http://localhost:5173**
+Navigate to: **http://localhost:3000**
 
 ---
 

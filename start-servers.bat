@@ -20,13 +20,13 @@ echo Servers are starting...
 echo ========================================
 echo.
 echo Backend:  http://127.0.0.1:8000
-echo Frontend: http://localhost:5173
+echo Frontend: http://localhost:3000
 echo API Docs: http://127.0.0.1:8000/docs
 echo.
 echo Press any key to open frontend in browser...
 pause >nul
 
-start http://localhost:5173
+start http://localhost:3000
 
 echo.
 echo Both servers are running in separate windows.
