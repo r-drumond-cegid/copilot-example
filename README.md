@@ -365,6 +365,20 @@ npm run build
 
 Projet d'exemple - Usage éducatif
 
+## 🔒 Collaboration & Branch Protection
+
+- **Branch protection (UI)**: Settings → Branches → Add rule for `main`.
+  - Require a pull request before merging (1 approval)
+  - Require review from Code Owners
+  - Require branches to be up to date
+  - Select required status checks: “Workflow Lint”, “Deploy Slides (GitHub Pages)”
+  - Include administrators (optional)
+- **Code owners**: [\.github/CODEOWNERS](.github/CODEOWNERS) contains `* @r-drumond-cegid` so your review is required on all PRs.
+- **Who can push**:
+  - Personal repo: set collaborators to "Read" so only the owner can push; others use forks → PRs.
+  - Org repo: use “Restrict who can push” in the branch rule and add your user/team.
+- **Pages approvals (UI)**: Settings → Environments → `github-pages` → Protection rules → Required reviewers: add `@r-drumond-cegid`.
+
 ## 👥 Contribution
 
 Suivre les directives dans `.github/instructions/chatbot-finance.instructions.md`
