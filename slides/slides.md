@@ -44,6 +44,46 @@ style: |
 
 ---
 
+## Introduction : Les modes de GitHub Copilot (vue d’ensemble)
+- Ask — questions et explications
+- Edit — modifications ciblées
+- Agent — réalisation bout en bout
+- Plan — planification avant code
+
+---
+
+## Mode Ask
+Sert à poser des questions à Copilot.  
+Il explique du code, des concepts ou des erreurs.  
+👉 Exemple : « À quoi sert cette fonction ? » ou « Explique-moi cette erreur »  
+📌 Il ne modifie pas le code, il répond seulement.
+
+---
+
+## Mode Edit
+Sert à modifier du code existant.  
+On lui dit quoi changer, et Copilot applique les modifications.  
+👉 Exemple : « Simplifie cette fonction » ou « Ajoute des commentaires »  
+📌 Pratique pour corriger, améliorer ou refactoriser du code.
+
+---
+
+## Mode Agent
+Copilot agit comme un développeur autonome.  
+Il peut analyser tout le projet, créer ou modifier plusieurs fichiers, et résoudre un problème de bout en bout.  
+👉 Exemple : « Ajoute une authentification à l’application »  
+📌 Idéal pour des tâches complexes et globales.
+
+---
+
+## Mode Plan
+Sert à préparer une solution avant de coder.  
+Copilot propose un plan étape par étape.  
+👉 Exemple : « Comment ajouter une API REST à ce projet ? »  
+📌 Utile pour réfléchir à l’architecture et valider l’approche.
+
+---
+
 ## Idée clé à retenir
 
 > Tu expliques ce que tu veux.  
@@ -266,9 +306,8 @@ src/
 
 ---
 
-## Démo — Introduction 
+## Démo — Finance dashboard 
 
-- Objectif : dashboard pour application financière avec chatbot en pop-up.
 - Méthode : Spécification → Plan → Code (mode Agent).
 - Copilot : structuration du plan et assistance au développement.
 - Moi : définition du besoin, validation, tests et corrections.
