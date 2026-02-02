@@ -29,7 +29,7 @@ style: |
 
 ---
 
-## Le vrai changement avec Copilot Agent
+## Le vrai changement
 
 > Copilot n’est plus un outil réactif.  
 > C’est un **acteur du développement**.
@@ -42,7 +42,7 @@ style: |
 
 ---
 
-## Les 4 modes Copilot (vue d’ensemble)
+## Les 4 modes Copilot
 
 - **Ask** : comprendre (questions, explications)
 - **Edit** : modifier du code existant
@@ -64,7 +64,7 @@ style: |
 
 ---
 
-## Le workflow Agent (le cœur du sujet)
+## Le workflow Agent
 
 Tu expliques → Copilot planifie → Copilot code
 
@@ -182,7 +182,17 @@ Ton rôle : valider et ajuster.
 * UI chatbot
 * Données mock
 
-🎯 Montrer le process, pas le détail du code.
+🎯 Montrer le process
+
+---
+
+## *Agent Skills* — en bref
+
+- Des **compétences spécialisées** que Copilot peut charger
+- Définies dans des dossiers avec des instructions précises
+- Permettent d’automatiser des **tâches complexes et répétables**
+
+👉 Copilot est plus intelligent et contextuel.
 
 ---
 
@@ -217,5 +227,3 @@ Repo : [https://github.com/r-drumond-cegid/copilot-example](https://github.com/r
 
 - Personnalisation de Copilot dans VS Code : https://code.visualstudio.com/docs/copilot/customization/overview
 - awesome-copilot : [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main)
-
----
