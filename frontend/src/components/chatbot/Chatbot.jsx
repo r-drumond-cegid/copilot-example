@@ -137,6 +137,7 @@ const Chatbot = ({ isOpen, onToggle }) => {
           right: 24,
           zIndex: 1000,
         }}
+        aria-label={isOpen ? 'Fermer le chatbot' : 'Ouvrir le chatbot'}
       >
         {isOpen ? <CloseIcon /> : <ChatIcon />}
       </Fab>

@@ -3,7 +3,7 @@
 import os
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Tuple
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 
@@ -41,6 +41,7 @@ _sessions: dict[str, ChatSession] = {}
 
 def create_session() -> str:
     """Create a new chat session."""
+    _prune_expired_sessions()
     session_id = f"sess_{uuid.uuid4().hex[:12]}"
     now = datetime.now().isoformat()
     
@@ -61,7 +62,7 @@ def get_session(session_id: str) -> Optional[ChatSession]:
     return _sessions.get(session_id)
 
 
-def add_message(session_id: str, role: str, content: str) -> ChatMessage:
+def add_message(session_id: str, role: str, content: str, metadata: Optional[dict] = None) -> ChatMessage:
     """Add a message to a session."""
     session = _sessions.get(session_id)
     if not session:
@@ -73,7 +74,7 @@ def add_message(session_id: str, role: str, content: str) -> ChatMessage:
         role=role,
         content=content,
         timestamp=datetime.now().isoformat(),
-        metadata={},
+        metadata=metadata or {},
     )
     
     session.messages.append(message)
@@ -86,7 +87,7 @@ def generate_ai_response(
     user_message: str,
     session_id: str,
     context_data: Optional[dict] = None
-) -> str:
+) -> Tuple[str, str]:
     """
     Generate AI response using Azure OpenAI.
     
@@ -100,14 +101,14 @@ def generate_ai_response(
     """
     session = get_session(session_id)
     if not session:
-        return "Erreur: Session invalide."
+        return ("Erreur: Session invalide.", "fallback")
     
     # Get Azure OpenAI client
     client = _get_azure_client()
     
     # If client not configured, use fallback rule-based responses
     if client is None:
-        return _generate_fallback_response(user_message, context_data)
+        return (_generate_fallback_response(user_message, context_data), "fallback")
     
     try:
         # Build system prompt with financial context
@@ -140,11 +141,11 @@ def generate_ai_response(
             max_tokens=1000,
         )
         
-        return response.choices[0].message.content
+        return (response.choices[0].message.content, "azure")
         
     except Exception as e:
         print(f"Error calling Azure OpenAI: {e}")
-        return _generate_fallback_response(user_message, context_data)
+        return (_generate_fallback_response(user_message, context_data), "fallback")
 
 
 def _build_system_prompt(context_data: Optional[dict] = None) -> str:
@@ -268,10 +269,19 @@ async def process_chat_message(request: ChatRequest, context_data: Optional[dict
     add_message(session_id, "user", request.message)
     
     # Generate AI response
-    ai_response_text = generate_ai_response(request.message, session_id, context_data)
+    ai_response_text, source = generate_ai_response(request.message, session_id, context_data)
     
     # Add assistant message
-    assistant_message = add_message(session_id, "assistant", ai_response_text)
+    # Add assistant message with explainability metadata
+    model_name = os.getenv("MODEL_NAME", "gpt41") if source == "azure" else "rule-based"
+    temperature = os.getenv("MODEL_TEMPERATURE", "0.1") if source == "azure" else None
+    metadata = {
+        "source": source,
+        "model_name": model_name,
+        **({"temperature": float(temperature)} if temperature is not None else {}),
+        "explain": "Réponse générée via Azure OpenAI" if source == "azure" else "Réponse générée via règles de secours",
+    }
+    assistant_message = add_message(session_id, "assistant", ai_response_text, metadata)
     
     # Get suggestions
     suggestions = get_conversation_suggestions(session)
@@ -293,4 +303,25 @@ def clear_session(session_id: str) -> bool:
 
 def list_active_sessions() -> list[ChatSession]:
     """List all active chat sessions."""
+    _prune_expired_sessions()
     return [s for s in _sessions.values() if s.is_active]
+
+
+def _prune_expired_sessions(max_age_hours: int = 24) -> None:
+    """Remove sessions not updated within max_age_hours."""
+    try:
+        cutoff = datetime.now().timestamp() - (max_age_hours * 3600)
+        to_delete = []
+        for sid, sess in _sessions.items():
+            try:
+                last = datetime.fromisoformat(sess.updated_at).timestamp()
+                if last < cutoff:
+                    to_delete.append(sid)
+            except Exception:
+                to_delete.append(sid)
+        for sid in to_delete:
+            del _sessions[sid]
+    except Exception:
+        # Fail-safe: never crash API due to prune
+        pass
+
