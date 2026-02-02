@@ -25,80 +25,48 @@ style: |
 ---
 
 # Développer avec GitHub Copilot (Mode Agent)
-**Tu expliques → Copilot planifie → Copilot code**
+**De l’auto-complétion à l’agent autonome**
 
 ---
 
-## Agents Copilot vs chat classique
-**Agents Copilot : la révolution**
+## Le vrai changement avec Copilot Agent
 
-- Les agents = autonomie + planification.
-- Mode Plan = décomposition automatique des tâches.
-- Exécution multi-étapes sans intervention humaine.
-- Mieux que le « prompt » au hasard.
+> Copilot n’est plus un outil réactif.  
+> C’est un **acteur du développement**.
 
----
+- Tu exprimes l’intention
+- Il planifie le travail
+- Il implémente le code
 
-## Développer avec GitHub Copilot (Mode Agent)
-**Copilot ne code pas “au hasard” — il suit des instructions.**
+👉 On passe du *prompting* à la **collaboration**.
 
 ---
 
-## Introduction : Les modes de GitHub Copilot (vue d’ensemble)
-- Ask — questions et explications
-- Edit — modifications ciblées
-- Agent — réalisation bout en bout
-- Plan — planification avant code
+## Les 4 modes Copilot (vue d’ensemble)
+
+- **Ask** : comprendre (questions, explications)
+- **Edit** : modifier du code existant
+- **Plan** : réfléchir avant de coder
+- **Agent** : exécuter une tâche complète
+
+💡 Tous les modes servent un but :  
+**produire du code cohérent, pas juste du code qui marche**
 
 ---
 
-## Mode Ask
-Sert à poser des questions à Copilot.  
-Il explique du code, des concepts ou des erreurs.  
-👉 Exemple : « À quoi sert cette fonction ? » ou « Explique-moi cette erreur »  
-📌 Il ne modifie pas le code, il répond seulement.
+## Mode Agent : ce qui change
+
+- Vue globale du projet
+- Travail sur plusieurs fichiers
+- Autonomie basée sur un plan
+
+👉 Fait pour les vraies features.
 
 ---
 
-## Mode Edit
-Sert à modifier du code existant.  
-On lui dit quoi changer, et Copilot applique les modifications.  
-👉 Exemple : « Simplifie cette fonction » ou « Ajoute des commentaires »  
-📌 Pratique pour corriger, améliorer ou refactoriser du code.
+## Le workflow Agent (le cœur du sujet)
 
----
-
-## Mode Agent
-Copilot agit comme un développeur autonome.  
-Il peut analyser tout le projet, créer ou modifier plusieurs fichiers, et résoudre un problème de bout en bout.  
-👉 Exemple : « Ajoute une authentification à l’application »  
-📌 Idéal pour des tâches complexes et globales.
-
----
-
-## Mode Plan
-Sert à préparer une solution avant de coder.  
-Copilot propose un plan étape par étape.  
-👉 Exemple : « Comment ajouter une API REST à ce projet ? »  
-📌 Utile pour réfléchir à l’architecture et valider l’approche.
-
----
-
-## Idée clé à retenir
-
-> Tu expliques ce que tu veux.  
-> Copilot réfléchit à comment le faire.  
-> Copilot écrit le code.
-
----
-
-## Pourquoi utiliser Copilot comme un agent ?
-
-- Ne pas coder sans vision ni plan
-- Garder une vision claire du besoin
-- Accélérer le développement sans perdre le contrôle
-
-Copilot devient un assistant de développement, pas juste un auto-compléteur.
+Tu expliques → Copilot planifie → Copilot code
 
 ---
 
@@ -112,9 +80,13 @@ Copilot devient un assistant de développement, pas juste un auto-compléteur.
 
 ## Étape 1 — Écrire de bonnes instructions
 
-Fichier : `.github/copilot-instructions.md`
+Fichier clé : `.github/copilot-instructions.md`
 
 **Question centrale :** Qu’est-ce que je veux construire, et pourquoi ?
+
+Pas de code.
+Pas d’architecture détaillée.
+Juste l’intention.
 
 ---
 
@@ -122,9 +94,11 @@ Fichier : `.github/copilot-instructions.md`
 
 Dans `.github/copilot-instructions.md` :
 
-- Objectif : à quoi sert l’application ?
-- Comportements clés : que peut faire l’utilisateur ?
-- Contraintes : règles techniques importantes
+* Objectif de l’application
+* Comportements clés
+* Contraintes importantes
+
+👉 Plus c’est clair ici, moins tu corriges après.
 
 ---
 
@@ -149,111 +123,93 @@ Créer une application web simple pour gérer des tâches.
 
 ---
 
-## Étape 2 — Mode Plan (Copilot)
+## Étape 2 — Mode Plan
 
-Prompt recommandé : « Analyse ces instructions et propose un plan. »
+Prompt :
 
-Copilot va :
+> Analyse ces instructions et propose un plan.
 
-- choisir une structure de projet
-- définir les composants
-- proposer un ordre logique de travail
+Copilot :
 
-👉 Ce plan sert à vérifier que vous êtes alignés.
+* structure le projet
+* découpe les composants
+* ordonne les étapes
+
+👉 On valide avant de coder.
 
 ---
 
-## Étape 3 — Exécution (Copilot Agent)
+## Étape 3 — Mode Agent
 
-Une fois le plan validé :
+* Implémentation étape par étape
+* Création et modification de fichiers
+* Respect du plan
 
-- Copilot écrit le code, étape par étape
-- Tu peux interrompre ou corriger à tout moment
-
-Ton rôle : valider, ajuster, garder la cohérence.
+Ton rôle : valider et ajuster.
 
 ---
 
 ## Rôles
 
-- Toi : définir le besoin, valider le plan, relire le code
-- Copilot : transformer l’idée en plan, découper le travail, écrire le code
+* **Toi** : vision, décisions, validation
+* **Copilot** : plan, découpage, code
+
+👉 Tu restes responsable.
 
 ---
 
 ## Règle d’or
 
-> Plus l’intention est claire, meilleur sera le code.
-
----
-
-## Prompts clés
-
-```text
-# Pour valider la spec
-« Valide cette spec pour clarté et complétude »
-
-# Pour générer le plan
-« En Mode Plan, génère un plan technique détaillé »
-
-# Pour découper en tâches
-« Découpe le projet en tâches ordonnées »
-
-# Pour implémenter
-« Implémente la tâche 1 selon le plan »
-```
-
----
-
-## Instructions personnalisées avancées
-
-```markdown
-## Normes de codage
-
-- ESLint + Prettier obligatoires
-- Tests unitaires pour chaque fonction
-- TypeScript strict: true
-
-## Checklist de revue de code
-
-- Performance : pas de re-render inutiles
-- Sécurité : validation des inputs
-- Accessibilité : WCAG 2.1 niveau AA
-```
-
----
-
-## SDD + Agents = Avantage décisif
-
-- Jusqu’à +50 % de vitesse (agent autonome)
-- Zéro code « au feeling »
-- Pivot rapide : modifiez `.github/copilot-instructions.md`
-- Une architecture cohérente à la fin
+> Plus l’intention est claire,
+> meilleur sera le code.
 
 ---
 
 ## Pièges à éviter
 
-- Ne pas trop détailler les instructions (trop verbeux = lent)
-- Oublier de valider le plan avant le code
-- Négliger les instructions personnalisées
+* Spec trop détaillée
+* Plan non validé
+* Contraintes oubliées
+
+👉 Un agent sans cadre = dette technique.
 
 ---
 
-## Timing pour un hackathon
+## Démo — Finance dashboard
 
-**Heures 0–2** : instructions + plan  
-**Heures 2–20** : code avec l’agent Copilot  
-**Heures 20–48** : tests + finition
+* Spec → Plan → Code
+* FastAPI + Plotly
+* UI chatbot
+* Données mock
+
+🎯 Montrer le process, pas le détail du code.
 
 ---
 
-## Stack et personnalisation
+## À retenir
 
-- Agents Copilot : Mode Plan
-- VS Code : IDE principal avec personnalisations
-- Git : `.github/copilot-instructions.md` dans le repo
-- awesome-copilot : templates d’agents
+* Copilot Agent ≠ auto-complétion
+* La spec prime sur le code
+* Le plan est indispensable
+
+👉 Meilleures instructions
+👉 Meilleur code
+
+---
+
+## Merci 🙏
+
+## Questions ?
+
+Slides : [https://r-drumond-cegid.github.io/copilot-example/](https://r-drumond-cegid.github.io/copilot-example/)
+Repo : [https://github.com/r-drumond-cegid/copilot-example](https://github.com/r-drumond-cegid/copilot-example)
+
+---
+
+## Liens utiles
+
+- Demande d’accès à GitHub Copilot chez Cegid : https://devsecopscegid.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1%2Fgroup%2F4%2Fcreate%2F43
+- Cegid Design System : https://cds-website.azurewebsites.net/guidelines/installation
 
 ---
 
@@ -263,68 +219,3 @@ Ton rôle : valider, ajuster, garder la cohérence.
 - awesome-copilot : [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main)
 
 ---
-
-## Bonus : structure recommandée
-
-**`.github/copilot-instructions.md`**
-
-```markdown
-# [Nom du projet] - Spec & Instructions
-
-## 1. Objectif
-[Description courte : 2–3 phrases]
-
-## 2. Motivations
-- [Pourquoi ce projet]
-- [Cas d’usage principal]
-
-## 3. Comportements clés
-- [Comportement 1]
-- [Comportement 2]
-- [Comportement 3]
-```
-
----
-
-## Bonus : structure recommandée (suite)
-
-```markdown
-## 4. Tech Stack
-- **Frontend** : [Framework + version]
-- **Backend** : [Framework + version]
-- **Database** : [Type + version]
-## 5. Architecture
-src/
-├── components/
-├── pages/
-├── services/
-└── utils/
-## 6. Contraintes
-- Performance : [X ms]
-- Taille du bundle : [X kb]
-```
-
----
-
-## Démo — Finance dashboard 
-
-- Méthode : Spécification → Plan → Code (mode Agent).
-- Copilot : structuration du plan et assistance au développement.
-- Moi : définition du besoin, validation, tests et corrections.
-- Démo : dashboard Plotly, UI chatbot, API FastAPI avec données mock.
-
----
-
-## Questions ?
-
-**Merci !** 🙏
-
-📊 **Slides** : [Lien GitHub Pages](https://r-drumond-cegid.github.io/copilot-example/)
-💻 **Repo** : [Lien GitHub](https://github.com/r-drumond-cegid/copilot-example)
-
----
-
-## Liens utiles
-
-- Demande d’accès à GitHub Copilot chez Cegid : https://devsecopscegid.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1%2Fgroup%2F4%2Fcreate%2F43
-- Cegid Design System : https://cds-website.azurewebsites.net/guidelines/installation
